@@ -1,0 +1,29 @@
+{
+  "name": "pretty_video",
+  "version": "1.0.0",
+  "author": "hu",
+  "description": "原video控制栏功能有限，且丑，自定义video控制栏",
+  "main": "index.js",
+  "scripts": {
+    "dev": "webpack-dev-server",
+    "wdith": "webpack --progress --watch",
+    "build": "webpack --mode=production"
+  },
+  "license": "MIT",
+  "keywords": [
+    "video"
+  ],
+  "dependencies": {},
+  "devDependencies": {
+    "awesome-typescript-loader": "^5.2.1",
+    "css-loader": "^3.4.2",
+    "less": "^3.11.1",
+    "less-loader": "^5.0.0",
+    "source-map-loader": "^0.2.4",
+    "style-loader": "^1.1.3",
+    "typescript": "^3.7.5",
+    "webpack": "^4.41.6",
+    "webpack-cli": "^3.3.11",
+    "webpack-dev-server": "^3.10.3"
+  }
+}

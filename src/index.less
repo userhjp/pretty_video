@@ -1,0 +1,307 @@
+body {
+    margin: 0;
+}
+.video_player {
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+  
+    .video {
+      width: 100%;
+      height: 100%;
+      display: block;
+      background: #000;
+      z-index: auto;
+    }
+  
+    .controls {
+      position: absolute;
+      width: 100%;
+      height: 40px;
+      background-color: rgba(0, 16, 27, .7);
+      bottom: -40px;
+      transition: bottom 0.3s;
+      left: 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 999;
+      /* 进度条 */
+      .progress_bar {
+        position: absolute;
+        cursor: pointer;
+        top: -2px;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background-color: #ccc;
+        transition: height .2s linear, top .2s linear;
+      }
+  
+      .progress_bar:hover {
+        top: -4px;
+        height: 4px;
+        i {
+          width: 14px;
+          height: 14px;
+          top: -7px
+        }
+      }
+  
+      .progress_bar>div {
+        width: 0px;
+        height: 100%;
+        background-color: rgba(45, 125, 194, 1);
+      }
+  
+      .progress_bar>i {
+        position: absolute;
+        padding: 2px;
+        opacity: 0;
+        top: -5px;
+        left: 0px;
+        width: 8px;
+        height: 8px;
+        background-color: #fff;
+        border-radius: 20px;
+        transition: height .2s linear, top .2s linear, width .2s linear;
+      }
+  
+      .controls_left {
+        display: flex;
+        align-items: center;
+        margin-left: 6px;
+      }
+  
+      .controls_right {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        > * {
+          cursor: pointer;
+          margin-right: 12px;
+        }
+        /* 倍速 */
+        .speed_bth {
+          position: relative;
+          .speed_li {
+            position: absolute;
+            display: none;
+            bottom: 0px;
+            width: 58px;
+            padding-bottom: 34px;
+            text-align: center;
+            color: #fff;
+  
+            div {
+              cursor: pointer;
+              background-color: rgba(0, 16, 27, .7);
+              line-height: 22px;
+              margin-bottom: 1px;
+              border-radius: 2px;
+            }
+  
+            div.on {
+              color: rgba(45, 125, 194, 1);
+            }
+  
+            div:hover {
+              color: rgba(45, 125, 194, 1);
+            }
+          }
+  
+          span {
+            cursor: pointer;
+            display: inline-block;
+            color: #fff;
+            text-align: center;
+            min-width: 40px;
+            padding: 0 10px;
+            line-height: 22px;
+            background-color: rgba(0, 0, 0, .35);
+            border-radius: 12px;
+          }
+        }
+  
+        .speed_bth:hover {
+          span {
+            background-color: rgba(45, 125, 194, 1);
+          }
+  
+          .speed_li {
+            display: block;
+          }
+        }
+  
+        /* 音量 */
+        .volume_bth {
+          position: relative;
+          display: flex;
+          .volume_con {
+              position: absolute;
+              display: none;
+              bottom: 0;
+              width: 34px;
+              height: 112px;
+              left: -8px;
+              .volume_slider {
+                  position: absolute;
+                  text-align: center;
+                  border-radius: 10px;
+                  padding: 14px 14px;
+                  background-color: rgba(0, 0, 0, 0.5);
+                  right: -46px;
+                  top: 0;
+                  transform: rotate(-90deg);
+              }
+          }
+        }
+  
+        .volume_bth:hover {
+          .volume_con {
+            display: block;
+          }
+        }
+      }
+  
+      .play {
+        width: 14px;
+        height: 14px;
+        margin-left: 10px;
+      }
+  
+      .fullscreen {
+        width: 14px;
+        height: 14px;
+      }
+  
+      .time {
+        color: #fff;
+        padding-left: 10px;
+        font-size: 14px;
+      }
+    }
+  
+    .video_cover {
+        position: absolute;
+        display: none;
+        height: 100%;
+        width: 100%;
+        top: 0;
+        left: 0;
+        background-color: rgba(0, 0, 0, 0.7);
+        .cover_content {
+          width:200px;
+          height:200px;
+          overflow: auto;
+          position: absolute;
+          margin: auto;
+          top:0;
+          bottom:0;
+          left:0;
+          right:0;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+  
+          img {
+              width:40px;
+              height:40px;
+          }
+  
+          .tips_error {
+              margin-top: 8px;
+          }
+  
+          .tips_text {
+              color: #fff;
+              font-size: 12px;
+              text-align: center;
+          }
+  
+          .loading {
+              .spot {
+                  width: 4px;
+                  height: 4px;
+                  border-radius: 2px;
+                  background: #ffffff;
+                  float: left;
+                  margin: 8px 4px;
+                  animation: spot linear 1s infinite;
+                  -webkit-animation: spot linear 1s infinite;
+              }
+              .spot:nth-child(1){
+                  animation-delay:0s;
+              }
+              .spot:nth-child(2){
+                  animation-delay:0.15s;
+              }
+              .spot:nth-child(3){
+                  animation-delay:0.3s;
+              }
+              .spot:nth-child(4){
+                  animation-delay:0.45s;
+              }
+              .spot:nth-child(5){
+                  animation-delay:0.6s;
+              }
+              @keyframes spot 
+              {
+                  0%,60%,100% {transform: scale(1);}
+                  30% {transform: scale(2.5);}
+              }
+              @-webkit-keyframes spot 
+              {
+                  0%,60%,100% {transform: scale(1);}
+                  30% {transform: scale(2.5);}
+              }
+            }
+        }
+    }
+  }
+  
+  
+  .video_player.showControls {
+    .controls {
+      bottom: 0 !important;
+    }
+    .progress_bar>i {
+      opacity: 1 !important;
+    }
+  }
+  input[type="range"] {
+    display: block;
+    -webkit-appearance: none;
+    background: -webkit-linear-gradient(rgba(45, 125, 194, 1), rgba(45, 125, 194, 1)) no-repeat, #ddd;/*设置左边颜色为#61bd12，右边颜色为#ddd*/
+    background-size: 75% 100%;/*设置左右宽度比例*/
+    width: 100px;
+    height: 4px;
+    border-radius: 5px;
+    margin: 0 auto;
+    outline: 0;
+  }
+  
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    background-color: #fff;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+  //   border: 2px solid white;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+  }
+  
+  input[type="range"]::-webkit-slider-thumb:hover {
+    background-color: white;
+    border: 2px solid #49a9ee;
+  }
+  
+  input[type="range"]::-webkit-slider-thumb:active {
+    transform: scale(1.6);
+  
+  }
+  
+  
+  

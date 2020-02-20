@@ -1,0 +1,31 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "baseUrl": "./",
+    "outDir": "./dist/",
+    "sourceMap": true,
+    "declaration": false,
+    "downlevelIteration": true,
+    "experimentalDecorators": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "importHelpers": true,
+    "target": "es2015",
+    "lib": [
+      "es2018",
+      "dom"
+    ],
+    // "paths": {
+    //   "@shared/*": [ "src/app/shared/*" ],
+    //   "@routes/*":[ "src/app/routes/*" ],
+    //   "@core/*": [ "src/app/core/*" ],
+    //   "@env/*": [ "src/environments/*" ]
+    // }
+  },
+  "exclude": [
+    "node_modules"
+  ],
+  "include":[
+    "./src/**/*"
+  ]
+}
