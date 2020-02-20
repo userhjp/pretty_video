@@ -9,71 +9,7 @@
   <script src="./main.bundle.js"></script>
 </head>
 <body>
-  <div class="video_player" id="video_container">
-    <video #myVideo id="myVideo" class="video" [autoplay]="autoplay" width="100%">
-        您的浏览器不支持Video播放器
-    </video>
-    <div class="controls" id="video_controls">
-        <div id="progress" class="progress_bar">
-            <div></div>
-            <i></i>
-        </div>
-        <div class="controls_left">
-            <img class="play play_btn" src="src/assets/bofang.svg">
-            <div class="time"></div>
-        </div>
-        <div class="controls_right">
-            <!-- 音量 -->
-            <div class="volume_bth">
-                <div class="volume_con">
-                    <div class="volume_slider">
-                        <input id="volumeslider" type='range' min="0" max="1" step="0.01" value="0.8"/>
-                    </div>
-                </div>
-                <img id="volume_img" class="fullscreen" src="src/assets/mn_shengyin_fill.svg">
-            </div>
-            <!-- 倍速 -->
-            <div class="speed_bth">
-                <div id="speed_con" class="speed_li">
-                    <div>2.0x</div>
-                    <div>1.5x</div>
-                    <div>1.2x</div>
-                    <div class="on">1.0x</div>
-                    <div>0.5x</div>
-                    <!-- <div *ngFor="let item of rateList" [ngClass]="{ 'on': item === currentRate }" (click)="setPlaybackRate(item)">{{ item }}</div> -->
-                </div>
-                <span id="currentRate">1.0x</span>
-            </div>
-            <!-- 全屏 -->
-            <img id="v_fullscreen" class="fullscreen" src="src/assets/quanping.svg">
-        </div>
-    </div>
-    <div class="video_cover" id="v_error">
-        <div class="cover_content">
-            <img src="src/assets/error.svg">
-            <div class="tips_text tips_error">资源加载失败~</div>
-        </div>
-    </div>
-    <div class="video_cover" id="v_play">
-        <div class="cover_content">
-            <img class="play_btn" src="src/assets/bofang.svg">
-        </div>
-    </div>
-    <div class="video_cover" id="v_waiting">
-        <div class="cover_content">
-            <div class="loading">
-                <div>
-                    <div class="spot"></div>
-                    <div class="spot"></div>
-                    <div class="spot"></div>
-                    <div class="spot"></div>
-                    <div class="spot"></div>
-                </div>
-                <div class="tips_text">缓冲中...</div>
-            </div>
-        </div>
-    </div>
-</div>
+ <div id="MyVideo"></div>
 <div>{{currentState}}</div>
 </body>
 </html>

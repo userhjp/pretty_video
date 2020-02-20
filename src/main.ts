@@ -1,6 +1,6 @@
 import './index.less';
 
-class Video {
+export default class Video {
     containerElemelt: any; // 容器
     playerElement: any; // 播放器
     volumesliderElement: any; // 音量滑动
@@ -8,7 +8,8 @@ class Video {
     currentElement: any; // 进度条当前进度
     dotElement: any; // 进度条拖动按钮
     timeElement: any; // 当前播放时间进度
-    speedElement: any; // 倍速列表
+    speedListElement: any; // 倍速列表
+    speedBtnElement: any; // 倍速按钮
     
     autoplay = false; // 自动播放
     isFullscreen = false; // 全屏
@@ -19,16 +20,18 @@ class Video {
     constructor() {
     }
     
-    init() {
-      const videoContainer = document.getElementById('video_container') // this.videoContainer.nativeElement;
-      this.containerElemelt = videoContainer;
+    init(el) {
+      let videoContainer = typeof el === 'string' ? document.getElementById(el) : el;
+      videoContainer.innerHTML = this.videoElement;
+      this.containerElemelt = videoContainer.querySelector('#video_container');;
       this.playerElement = videoContainer.querySelector('#myVideo');
       this.progressElement = videoContainer.querySelector('#progress');
       this.volumesliderElement = videoContainer.querySelector('#volumeslider');
       this.currentElement = this.progressElement.getElementsByTagName('div')[0];
       this.dotElement = this.progressElement.getElementsByTagName('i')[0];
       this.timeElement = videoContainer.getElementsByClassName('time')[0];
-      this.speedElement = videoContainer.querySelector('#speed_con');
+      this.speedListElement = videoContainer.querySelector('#speed_con').children;
+      this.speedBtnElement = videoContainer.querySelector('#speed_btn');
       this.playerElement.src = 'http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4'// 'https://media.w3.org/2010/05/sintel/trailer.mp4';
       this.playerElement.poster = 'http://a3.att.hudong.com/68/61/300000839764127060614318218_950.jpg';
       this.initEvent();
@@ -146,12 +149,14 @@ class Video {
       const touchend = isPc ? 'mouseup' : 'touchend';
       
       // 倍速列表点击事件
-      for(const i of this.speedElement.children) {
+      for(const i of this.speedListElement) {
           i.addEventListener('click', (e) => {
-            for(const el of this.speedElement.children) { el.classList.remove("on"); }
+            for(const el of this.speedListElement) { el.classList.remove("on"); }
               const val = e.target.innerText;
               e.target.classList.add("on");
-              this.containerElemelt.querySelector('#currentRate').innerText = val;
+              this.speedBtnElement.innerText = val;
+              this.setPlaybackRate(val);
+              
           })
       }
 
@@ -223,6 +228,7 @@ class Video {
       };
     
       // 隐藏控制条pc和移动端失去焦点事件差异
+      debugger
       if (isPc) {
         this.containerElemelt.addEventListener('mousemove', onmouseover);
       } else {
@@ -362,10 +368,72 @@ class Video {
       num = isNaN(num) ? 0 : Math.floor(num); // 向下取整
       return (Array(len).join('0') + num).slice(-len);
     }
-}
 
-
-window.onload = function () {
-    const obj = new Video();
-    obj.init();
+    videoElement = `
+        <div class="video_player" id="video_container">
+        <video #myVideo id="myVideo" class="video" [autoplay]="autoplay" width="100%">
+            您的浏览器不支持Video播放器
+        </video>
+        <div class="controls" id="video_controls">
+            <div id="progress" class="progress_bar">
+                <div></div>
+                <i></i>
+            </div>
+            <div class="controls_left">
+                <img class="play play_btn" src="src/assets/bofang.svg">
+                <div class="time"></div>
+            </div>
+            <div class="controls_right">
+                <!-- 音量 -->
+                <div class="volume_bth">
+                    <div class="volume_con">
+                        <div class="volume_slider">
+                            <input id="volumeslider" type='range' min="0" max="1" step="0.01" value="0.8"/>
+                        </div>
+                    </div>
+                    <img id="volume_img" class="fullscreen" src="src/assets/mn_shengyin_fill.svg">
+                </div>
+                <!-- 倍速 -->
+                <div class="speed_bth">
+                    <div id="speed_con" class="speed_li">
+                        <div>2.0x</div>
+                        <div>1.5x</div>
+                        <div>1.2x</div>
+                        <div class="on">1.0x</div>
+                        <div>0.5x</div>
+                        <!-- <div *ngFor="let item of rateList" [ngClass]="{ 'on': item === currentRate }" (click)="setPlaybackRate(item)">{{ item }}</div> -->
+                    </div>
+                    <span id="speed_btn">1.0x</span>
+                </div>
+                <!-- 全屏 -->
+                <img id="v_fullscreen" class="fullscreen" src="src/assets/quanping.svg">
+            </div>
+        </div>
+        <div class="video_cover" id="v_error">
+            <div class="cover_content">
+                <img src="src/assets/error.svg">
+                <div class="tips_text tips_error">资源加载失败~</div>
+            </div>
+        </div>
+        <div class="video_cover" id="v_play">
+            <div class="cover_content">
+                <img class="play_btn" src="src/assets/bofang.svg">
+            </div>
+        </div>
+        <div class="video_cover" id="v_waiting">
+            <div class="cover_content">
+                <div class="loading">
+                    <div>
+                        <div class="spot"></div>
+                        <div class="spot"></div>
+                        <div class="spot"></div>
+                        <div class="spot"></div>
+                        <div class="spot"></div>
+                    </div>
+                    <div class="tips_text">缓冲中...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    `
 }
