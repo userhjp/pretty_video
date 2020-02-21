@@ -79,27 +79,25 @@ export default class Video {
     fullscreen() {
       const fullScreenElement = this.containerElemelt;
       if (this.isFullscreen) {
-        this.isFullscreen = false;
-        if (document.exitFullscreen) {
-          document.exitFullscreen();
-        } else if (fullScreenElement.webkitCancelFullScreen) {
-          fullScreenElement.webkitCancelFullScreen();
-        } else if (fullScreenElement.mozCancelFullScreen) {
-          fullScreenElement.mozCancelFullScreen();
-        } else if (fullScreenElement.msExitFullscreen) {
-          fullScreenElement.msExitFullscreen();
+        if (document['exitFullscreen']) {
+          document['exitFullscreen']();
+        } else if (document['webkitCancelFullScreen']) {
+          document['webkitCancelFullScreen']();
+        } else if (document['mozCancelFullScreen']) {
+          document['mozCancelFullScreen']();
+        } else if (document['msExitFullscreen']) {
+          document['msExitFullscreen']();
+        } else {
+          return;
         }
+        this.isFullscreen = false;
       } else {
-        this.isFullscreen = true;
-        if (fullScreenElement.requestFullscreen) {
-          fullScreenElement.requestFullscreen();
-        } else if (fullScreenElement.webkitRequestFullScreen) {
-          fullScreenElement.webkitRequestFullScreen();
-        } else if (fullScreenElement.mozRequestFullScreen) {
-          fullScreenElement.mozRequestFullScreen();
-        } else if (fullScreenElement.msRequestFullscreen) {
-          // IE11
-          fullScreenElement.msRequestFullscreen();
+        const requestMethod = fullScreenElement.requestFullScreen || fullScreenElement.webkitRequestFullScreen || fullScreenElement.mozRequestFullScreen || fullScreenElement.msRequestFullscreen;
+        if (requestMethod) {
+           requestMethod.call(fullScreenElement);
+          this.isFullscreen = true;
+        } else {
+          alert('该浏览器不支持全屏')
         }
       }
     }
@@ -237,10 +235,10 @@ export default class Video {
       // 移动端触摸视频时展示控制条, 3秒无操作隐藏控制条
       const onmouseover = (e) => {
         this.containerElemelt.classList.add('showControls');
-        clearTimeout(timeout);
-        timeout = setTimeout(() => {
-          this.containerElemelt.classList.remove('showControls');
-        }, 3000);
+        // clearTimeout(timeout);
+        // timeout = setTimeout(() => {
+        //   this.containerElemelt.classList.remove('showControls');
+        // }, 3000);
       };
 
       // 右键
