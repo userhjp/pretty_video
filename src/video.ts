@@ -14,7 +14,7 @@ export default class Video {
     
     autoplay = false; // 自动播放
     isFullscreen = false; // 全屏
-    isMove = false; // 进度条是否拖动中，防止拖动时候视频播放更新进度条
+    isMove = false; // 进度条是否拖动中，防止拖动时候视频正常播放更新进度条
     currentvolum = 1; // 当前视频播放音量 0 - 1
     // 开始加载 | 加载完成 | 播放中 | 暂停中 | 缓冲中 | 缓冲就绪 | 播放完毕 | 错误
 
@@ -143,7 +143,7 @@ export default class Video {
       this.dotElement.style.left = position + 'px';
     }
     
-    /** 是否是移动端 */
+    /** 是否是PC端 */
     isPC() {
       const userAgentInfo = navigator.userAgent;
       const Agents = ['Android', 'iPhone', 'SymbianOS', 'Windows Phone', 'iPad', 'iPod'];  // 判断用户代理头信息
@@ -177,7 +177,6 @@ export default class Video {
       for(const el of playBtn) { 
         el.addEventListener('click', (e) => { 
             this.play();
-            // this.containerElemelt.getElementsByClassName('play play_btn')[0].src = this.playerElement.paused ? 'src/assets/bofang.svg' : 'src/assets/zanting.svg';
         })
       }
 
@@ -196,7 +195,7 @@ export default class Video {
       this.dotElement.addEventListener(touchstart, (event) => {
         event.preventDefault();
         const maxWidth = this.progressElement.clientWidth - this.dotElement.clientWidth; // 进度总长度，进度条-按钮
-        // 如果这个元素的位置内只有一个手指的话
+        // 如果这个元素的位置内只有一个手指
         if (isPc || event.targetTouches.length === 1) {
           const touch = isPc ? event : event.targetTouches[0];
           // 把元素放在手指所在的位置
@@ -222,6 +221,7 @@ export default class Video {
             // 拖动完成更新播放器时间
             const touch2 = isPc ? e : e.changedTouches[0];
             const position = getPosition(touch2);
+            // 更新视频实际播放时间
             video.currentTime = position / maxWidth * video.duration;
             this.isMove = false;
             dotElmt.removeEventListener(touchmove, move);
@@ -241,6 +241,19 @@ export default class Video {
         timeout = setTimeout(() => {
           this.containerElemelt.classList.remove('showControls');
         }, 3000);
+      };
+
+      // 右键
+      this.containerElemelt.oncontextmenu = (e) => {
+        //鼠标点的坐标
+        const oX = e.layerX;
+        const oY = e.layerY;
+        //菜单出现后的位置
+        // menu.style.display = "block";
+        // menu.style.left = oX + "px";
+        // menu.style.top = oY + "px";
+        //阻止浏览器默认事件
+        return false;//一般点击右键会出现浏览器默认的右键菜单，写了这句代码就可以阻止该默认事件。
       };
     
       // 隐藏控制条pc和移动端失去焦点事件差异
