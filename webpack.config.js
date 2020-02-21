@@ -40,7 +40,7 @@ module.exports = {
                 loader: 'url-loader',
                 options: {
                     name:'assets/[name].[ext]',  //图片复制到指定位置
-                    limit:10240  //单位byte，小于8KB的图片都会被编码(base64)放打包在js中
+                    limit:8192  //单位byte，小于8KB的图片都会被编码(base64)放打包在js中
                 }
             }
         },
