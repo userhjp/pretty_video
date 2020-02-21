@@ -1,4 +1,4 @@
-import Video from './main';
+import Video from './video';
 
 window.onload = function () {
     const video = document.getElementById('MyVideo');
