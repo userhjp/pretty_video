@@ -1,5 +1,6 @@
 import './index.less';
 
+
 export default class Video {
     containerElemelt: any; // 容器
     playerElement: any; // 播放器
@@ -43,10 +44,15 @@ export default class Video {
     
     /** 开始、暂停播放 */
     play() {
+      const btnClass = this.containerElemelt.getElementsByClassName('play_btn')[0].classList;;
       if (this.playerElement.paused) {
         this.playerElement.play();
+        btnClass.remove('play');
+        btnClass.add('suspend');
       } else {
         this.playerElement.pause();
+        btnClass.remove('suspend');
+        btnClass.add('play');
       }
     }
     
@@ -59,10 +65,14 @@ export default class Video {
     /** 设置音量 */
     setVolum(value) {
       value = parseFloat(value);
-
       this.playerElement.volume = value;
       this.volumesliderElement.style.backgroundSize = `${value * 100}% 100%`; /*设置左右宽度比例*/
-      this.containerElemelt.querySelector('#volume_img').src = value ? 'src/assets/mn_shengyin_fill.svg' : 'src/assets/mn_shengyinwu_fill.svg'
+      const volume_bth = this.containerElemelt.querySelector('#volume_img');
+      if(value) {
+        volume_bth.classList.remove('mute');
+      } else {
+        volume_bth.classList.add('mute');
+      }
     }
     
     /** 全屏 */
@@ -167,14 +177,18 @@ export default class Video {
       for(const el of playBtn) { 
         el.addEventListener('click', (e) => { 
             this.play();
-            this.containerElemelt.getElementsByClassName('play play_btn')[0].src = this.playerElement.paused ? 'src/assets/bofang.svg' : 'src/assets/zanting.svg';
+            // this.containerElemelt.getElementsByClassName('play play_btn')[0].src = this.playerElement.paused ? 'src/assets/bofang.svg' : 'src/assets/zanting.svg';
         })
       }
 
       // 全屏按钮点击
       this.containerElemelt.querySelector('#v_fullscreen').addEventListener('click', (e) => { 
         this.fullscreen();
-        e.target.src = this.isFullscreen ? 'src/assets/suoxiao.svg' : 'src/assets/quanping.svg'
+        if(this.isFullscreen) {
+          e.target.classList.add('scale');
+        } else {
+          e.target.classList.remove('scale');
+        }
       })
       
 
@@ -395,7 +409,7 @@ export default class Video {
                 <i></i>
             </div>
             <div class="controls_left">
-                <img class="play play_btn" src="src/assets/bofang.svg">
+                <i class="button_img play play_btn"></i>
                 <div class="time"></div>
             </div>
             <div class="controls_right">
@@ -406,7 +420,7 @@ export default class Video {
                             <input id="volumeslider" type='range' min="0" max="1" step="0.01" value="0.8"/>
                         </div>
                     </div>
-                    <img id="volume_img" class="fullscreen" src="src/assets/mn_shengyin_fill.svg">
+                    <i id="volume_img" class="button_img sound"></i>
                 </div>
                 <!-- 倍速 -->
                 <div class="speed_bth">
@@ -420,18 +434,18 @@ export default class Video {
                     <span id="speed_btn">1.0x</span>
                 </div>
                 <!-- 全屏 -->
-                <img id="v_fullscreen" class="fullscreen" src="src/assets/quanping.svg">
+                <i id="v_fullscreen" class="button_img full"></i>
             </div>
         </div>
         <div class="video_cover" id="v_error">
             <div class="cover_content">
-                <img src="src/assets/error.svg">
+                <div class="cover_img error"></div>
                 <div class="tips_text tips_error">资源加载失败~</div>
             </div>
         </div>
         <div class="video_cover" id="v_play">
             <div class="cover_content">
-                <img class="play_btn" src="src/assets/bofang.svg">
+                <div class="cover_img play play_btn"></div>
             </div>
         </div>
         <div class="video_cover" id="v_waiting">
