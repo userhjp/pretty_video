@@ -5,7 +5,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
     // mode: "production",
-    entry: path.resolve(__dirname, 'src/index.ts'), // 入口，如果传入一个字符串或字符串数组，chunk 会被命名为 main。如果传入一个对象，则每个键(key)会是 chunk 的名称，该值描述了 chunk 的入口起点。
+    entry: path.resolve(__dirname, 'src/index.tsx'), // 入口，如果传入一个字符串或字符串数组，chunk 会被命名为 main。如果传入一个对象，则每个键(key)会是 chunk 的名称，该值描述了 chunk 的入口起点。
     output: {
         filename: "[name].bundle.js", // 输出名称
         path: path.resolve(__dirname, "dist"), // 输出路径
@@ -21,7 +21,9 @@ module.exports = {
         { // 处理ts
           test: /\.tsx?$/,
           exclude: /node_modules/,
-          loader: "awesome-typescript-loader"
+          use: [
+            { loader: 'awesome-typescript-loader' },
+          ]
         },
         { // 处理less
           test: /\.less?$/,
@@ -45,7 +47,7 @@ module.exports = {
       ]
     },
     resolve: {
-      extensions: ['.tsx', '.ts', '.js']
+      extensions: ['.tsx', '.ts', '.js', '.jsx']
     },
     plugins: [//插件数组
       new htmlWebpackPlugin({ //创建一个在内存中生成html页面插件的配置对象

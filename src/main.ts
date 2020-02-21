@@ -34,6 +34,7 @@ export default class Video {
       this.speedBtnElement = videoContainer.querySelector('#speed_btn');
       this.playerElement.src = 'http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4'// 'https://media.w3.org/2010/05/sintel/trailer.mp4';
       this.playerElement.poster = 'http://a3.att.hudong.com/68/61/300000839764127060614318218_950.jpg';
+      this.playerElement.autoplay = this.autoplay;
       this.initEvent();
     }
     
@@ -41,7 +42,7 @@ export default class Video {
     reload = () => this.playerElement.load();
     
     /** 开始、暂停播放 */
-    start() {
+    play() {
       if (this.playerElement.paused) {
         this.playerElement.play();
       } else {
@@ -51,13 +52,17 @@ export default class Video {
     
     /** 设置倍速 */
     setPlaybackRate(e: string) {
+      this.speedBtnElement.innerText = e;
       this.playerElement.playbackRate = parseFloat(e);
     }
     
     /** 设置音量 */
-    setVolum(e) {
-      this.currentvolum = +e;
-      this.playerElement.volume = e;
+    setVolum(value) {
+      value = parseFloat(value);
+
+      this.playerElement.volume = value;
+      this.volumesliderElement.style.backgroundSize = `${value * 100}% 100%`; /*设置左右宽度比例*/
+      this.containerElemelt.querySelector('#volume_img').src = value ? 'src/assets/mn_shengyin_fill.svg' : 'src/assets/mn_shengyinwu_fill.svg'
     }
     
     /** 全屏 */
@@ -152,11 +157,8 @@ export default class Video {
       for(const i of this.speedListElement) {
           i.addEventListener('click', (e) => {
             for(const el of this.speedListElement) { el.classList.remove("on"); }
-              const val = e.target.innerText;
               e.target.classList.add("on");
-              this.speedBtnElement.innerText = val;
-              this.setPlaybackRate(val);
-              
+              this.setPlaybackRate(e.target.innerText);
           })
       }
 
@@ -164,7 +166,7 @@ export default class Video {
       const playBtn = this.containerElemelt.getElementsByClassName('play_btn');
       for(const el of playBtn) { 
         el.addEventListener('click', (e) => { 
-            this.start();
+            this.play();
             this.containerElemelt.getElementsByClassName('play play_btn')[0].src = this.playerElement.paused ? 'src/assets/bofang.svg' : 'src/assets/zanting.svg';
         })
       }
@@ -228,12 +230,26 @@ export default class Video {
       };
     
       // 隐藏控制条pc和移动端失去焦点事件差异
-      debugger
       if (isPc) {
         this.containerElemelt.addEventListener('mousemove', onmouseover);
+        this.containerElemelt.querySelector('#volume_img').addEventListener('click', (e) => {
+            const val = parseFloat(this.volumesliderElement.value) > 0 ? 0.0 : this.currentvolum;
+            this.volumesliderElement.value = val;
+            this.setVolum(val);
+        })
       } else {
         this.containerElemelt.ontouchstart = onmouseover;
       }
+
+      // 双击播放器暂停，移动端无双击时间，用两次点击时间模拟 300 毫秒2次点击为双击
+      let clickTime = 0;
+      this.playerElement.addEventListener('click', () => {
+        const nowTime = new Date().getTime();
+        if(nowTime - clickTime < 300) {
+            this.play()
+        }
+        clickTime = nowTime;
+      });
     
       // 阻止事件冒泡到点击进度条
       this.dotElement.onmousedown = (event) => event.stopPropagation();
@@ -251,9 +267,8 @@ export default class Video {
       this.volumesliderElement.oninput = (e) => {
         e.stopPropagation();
         const value = e.target.value;
+        this.currentvolum = value;
         this.setVolum(value);
-        e.target.style.backgroundSize = `${value * 100}% 100%`; /*设置左右宽度比例*/
-        this.containerElemelt.querySelector('#volume_img').src = +value ? 'src/assets/mn_shengyin_fill.svg' : 'src/assets/mn_shengyinwu_fill.svg'
         
       };
     
@@ -371,7 +386,7 @@ export default class Video {
 
     videoElement = `
         <div class="video_player" id="video_container">
-        <video #myVideo id="myVideo" class="video" [autoplay]="autoplay" width="100%">
+        <video #myVideo id="myVideo" class="video" width="100%">
             您的浏览器不支持Video播放器
         </video>
         <div class="controls" id="video_controls">
@@ -401,7 +416,6 @@ export default class Video {
                         <div>1.2x</div>
                         <div class="on">1.0x</div>
                         <div>0.5x</div>
-                        <!-- <div *ngFor="let item of rateList" [ngClass]="{ 'on': item === currentRate }" (click)="setPlaybackRate(item)">{{ item }}</div> -->
                     </div>
                     <span id="speed_btn">1.0x</span>
                 </div>
