@@ -360,7 +360,7 @@ export default class Video {
         return false;//一般点击右键会出现浏览器默认的右键菜单，写了这句代码就可以阻止该默认事件。
       };
 
-      // 双击播放器暂停，移动端无双击时间，用两次点击时间模拟 300 毫秒2次点击为双击
+      // 双击播放器暂停，移动端无双击事件，用两次点击时间模拟 300 毫秒2次点击为双击
       let clickTime = 0;
       this.playerElement.addEventListener('click', () => {
         const nowTime = new Date().getTime();
