@@ -1,13 +1,13 @@
 import './index.less';
 
 interface Config {
-  el?: string | HTMLElement;
-  autoplay?: boolean;
-  src?: string;
-  poster?: string;
-  autoHideControls?: boolean;
-  isFastForward?: boolean;
-  hideFullScreen?: boolean;
+  el?: string | HTMLElement; // 可以传入 Element或者容器ID
+  autoplay?: boolean; // 视频加载是否自动播放
+  src?: string; // 播放地址
+  poster?: string; // 封面
+  autoHideControls?: boolean; // 是否自动隐藏控制栏
+  isFastForward?: boolean; // 是否允许点击、拖动进度条跳转进度
+  hideFullScreen?: boolean; // 是否隐藏全屏按钮
 }
 export default class Video {
     containerElemelt: any; // 容器
@@ -165,7 +165,7 @@ export default class Video {
       return currentTime;
     }
     
-    /** 视频当前播放事件进度/进度条样式 */
+    /** 视频当前播放进度/进度条样式 */
     setDuration(position: number) {
       const currentTime = this.getCurrentLocationTime(position);
       const duration = `${this.PrefixInteger(this.playerElement.duration / 60)}:${this.PrefixInteger(this.playerElement.duration % 60)}`; // 视频总长度- 分:秒
@@ -219,7 +219,7 @@ export default class Video {
         }
       })
 
-      // 进度条变出变大
+      // 进度条变粗大
       const progressHover = (isHover) => {
         if(!this.isFastForward) return;
         this.progressElement.style.top = isHover ? '-4px' : '-2px';
