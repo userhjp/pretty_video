@@ -26,6 +26,16 @@
           poster: 'http://a3.att.hudong.com/68/61/300000839764127060614318218_950.jpg',
       });
   }
+
+  interface Config {
+    el?: string | HTMLElement; // Element或者容器ID
+    autoplay?: boolean; // 视频加载是否自动播放
+    src?: string; // 播放地址
+    poster?: string; // 封面
+    autoHideControls?: boolean; // 是否自动隐藏控制栏
+    isFastForward?: boolean; // 是否允许点击、拖动进度条跳转进度
+    hideFullScreen?: boolean; // 是否隐藏全屏按钮
+  }
 ```
 
 ## 注意
