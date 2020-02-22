@@ -1,42 +1,69 @@
 import './index.less';
 
-
+interface Config {
+  el?: string | HTMLElement;
+  autoplay?: boolean;
+  src?: string;
+  poster?: string;
+  autoHideControls?: boolean;
+  isFastForward?: boolean;
+  hideFullScreen?: boolean;
+}
 export default class Video {
     containerElemelt: any; // 容器
     playerElement: any; // 播放器
+    videoControlsElement: any; // 整个控制条
     volumesliderElement: any; // 音量滑动
     progressElement: any; // 进度条
-    currentElement: any; // 进度条当前进度
-    dotElement: any; // 进度条拖动按钮
+    currentSpElement: any; // 进度条当前进度
+    dotElement: any; // 进度条拖动点按钮
+    dateLabelElement: any; // 当前鼠标位置提示label
     timeElement: any; // 当前播放时间进度
     speedListElement: any; // 倍速列表
     speedBtnElement: any; // 倍速按钮
-    
     autoplay = false; // 自动播放
     isFullscreen = false; // 全屏
     isMove = false; // 进度条是否拖动中，防止拖动时候视频正常播放更新进度条
     currentvolum = 1; // 当前视频播放音量 0 - 1
+
+    autoHideControls = true; // 自动隐藏控制条
+    isFastForward = true; // 是否允许快进
     // 开始加载 | 加载完成 | 播放中 | 暂停中 | 缓冲中 | 缓冲就绪 | 播放完毕 | 错误
 
     constructor() {
     }
     
-    init(el) {
-      let videoContainer = typeof el === 'string' ? document.getElementById(el) : el;
+    init(config: Config) {
+      let videoContainer = typeof config.el === 'string' ? document.getElementById(config.el) : config.el;
       videoContainer.innerHTML = this.videoElement;
       this.containerElemelt = videoContainer.querySelector('#video_container');;
       this.playerElement = videoContainer.querySelector('#myVideo');
+      this.videoControlsElement = videoContainer.querySelector('#video_controls')
       this.progressElement = videoContainer.querySelector('#progress');
       this.volumesliderElement = videoContainer.querySelector('#volumeslider');
-      this.currentElement = this.progressElement.getElementsByTagName('div')[0];
-      this.dotElement = this.progressElement.getElementsByTagName('i')[0];
-      this.timeElement = videoContainer.getElementsByClassName('time')[0];
+      this.currentSpElement = this.progressElement.querySelector('.current_progress');
+      this.dotElement = this.progressElement.querySelector('.current_dot');
+      this.dateLabelElement = videoContainer.querySelector('.date_label');
+      this.timeElement = videoContainer.querySelector('.time');
       this.speedListElement = videoContainer.querySelector('#speed_con').children;
       this.speedBtnElement = videoContainer.querySelector('#speed_btn');
-      this.playerElement.src = 'http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4'// 'https://media.w3.org/2010/05/sintel/trailer.mp4';
-      this.playerElement.poster = 'http://a3.att.hudong.com/68/61/300000839764127060614318218_950.jpg';
-      this.playerElement.autoplay = this.autoplay;
+      this.setUrl({
+        src: config.src,
+        poster: config.poster,
+        autoplay: config.autoplay
+      })
+      this.autoHideControls = config.autoHideControls === false ? false : true;
+      this.isFastForward = config.isFastForward === false ? false : true;
+      this.containerElemelt.querySelector('#v_fullscreen').style.display = config.hideFullScreen === true ? 'none' : 'block'
       this.initEvent();
+    }
+
+    /** 播放地址 */
+    setUrl(object: { src: string, poster?: string, autoplay?: boolean }) {
+      if(!this.playerElement) throw new Error("请先初始化播放器!");
+      this.playerElement.src = object.src || '';
+      this.playerElement.poster = object.poster || '';
+      this.playerElement.autoplay = object.autoplay || false;
     }
     
     /** 重新加载视频 */
@@ -128,16 +155,22 @@ export default class Video {
     getProgressWidth() {
       return this.progressElement.clientWidth;
     }
+
+    /** 根据当前X位置计算当前时间进度 */
+    getCurrentLocationTime(position: number): string {
+      const maxWidth = this.getProgressWidth(); // 进度总长度，进度条-按钮
+      if(position > maxWidth) position = maxWidth;
+      const slitherCurrentTime = position / maxWidth * this.playerElement.duration; // 当前拖动进度位置时间
+      const currentTime = `${this.PrefixInteger(slitherCurrentTime / 60)}:${this.PrefixInteger(slitherCurrentTime % 60)}`; // 当前播放进度- 分:秒
+      return currentTime;
+    }
     
     /** 视频当前播放事件进度/进度条样式 */
     setDuration(position: number) {
-      const maxWidth = this.getProgressWidth(); // 进度总长度，进度条-按钮
-      const slitherCurrentTime = position / maxWidth * this.playerElement.duration; // 当前拖动进度位置时间
-      
-      const currentTime = `${this.PrefixInteger(slitherCurrentTime / 60)}:${this.PrefixInteger(slitherCurrentTime % 60)}`; // 当前播放进度- 分:秒
+      const currentTime = this.getCurrentLocationTime(position);
       const duration = `${this.PrefixInteger(this.playerElement.duration / 60)}:${this.PrefixInteger(this.playerElement.duration % 60)}`; // 视频总长度- 分:秒
       this.timeElement.innerHTML = `${currentTime} / ${duration}`
-      this.currentElement.style.width = position + 'px';
+      this.currentSpElement.style.width = position + 'px';
       this.dotElement.style.left = position + 'px';
     }
     
@@ -157,9 +190,9 @@ export default class Video {
       const video = this.playerElement;
       const isPc = this.isPC();
       // pc端 和移动端事件区分
-      const touchstart = isPc ? 'mousedown' : 'touchstart';
-      const touchmove = isPc ? 'mousemove' : 'touchmove';
-      const touchend = isPc ? 'mouseup' : 'touchend';
+      const touchstart = isPc ? 'mousedown' : 'touchstart'; // 鼠标按下/触摸
+      const touchmove = isPc ? 'mousemove' : 'touchmove'; // 开始移动/拖动
+      const touchend = isPc ? 'mouseup' : 'touchend'; // 松开/手指移开
       
       // 倍速列表点击事件
       for(const i of this.speedListElement) {
@@ -173,9 +206,7 @@ export default class Video {
       // 播放按钮点击
       const playBtn = this.containerElemelt.getElementsByClassName('play_btn');
       for(const el of playBtn) { 
-        el.addEventListener('click', (e) => { 
-            this.play();
-        })
+        el.addEventListener('click', (e) => this.play());
       }
 
       // 全屏按钮点击
@@ -187,29 +218,62 @@ export default class Video {
           e.target.classList.remove('scale');
         }
       })
-      
+
+      // 进度条变出变大
+      const progressHover = (isHover) => {
+        if(!this.isFastForward) return;
+        this.progressElement.style.top = isHover ? '-4px' : '-2px';
+        this.progressElement.style.height = isHover ? '4px' : '2px';
+        this.progressElement.children[1].style.width = isHover ? '12px' : '8px';
+        this.progressElement.children[1].style.height = isHover ? '12px' : '8px';
+      }
+
+      // 改变label位置
+      const showmoveLabel = (clientX) => {
+        if(clientX < 0) clientX = 0;
+        this.dateLabelElement.innerText = this.getCurrentLocationTime(clientX);
+        const minLeft = this.dateLabelElement.clientWidth / 2;
+        const maxLeft = this.progressElement.clientWidth - minLeft;
+        if(clientX < minLeft) clientX = minLeft; // 防止被遮掩
+        if(clientX > maxLeft) clientX = maxLeft; 
+        this.dateLabelElement.style.left = clientX + 'px';
+        this.dateLabelElement.style.visibility = 'visible';
+      }
+
+      const hidemoveLabel = () => {
+        this.dateLabelElement.style.visibility = 'hidden';
+      }
+
 
       // 进度条开始拖动
       this.dotElement.addEventListener(touchstart, (event) => {
+        if(!this.isFastForward) return;
         event.preventDefault();
-        const maxWidth = this.progressElement.clientWidth - this.dotElement.clientWidth; // 进度总长度，进度条-按钮
+        // 这里处理移动端进度条焦点变化
+        if(!isPc) { 
+          progressHover(true);
+        } 
+        const maxWidth = this.getProgressWidth();
         // 如果这个元素的位置内只有一个手指
         if (isPc || event.targetTouches.length === 1) {
           const touch = isPc ? event : event.targetTouches[0];
           // 把元素放在手指所在的位置
-          const disX = touch.pageX - this.dotElement.offsetLeft;
+          const disX = touch.clientX - this.dotElement.offsetLeft;
           const getPosition = (e) => {
-            let l = e.pageX - disX;
+            let l = e.clientX - disX;
             if (l < 0) { l = 0; }
             if (l > maxWidth) { l = maxWidth; }
             return l;
           };
+          const position = getPosition(touch);
+          if(!isPc) showmoveLabel(position);
           // 开始拖动
           const move = (e) => {
             this.isMove = true;
             const touch2 = isPc ? e : e.targetTouches[0];
             const position = getPosition(touch2);
             this.setDuration(position);
+            showmoveLabel(position);
           };
     
           // 如果浏览器下，需要全局监听拖动
@@ -222,6 +286,10 @@ export default class Video {
             // 更新视频实际播放时间
             video.currentTime = position / maxWidth * video.duration;
             this.isMove = false;
+            if(!isPc) { // 这里处理移动端进度条变化
+              progressHover(false);
+              hidemoveLabel();
+            } 
             dotElmt.removeEventListener(touchmove, move);
             dotElmt.removeEventListener(touchend, chend);
           };
@@ -233,13 +301,51 @@ export default class Video {
       let timeout = null;
       // 实现效果，pc端鼠标移入视频显示控制条，3秒无操作隐藏控制条
       // 移动端触摸视频时展示控制条, 3秒无操作隐藏控制条
-      const onmouseover = (e) => {
+      const onmouseover = () => {
+        if(!this.autoHideControls) return;
         this.containerElemelt.classList.add('showControls');
-        // clearTimeout(timeout);
-        // timeout = setTimeout(() => {
-        //   this.containerElemelt.classList.remove('showControls');
-        // }, 3000);
+        clearTimeout(timeout);
+        timeout = setTimeout(() => {
+          this.containerElemelt.classList.remove('showControls');
+        }, 3000);
       };
+    
+      
+      if (isPc) {
+        // 鼠标在容器移动时候触发显示
+        this.containerElemelt.addEventListener('mousemove', onmouseover);
+        // 当鼠标移动到控制条上，取消隐藏，一直显示
+        this.videoControlsElement.addEventListener('mouseenter', (e) => {
+          this.containerElemelt.removeEventListener('mousemove', onmouseover);
+          clearTimeout(timeout)
+        });
+
+        // 鼠标移开
+        this.videoControlsElement.addEventListener('mouseleave', () => {
+          onmouseover();
+          this.containerElemelt.addEventListener('mousemove', onmouseover);
+        });
+
+        // PC端点击音量按钮禁音
+        this.containerElemelt.querySelector('#volume_img').addEventListener('click', (e) => {
+            const val = parseFloat(this.volumesliderElement.value) > 0 ? 0.0 : this.currentvolum;
+            this.volumesliderElement.value = val;
+            this.setVolum(val);
+        })
+
+        ///进度条控制样式 mouseover mouseout：鼠标移入子元素时会重复触发所以使用mouseenter mouseleave
+        // PC端鼠标移入控制条变粗变大
+        this.progressElement.addEventListener('mouseenter', (e) => progressHover(true));
+        // 鼠标移开
+        this.progressElement.addEventListener('mouseleave', (e) => {
+          progressHover(false);
+          hidemoveLabel();
+        });
+        // 鼠标移动
+        this.progressElement.addEventListener('mousemove', (e) => showmoveLabel(e.clientX))
+      } else {
+        this.containerElemelt.ontouchstart = onmouseover;
+      }
 
       // 右键
       this.containerElemelt.oncontextmenu = (e) => {
@@ -253,18 +359,6 @@ export default class Video {
         //阻止浏览器默认事件
         return false;//一般点击右键会出现浏览器默认的右键菜单，写了这句代码就可以阻止该默认事件。
       };
-    
-      // 隐藏控制条pc和移动端失去焦点事件差异
-      if (isPc) {
-        this.containerElemelt.addEventListener('mousemove', onmouseover);
-        this.containerElemelt.querySelector('#volume_img').addEventListener('click', (e) => {
-            const val = parseFloat(this.volumesliderElement.value) > 0 ? 0.0 : this.currentvolum;
-            this.volumesliderElement.value = val;
-            this.setVolum(val);
-        })
-      } else {
-        this.containerElemelt.ontouchstart = onmouseover;
-      }
 
       // 双击播放器暂停，移动端无双击时间，用两次点击时间模拟 300 毫秒2次点击为双击
       let clickTime = 0;
@@ -281,6 +375,7 @@ export default class Video {
     
       // 鼠标点击的时候，跳转进度
       this.progressElement.onmousedown = (event) => {
+        if(!this.isFastForward) return;
         const maxWidth = this.getProgressWidth();
         let layerX = event.layerX;
         if (layerX > maxWidth) { layerX = maxWidth; }
@@ -294,13 +389,10 @@ export default class Video {
         const value = e.target.value;
         this.currentvolum = value;
         this.setVolum(value);
-        
       };
     
       // loadstart：视频查找。当浏览器开始寻找指定的音频/视频时触发，也就是当加载过程开始时
-      video.addEventListener('loadstart', (e) => {
-        this.setState('loadstart');
-      });
+      video.addEventListener('loadstart', (e) => this.setState('loadstart'));
     
       // durationchange：时长变化。当指定的音频/视频的时长数据发生变化时触发，加载后，时长由 NaN 变为音频/视频的实际时长
       video.addEventListener('durationchange', (e) => {
@@ -326,9 +418,7 @@ export default class Video {
       // });
     
       // canplay：可播放监听。当浏览器能够开始播放指定的音频/视频时触发
-      video.addEventListener('canplay', (e) => {
-        this.setState('canplay');
-      });
+      video.addEventListener('canplay', (e) => this.setState('canplay'));
     
       // canplaythrough：可流畅播放。当浏览器预计能够在不停下来进行缓冲的情况下持续播放指定的音频/视频时触发
       // video.addEventListener('canplaythrough', (e) => {
@@ -336,14 +426,10 @@ export default class Video {
       // });
     
       // play：播放监听
-      video.addEventListener('play', (e) => {
-        this.setState('play');
-      });
+      video.addEventListener('play', (e) => this.setState('play'));
     
       // pause：暂停监听
-      video.addEventListener('pause', (e) => {
-        this.setState('pause');
-      });
+      video.addEventListener('pause', (e) => this.setState('pause'));
     
       // seeking：查找开始。当用户开始移动/跳跃到音频/视频中新的位置时触发
       // video.addEventListener('seeking', (e) => {
@@ -356,14 +442,10 @@ export default class Video {
       // });
     
       // waiting：视频加载等待。当视频由于需要缓冲下一帧而停止，等待时触发
-      video.addEventListener('waiting', (e) => {
-        this.setState('waiting');
-      });
+      video.addEventListener('waiting', (e) => this.setState('waiting'));
     
       // playing：当视频在已因缓冲而暂停或停止后已就绪时触发
-      video.addEventListener('playing', (e) => {
-        this.setState('playing');
-      });
+      video.addEventListener('playing', (e) => this.setState('playing'));
     
       // timeupdate：目前的播放位置已更改时，播放时间更新
       video.addEventListener('timeupdate', (e) => {
@@ -374,14 +456,10 @@ export default class Video {
       });
     
       // ended：播放结束
-      video.addEventListener('ended', (e) => {
-        this.setState('ended');
-      });
+      video.addEventListener('ended', (e) => this.setState('ended'));
     
       // error：播放错误
-      video.addEventListener('error', (e) => {
-        this.setState('error');
-      });
+      video.addEventListener('error', (e) => this.setState('error'));
     
       // volumechange：当音量更改时
       // video.addEventListener('volumechange', (e) => {
@@ -410,14 +488,15 @@ export default class Video {
     }
 
     videoElement = `
-        <div class="video_player" id="video_container">
+        <div class="video_player showControls" id="video_container">
         <video #myVideo id="myVideo" class="video" width="100%">
             您的浏览器不支持Video播放器
         </video>
         <div class="controls" id="video_controls">
+            <span class="date_label">00:00</span>
             <div id="progress" class="progress_bar">
-                <div></div>
-                <i></i>
+                <div class="current_progress"></div>
+                <i class="current_dot"></i>
             </div>
             <div class="controls_left">
                 <i class="button_img play play_btn"></i>

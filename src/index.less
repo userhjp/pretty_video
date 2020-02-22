@@ -1,3 +1,5 @@
+
+@mainColor: rgba(45, 125, 194, 1);
 body {
     margin: 0;
 }
@@ -35,8 +37,8 @@ body {
         width: 100%;
         height: 2px;
         background-color: #ccc;
-        transition: height .2s linear, top .2s linear;
-        i {
+        transition: height .15s linear, top .15s linear;
+        .current_dot {
             position: absolute;
             opacity: 0;
             top: 50%;
@@ -44,25 +46,47 @@ body {
             width: 8px;
             height: 8px;
             background-color: #fff;
-            transform: translateY(-50%);
+            transform: translateY(-50%) translateX(-50%);
             border-radius: 50%;
-            transition: height .2s linear, top .2s linear, width .2s linear;
+            transition: height .15s linear, top .15s linear, width .15s linear;
         }
-        div {
+        .current_progress {
             width: 0px;
             height: 100%;
-            background-color: rgba(45, 125, 194, 1);
+            background-color: @mainColor;
         }
       }
-  
-      .progress_bar:hover {
-        top: -4px;
-        height: 4px;
-        i {
-          width: 12px;
-          height: 12px;
-        }
+
+      .date_label {
+        position: absolute;
+        width: 48px;
+        height: 22px;
+        line-height: 20px;
+        top: -34px;
+        left: 0;
+        visibility: hidden;
+        font-size: 12px;
+        transform: translateX(-50%);
+        color: #fff;
+        text-align: center;
+        border-radius: 4px;
+        background-color: rgba(0, 16, 27, .7);
       }
+
+      .date_label::after {
+        content: '';
+        position: absolute;
+        bottom: -4px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 0;
+        height: 0;
+        border-top: 4px solid rgba(0, 16, 27, .7);
+        border-left: 4px solid transparent;
+        border-right: 4px solid transparent;
+      }
+
+
   
       .controls_left {
         display: flex;
@@ -100,11 +124,11 @@ body {
             }
   
             div.on {
-              color: rgba(45, 125, 194, 1);
+              color: @mainColor;
             }
   
             div:hover {
-              color: rgba(45, 125, 194, 1);
+              color: @mainColor;
             }
           }
   
@@ -124,7 +148,7 @@ body {
   
         .speed_bth:hover {
           span {
-            background-color: rgba(45, 125, 194, 1);
+            background-color: @mainColor;
           }
   
           .speed_li {
@@ -299,14 +323,14 @@ body {
     .controls {
       bottom: 0 !important;
     }
-    .progress_bar>i {
+    .progress_bar .current_dot {
       opacity: 1 !important;
     }
   }
   input[type="range"] {
     display: block;
     -webkit-appearance: none;
-    background: -webkit-linear-gradient(rgba(45, 125, 194, 1), rgba(45, 125, 194, 1)) no-repeat, #ddd;/*设置左边颜色为#61bd12，右边颜色为#ddd*/
+    background: -webkit-linear-gradient(@mainColor, @mainColor) no-repeat, #ddd;/*设置左边颜色为#61bd12，右边颜色为#ddd*/
     background-size: 75% 100%;/*设置左右宽度比例*/
     width: 100px;
     height: 4px;
