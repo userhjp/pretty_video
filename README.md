@@ -13,6 +13,21 @@
  > npm install
  > npm run dev
 
+## 简单直接使用
+
+``` javaSrcipt
+  import Video from './video';
+  window.onload = function () {
+      const video = document.getElementById('MyVideo');
+      const obj = new Video();
+      obj.init({
+          el: video,
+          src: 'http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4',
+          poster: 'http://a3.att.hudong.com/68/61/300000839764127060614318218_950.jpg',
+      });
+  }
+```
+
 ## 注意
 
 1. 打包 npm run build 需要将 webpack.config.js 文件 修改入口entry地址为video.ts  index.ts只是测试用，不用打包进去（第一次使用webpack自己配置打包，很多不是太熟悉 - - 见谅),然后只需要main.bundle.js 文件，将该文件复制到您的项目直接引入
