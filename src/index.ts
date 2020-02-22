@@ -5,7 +5,7 @@ window.onload = function () {
     const obj = new Video();
     obj.init({
         el: video,
-        src: 'http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4',
+        src: 'http://vfx.mtime.cn/Video/2019/03/19/mp4/190319222227698228.mp4',
         poster: 'http://a3.att.hudong.com/68/61/300000839764127060614318218_950.jpg',
     });
 }

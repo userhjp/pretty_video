@@ -163,14 +163,14 @@ export default class Video {
       const maxWidth = this.getProgressWidth(); // 进度总长度，进度条-按钮
       if(position > maxWidth) position = maxWidth;
       const slitherCurrentTime = position / maxWidth * this.playerElement.duration; // 当前拖动进度位置时间
-      const currentTime = `${this.PrefixInteger(slitherCurrentTime / 60)}:${this.PrefixInteger(slitherCurrentTime % 60)}`; // 当前播放进度- 分:秒
+      const currentTime = `${this.formatSeconds(slitherCurrentTime)}`; // 当前播放进度- 分:秒
       return currentTime;
     }
     
     /** 视频当前播放进度/进度条样式 */
     setDuration(position: number) {
       const currentTime = this.getCurrentLocationTime(position);
-      const duration = `${this.PrefixInteger(this.playerElement.duration / 60)}:${this.PrefixInteger(this.playerElement.duration % 60)}`; // 视频总长度- 分:秒
+      const duration = this.formatSeconds(this.playerElement.duration); // 视频总长度- 分:秒
       this.timeElement.innerHTML = `${currentTime} / ${duration}`
       this.currentSpElement.style.width = position + 'px';
       this.dotElement.style.left = position + 'px';
@@ -480,6 +480,26 @@ export default class Video {
       // video.addEventListener('ratechange', (e) => {
       //   console.log('ratechange');
       // });
+    }
+
+    /** 时间秒转换为时分秒 
+     * @param value 秒
+    */
+    formatSeconds(value): string {
+      let secondTime = parseInt(value);// 秒
+      let minuteTime = 0;// 分
+      let hourTime = 0;// 小时
+      if(secondTime >= 60) {
+        minuteTime = Math.floor(secondTime / 60);
+        secondTime = Math.floor(secondTime % 60);
+        if(minuteTime >= 60) {
+            hourTime = Math.floor(minuteTime / 60);
+            minuteTime = Math.floor(minuteTime % 60);
+        }
+      }
+      let joinDate = `${this.PrefixInteger(minuteTime)}:${this.PrefixInteger(secondTime)}`;
+      if(hourTime > 0 || this.playerElement.duration >= 3600) joinDate = `${this.PrefixInteger(hourTime)}:${joinDate}`;
+      return joinDate;
     }
     
     /**
