@@ -17,4 +17,4 @@
 ## 注意
 
 1. 打包需要将 webpack.config.js 文件 修改入口entry地址为video.ts  index.ts只是测试用，不用打包进去（第一次使用webpack自己配置打包，很多不是太熟悉 - - 见谅)
-2. 不支持IE，需要自行修改webpack配置 babel-polyfill。
+2. 不支持IE，若需要自行添加webpack配置 babel-polyfill。
