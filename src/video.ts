@@ -15,6 +15,7 @@ export default class Video {
     videoControlsElement: any; // 整个控制条
     volumesliderElement: any; // 音量滑动
     progressElement: any; // 进度条
+    progressBufferElement: any; // 缓冲进度条
     currentSpElement: any; // 进度条当前进度
     dotElement: any; // 进度条拖动点按钮
     dateLabelElement: any; // 当前鼠标位置提示label
@@ -42,6 +43,7 @@ export default class Video {
       this.progressElement = videoContainer.querySelector('#progress');
       this.volumesliderElement = videoContainer.querySelector('#volumeslider');
       this.currentSpElement = this.progressElement.querySelector('.current_progress');
+      this.progressBufferElement = this.progressElement.querySelector('.current_buffer');
       this.dotElement = this.progressElement.querySelector('.current_dot');
       this.dateLabelElement = videoContainer.querySelector('.date_label');
       this.timeElement = videoContainer.querySelector('.time');
@@ -224,8 +226,8 @@ export default class Video {
         if(!this.isFastForward) return;
         this.progressElement.style.top = isHover ? '-4px' : '-2px';
         this.progressElement.style.height = isHover ? '4px' : '2px';
-        this.progressElement.children[1].style.width = isHover ? '12px' : '8px';
-        this.progressElement.children[1].style.height = isHover ? '12px' : '8px';
+        this.progressElement.children[2].style.width = isHover ? '12px' : '8px';
+        this.progressElement.children[2].style.height = isHover ? '12px' : '8px';
       }
 
       // 改变label位置
@@ -305,9 +307,9 @@ export default class Video {
         if(!this.autoHideControls) return;
         this.containerElemelt.classList.add('showControls');
         clearTimeout(timeout);
-        timeout = setTimeout(() => {
-          this.containerElemelt.classList.remove('showControls');
-        }, 3000);
+        // timeout = setTimeout(() => {
+        //   this.containerElemelt.classList.remove('showControls');
+        // }, 3000);
       };
     
       
@@ -412,10 +414,13 @@ export default class Video {
       // });
     
       // progress：浏览器下载监听。当浏览器正在下载指定的音频/视频时触发
-      // video.addEventListener('progress', (e) => {
-      //   console.log('提示视频正在下载中');
-      //   console.log(e);
-      // });
+      video.addEventListener('progress', (e) => {
+        let buffered = e.target.buffered;
+        if(buffered.length) {
+          const loaded = 100 * buffered.end(0) / e.target.duration;
+          this.progressBufferElement.style.width = loaded + '%';
+        }
+      });
     
       // canplay：可播放监听。当浏览器能够开始播放指定的音频/视频时触发
       video.addEventListener('canplay', (e) => this.setState('canplay'));
@@ -496,6 +501,7 @@ export default class Video {
             <span class="date_label">00:00</span>
             <div id="progress" class="progress_bar">
                 <div class="current_progress"></div>
+                <div class="current_buffer"></div>
                 <i class="current_dot"></i>
             </div>
             <div class="controls_left">

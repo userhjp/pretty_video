@@ -9,7 +9,7 @@ module.exports = {
     output: {
         filename: "[name].bundle.js", // 输出名称
         path: path.resolve(__dirname, "dist"), // 输出路径
-        publicPath: "./", // 输出解析文件的目录，url 相对于 HTML 页面
+        // publicPath: "./", // 输出解析文件的目录，url 相对于 HTML 页面
         library: "prettyVideo", // 导出库(exported library)的名称
         libraryTarget: "umd", // 通用模块定义
     },
