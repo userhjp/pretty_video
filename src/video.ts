@@ -73,15 +73,13 @@ class prettyVideo {
     
     /** 开始、暂停播放 */
     play() {
-      const btnClass = this.containerElemelt.getElementsByClassName('play_btn')[0].classList;;
+      const btnClass = this.containerElemelt.getElementsByClassName('play_btn')[0].classList;
       if (this.playerElement.paused) {
         this.playerElement.play();
-        btnClass.remove('play');
         btnClass.add('suspend');
       } else {
         this.playerElement.pause();
         btnClass.remove('suspend');
-        btnClass.add('play');
       }
     }
     
@@ -143,6 +141,7 @@ class prettyVideo {
           case 'pause':
           case 'ended':
             this.containerElemelt.querySelector('#v_play').style.display = 'block';
+            this.containerElemelt.getElementsByClassName('play_btn')[0].classList.remove('suspend');
             break;
           case 'waiting':
             this.containerElemelt.querySelector('#v_waiting').style.display = 'block';
