@@ -141,7 +141,6 @@ class prettyVideo {
           case 'pause':
           case 'ended':
             this.containerElemelt.querySelector('#v_play').style.display = 'block';
-            this.containerElemelt.getElementsByClassName('play_btn')[0].classList.remove('suspend');
             break;
           case 'waiting':
             this.containerElemelt.querySelector('#v_waiting').style.display = 'block';
@@ -460,7 +459,10 @@ class prettyVideo {
       });
     
       // ended：播放结束
-      video.addEventListener('ended', (e) => this.setState('ended'));
+      video.addEventListener('ended', (e) => {
+        this.setState('ended')
+        this.containerElemelt.getElementsByClassName('play_btn')[0].classList.remove('suspend');
+      });
     
       // error：播放错误
       video.addEventListener('error', (e) => this.setState('error'));
