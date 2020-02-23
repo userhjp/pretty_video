@@ -9,7 +9,7 @@ interface Config {
   isFastForward?: boolean; // 是否允许点击、拖动进度条跳转进度
   hideFullScreen?: boolean; // 是否隐藏全屏按钮
 }
-export default class Video {
+class prettyVideo {
     containerElemelt: any; // 容器
     playerElement: any; // 播放器
     videoControlsElement: any; // 整个控制条
@@ -581,3 +581,5 @@ export default class Video {
     </div>
     `
 }
+export default prettyVideo;
+export { prettyVideo };

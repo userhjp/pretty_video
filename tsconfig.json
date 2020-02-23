@@ -3,7 +3,7 @@
   "compilerOptions": {
     "baseUrl": "./",
     "outDir": "./dist/",
-    "jsx": "react",
+    // "jsx": "react",
     "sourceMap": true,
     "downlevelIteration": true,
     "experimentalDecorators": true,

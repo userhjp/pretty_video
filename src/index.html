@@ -3,12 +3,22 @@
 <head>
   <meta charset="utf-8">
   <title>播放器</title>
-  <base href="/">
+  <base href="./">
   <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
-  <script type="text/javascript" src="./main.bundle.js"></script>
 </head>
 <body>
  <div id="MyVideo"></div>
 </body>
+<script type="text/javascript">
+    window.onload = function () {
+        const video = document.getElementById('MyVideo');
+        const myVideo = new prettyVideo();
+        myVideo.init({
+            el: video,
+            src: 'http://vfx.mtime.cn/Video/2019/03/19/mp4/190319222227698228.mp4',
+            poster: 'http://a3.att.hudong.com/68/61/300000839764127060614318218_950.jpg',
+        });
+    }
+</script>
 </html>
