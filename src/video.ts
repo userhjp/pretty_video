@@ -305,9 +305,9 @@ class prettyVideo {
         if(!this.autoHideControls) return;
         this.containerElemelt.classList.add('showControls');
         clearTimeout(timeout);
-        // timeout = setTimeout(() => {
-        //   this.containerElemelt.classList.remove('showControls');
-        // }, 3000);
+        timeout = setTimeout(() => {
+          this.containerElemelt.classList.remove('showControls');
+        }, 3000);
       };
     
       
