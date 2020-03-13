@@ -28,6 +28,7 @@ class prettyVideo {
    private timeElement: any; // 当前播放时间进度
    private speedListElement: any; // 倍速列表
    private speedBtnElement: any; // 倍速按钮
+   private playBtnElement: any; // 播放按钮
 
    private config: Config = {
       autoplay: false, // 视频加载是否自动播放
@@ -59,6 +60,7 @@ class prettyVideo {
         this.timeElement = videoContainer.querySelector('.time');
         this.speedListElement = videoContainer.querySelector('#speed_con').children;
         this.speedBtnElement = videoContainer.querySelector('#speed_btn');
+        this.playBtnElement = videoContainer.querySelector('.play_btn').classList;
 
         this.setupConfig(config);
         this.setUrl({
@@ -90,13 +92,12 @@ class prettyVideo {
     
     /** 开始、暂停播放 */
     play() {
-      const btnClass = this.containerElemelt.getElementsByClassName('play_btn')[0].classList;
       if (this.playerElement.paused) {
         this.playerElement.play();
-        btnClass.add('suspend');
+        this.playBtnElement.add('suspend');
       } else {
         this.playerElement.pause();
-        btnClass.remove('suspend');
+        this.playBtnElement.remove('suspend');
       }
     }
     
@@ -151,19 +152,24 @@ class prettyVideo {
       const video_cover = this.containerElemelt.getElementsByClassName('video_cover');
       for(let cover of video_cover) { cover.style.display = 'none'; }
       switch (state) {
-          case 'error':
-            this.containerElemelt.querySelector('#v_error').style.display = 'block';
-            break;
-          case 'canplay':
-          case 'pause':
-          case 'ended':
-            this.containerElemelt.querySelector('#v_play').style.display = 'block';
-            break;
-          case 'waiting':
-            this.containerElemelt.querySelector('#v_waiting').style.display = 'block';
-            break;
-          default:
-            break;
+        case 'error':
+          this.containerElemelt.querySelector('#v_error').style.display = 'block';
+          break;
+        case 'play':
+          this.playBtnElement.add('suspend');
+          break
+        case 'ended':
+          this.playBtnElement.remove('suspend');
+        case 'canplay':
+        case 'pause':
+          this.containerElemelt.querySelector('#v_play').style.display = 'block';
+          break;
+        case 'loadstart':
+        case 'waiting':
+          this.containerElemelt.querySelector('#v_waiting').style.display = 'block';
+          break;
+        default:
+          break;
       }
       console.log(state);
     }
@@ -452,14 +458,14 @@ class prettyVideo {
       video.addEventListener('pause', (e) => this.setState('pause'));
     
       // seeking：查找开始。当用户开始移动/跳跃到音频/视频中新的位置时触发
-      // video.addEventListener('seeking', (e) => {
-      //   console.log('开始移动进度条');
-      // });
+      video.addEventListener('seeking', (e) => {
+        console.log('开始移动进度条');
+      });
     
       // // seeked：查找结束。当用户已经移动/跳跃到视频中新的位置时触发
-      // video.addEventListener('seeked', (e) => {
-      //   console.log('进度条已经移动到了新的位置');
-      // });
+      video.addEventListener('seeked', (e) => {
+        console.log('进度条已经移动到了新的位置');
+      });
     
       // waiting：视频加载等待。当视频由于需要缓冲下一帧而停止，等待时触发
       video.addEventListener('waiting', (e) => this.setState('waiting'));
