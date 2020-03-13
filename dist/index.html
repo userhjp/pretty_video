@@ -10,17 +10,35 @@
 <body>
  <div id="MyVideo"></div>
  <div id="button">
-     <a value="https://media.w3.org/2010/05/sintel/trailer.mp4" href="#">葫芦娃.mp4</a><br>
-     <a value="http://vjs.zencdn.net/v/oceans.mp4"  href="#">震惊....mp4</a>
+     <a href="#" onclick="changeurl('one')">葫芦娃.mp4</a><br>
+     <a href="#" onclick="changeurl('two')">震惊....mp4</a>
  </div>
 <script type="text/javascript" src="./video.bundle.js"></script></body>
 <script type="text/javascript">
+    var myVideo = new prettyVideo();
+    var obj = {
+        one: {
+            url: 'https://media.w3.org/2010/05/sintel/trailer.mp4',
+            poster: 'http://a3.att.hudong.com/68/61/300000839764127060614318218_950.jpg'
+        },
+        two: {
+            url: 'http://vjs.zencdn.net/v/oceans.mp4',
+            poster: 'http://a3.att.hudong.com/68/61/300000839764127060614318218_950.jpg'
+        },
+    }
+    function changeurl(type) {
+        myVideo.setUrl({
+            src: obj[type].url,
+            poster: obj[type].poster,
+        })
+    }
     window.onload = function () {
-        const myVideo = new prettyVideo();
         myVideo.init('MyVideo', {
-            src: 'https://media.w3.org/2010/05/sintel/trailer.mp4',
-            poster: 'http://a3.att.hudong.com/68/61/300000839764127060614318218_950.jpg',
+            src: obj['one'].url,
+            poster: obj['one'].poster,
+            autoplay: false
         });
     }
+
 </script>
 </html>

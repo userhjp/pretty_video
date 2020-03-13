@@ -24,8 +24,7 @@
         window.onload = function () {
             var video = document.getElementById('MyVideo');
             var myVideo = new prettyVideo();
-            myVideo.init({
-                el: video,
+            myVideo.init(video, {
                 src: 'http://vfx.mtime.cn/Video/2019/03/19/mp4/190319222227698228.mp4',
                 poster: 'http://a3.att.hudong.com/68/61/300000839764127060614318218_950.jpg',
             });
@@ -39,11 +38,10 @@
  import prettyVideo from './video.bundle';
 
  const myVideo = new prettyVideo();
- myVideo.init(obj: Config);
+ myVideo.init(elId, obj: Config);
 
   // init初始化参数配置
   interface Config {
-    el?: string | HTMLElement; // Element或者容器ID
     autoplay?: boolean; // 视频加载是否自动播放
     src?: string; // 播放地址
     poster?: string; // 封面

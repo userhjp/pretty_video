@@ -48,7 +48,7 @@ class prettyVideo {
         const videoContainer = typeof el === 'string' ? document.getElementById(el) : el;
         videoContainer.innerHTML = this.videoElement;
         this.containerElemelt = videoContainer.querySelector('#video_container');;
-        this.playerElement = videoContainer.querySelector('#myVideo');
+        this.playerElement = videoContainer.querySelector('#_pretty_video');
         this.videoControlsElement = videoContainer.querySelector('#video_controls')
         this.progressElement = videoContainer.querySelector('#progress');
         this.volumesliderElement = videoContainer.querySelector('#volumeslider');
@@ -59,11 +59,12 @@ class prettyVideo {
         this.timeElement = videoContainer.querySelector('.time');
         this.speedListElement = videoContainer.querySelector('#speed_con').children;
         this.speedBtnElement = videoContainer.querySelector('#speed_btn');
+
+        this.setupConfig(config);
         this.setUrl({
           src: config.src,
           poster: config.poster,
-        })
-        this.setupConfig(config)
+        });
         this.initEvent();
       } catch (error) {
         console.error(error);
@@ -73,12 +74,12 @@ class prettyVideo {
     /** 播放器配置 */
     setupConfig(newConfig: Config) {
       this.config = {...this.config, ...newConfig};
-      this.playerElement.autoplay = this.config.autoplay;
+      this.playerElement.autoplay = this.config.autoplay ? true : false;
       this.containerElemelt.querySelector('#v_fullscreen').style.display = this.config.hideFullScreen === true ? 'none' : 'block';
     }
 
     /** 播放地址 */
-    setUrl(object: { src: string, poster?: string, autoplay?: boolean }) {
+    setUrl(object: { src: string, poster?: string }) {
       if(!this.playerElement) throw new Error("请先初始化播放器!");
       this.playerElement.src = object.src || '';
       this.playerElement.poster = object.poster || '';
@@ -531,7 +532,7 @@ class prettyVideo {
 
     videoElement = `
         <div class="video_player showControls" id="video_container">
-        <video #myVideo id="myVideo" class="video" width="100%">
+        <video id="_pretty_video" class="video" width="100%">
             您的浏览器不支持Video播放器
         </video>
         <div class="controls" id="video_controls">
