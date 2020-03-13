@@ -9,16 +9,21 @@
 </head>
 <body>
  <div id="MyVideo"></div>
+ <div id="button">
+     <a value="https://media.w3.org/2010/05/sintel/trailer.mp4" href="#">葫芦娃.mp4</a><br>
+     <a value="http://vjs.zencdn.net/v/oceans.mp4"  href="#">震惊....mp4</a>
+ </div>
 </body>
 <script type="text/javascript">
     window.onload = function () {
-        const video = document.getElementById('MyVideo');
-        const myVideo = new prettyVideo();
-        myVideo.init({
-            el: video,
-            src: 'http://vfx.mtime.cn/Video/2019/03/19/mp4/190319222227698228.mp4',
+        var myVideo = new prettyVideo();
+        myVideo.init('MyVideo', {
+            src: 'https://media.w3.org/2010/05/sintel/trailer.mp4',
             poster: 'http://a3.att.hudong.com/68/61/300000839764127060614318218_950.jpg',
         });
+
+        var btn = document.getElementById('button');
+        
     }
 </script>
 </html>

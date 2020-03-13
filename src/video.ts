@@ -1,63 +1,80 @@
 import './index.less';
 
 interface Config {
-  el?: string | HTMLElement; // 可以传入 Element或者容器ID
-  autoplay?: boolean; // 视频加载是否自动播放
-  src?: string; // 播放地址
-  poster?: string; // 封面
-  autoHideControls?: boolean; // 是否自动隐藏控制栏
-  isFastForward?: boolean; // 是否允许点击、拖动进度条跳转进度
-  hideFullScreen?: boolean; // 是否隐藏全屏按钮
-}
-class prettyVideo {
-    containerElemelt: any; // 容器
-    playerElement: any; // 播放器
-    videoControlsElement: any; // 整个控制条
-    volumesliderElement: any; // 音量滑动
-    progressElement: any; // 进度条
-    progressBufferElement: any; // 缓冲进度条
-    currentSpElement: any; // 进度条当前进度
-    dotElement: any; // 进度条拖动点按钮
-    dateLabelElement: any; // 当前鼠标位置提示label
-    timeElement: any; // 当前播放时间进度
-    speedListElement: any; // 倍速列表
-    speedBtnElement: any; // 倍速按钮
-    autoplay = false; // 自动播放
-    isFullscreen = false; // 全屏
-    isMove = false; // 进度条是否拖动中，防止拖动时候视频正常播放更新进度条
-    currentvolum = 1; // 当前视频播放音量 0 - 1
+  /** 视频加载是否自动播放 */
+  autoplay?: boolean;
+  /** 播放地址 */
+  src?: string;
+  /** 封面 */
+  poster?: string;
+  /** 是否自动隐藏控制栏 */
+  autoHideControls?: boolean;
+  /** 是否允许点击、拖动进度条跳转进度 */
+  isFastForward?: boolean; 
+  /** 是否隐藏全屏按钮 */
+  hideFullScreen?: boolean; 
+};
 
-    autoHideControls = true; // 自动隐藏控制条
-    isFastForward = true; // 是否允许快进
+class prettyVideo {
+   private containerElemelt: any; // 容器
+   private playerElement: any; // 播放器
+   private videoControlsElement: any; // 整个控制条
+   private volumesliderElement: any; // 音量滑动
+   private progressElement: any; // 进度条
+   private progressBufferElement: any; // 缓冲进度条
+   private currentSpElement: any; // 进度条当前进度
+   private dotElement: any; // 进度条拖动点按钮
+   private dateLabelElement: any; // 当前鼠标位置提示label
+   private timeElement: any; // 当前播放时间进度
+   private speedListElement: any; // 倍速列表
+   private speedBtnElement: any; // 倍速按钮
+
+   private config: Config = {
+      autoplay: false, // 视频加载是否自动播放
+      autoHideControls: true, // 自动隐藏控制条
+      isFastForward: true, // 是否允许快进
+      hideFullScreen: false, // 是否隐藏全屏按钮
+    }
+    private isFullscreen = false; // 全屏状态
+    private isMove = false; // 进度条是否拖动中，防止拖动时候视频正常播放更新进度条
+    private currentvolum = 1; // 当前视频播放音量 0 - 1
+
     // 开始加载 | 加载完成 | 播放中 | 暂停中 | 缓冲中 | 缓冲就绪 | 播放完毕 | 错误
 
-    constructor() {
-    }
+    constructor() {}
     
-    init(config: Config) {
-      let videoContainer = typeof config.el === 'string' ? document.getElementById(config.el) : config.el;
-      videoContainer.innerHTML = this.videoElement;
-      this.containerElemelt = videoContainer.querySelector('#video_container');;
-      this.playerElement = videoContainer.querySelector('#myVideo');
-      this.videoControlsElement = videoContainer.querySelector('#video_controls')
-      this.progressElement = videoContainer.querySelector('#progress');
-      this.volumesliderElement = videoContainer.querySelector('#volumeslider');
-      this.currentSpElement = this.progressElement.querySelector('.current_progress');
-      this.progressBufferElement = this.progressElement.querySelector('.current_buffer');
-      this.dotElement = this.progressElement.querySelector('.current_dot');
-      this.dateLabelElement = videoContainer.querySelector('.date_label');
-      this.timeElement = videoContainer.querySelector('.time');
-      this.speedListElement = videoContainer.querySelector('#speed_con').children;
-      this.speedBtnElement = videoContainer.querySelector('#speed_btn');
-      this.setUrl({
-        src: config.src,
-        poster: config.poster,
-        autoplay: config.autoplay
-      })
-      this.autoHideControls = config.autoHideControls === false ? false : true;
-      this.isFastForward = config.isFastForward === false ? false : true;
-      this.containerElemelt.querySelector('#v_fullscreen').style.display = config.hideFullScreen === true ? 'none' : 'block'
-      this.initEvent();
+    init(el: string | HTMLElement, config: Config) {
+      try {
+        const videoContainer = typeof el === 'string' ? document.getElementById(el) : el;
+        videoContainer.innerHTML = this.videoElement;
+        this.containerElemelt = videoContainer.querySelector('#video_container');;
+        this.playerElement = videoContainer.querySelector('#myVideo');
+        this.videoControlsElement = videoContainer.querySelector('#video_controls')
+        this.progressElement = videoContainer.querySelector('#progress');
+        this.volumesliderElement = videoContainer.querySelector('#volumeslider');
+        this.currentSpElement = this.progressElement.querySelector('.current_progress');
+        this.progressBufferElement = this.progressElement.querySelector('.current_buffer');
+        this.dotElement = this.progressElement.querySelector('.current_dot');
+        this.dateLabelElement = videoContainer.querySelector('.date_label');
+        this.timeElement = videoContainer.querySelector('.time');
+        this.speedListElement = videoContainer.querySelector('#speed_con').children;
+        this.speedBtnElement = videoContainer.querySelector('#speed_btn');
+        this.setUrl({
+          src: config.src,
+          poster: config.poster,
+        })
+        this.setupConfig(config)
+        this.initEvent();
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    /** 播放器配置 */
+    setupConfig(newConfig: Config) {
+      this.config = {...this.config, ...newConfig};
+      this.playerElement.autoplay = this.config.autoplay;
+      this.containerElemelt.querySelector('#v_fullscreen').style.display = this.config.hideFullScreen === true ? 'none' : 'block';
     }
 
     /** 播放地址 */
@@ -65,7 +82,6 @@ class prettyVideo {
       if(!this.playerElement) throw new Error("请先初始化播放器!");
       this.playerElement.src = object.src || '';
       this.playerElement.poster = object.poster || '';
-      this.playerElement.autoplay = object.autoplay || false;
     }
     
     /** 重新加载视频 */
@@ -221,7 +237,7 @@ class prettyVideo {
 
       // 进度条变粗大
       const progressHover = (isHover) => {
-        if(!this.isFastForward) return;
+        if(!this.config.isFastForward) return;
         this.progressElement.style.top = isHover ? '-4px' : '-2px';
         this.progressElement.style.height = isHover ? '4px' : '2px';
         this.progressElement.children[2].style.width = isHover ? '12px' : '8px';
@@ -247,7 +263,7 @@ class prettyVideo {
 
       // 进度条开始拖动
       this.dotElement.addEventListener(touchstart, (event) => {
-        if(!this.isFastForward) return;
+        if(!this.config.isFastForward) return;
         event.preventDefault();
         // 这里处理移动端进度条焦点变化
         if(!isPc) { 
@@ -302,7 +318,7 @@ class prettyVideo {
       // 实现效果，pc端鼠标移入视频显示控制条，3秒无操作隐藏控制条
       // 移动端触摸视频时展示控制条, 3秒无操作隐藏控制条
       const onmouseover = () => {
-        if(!this.autoHideControls) return;
+        if(!this.config.autoHideControls) return;
         this.containerElemelt.classList.add('showControls');
         clearTimeout(timeout);
         timeout = setTimeout(() => {
@@ -375,7 +391,7 @@ class prettyVideo {
     
       // 鼠标点击的时候，跳转进度
       this.progressElement.onmousedown = (event) => {
-        if(!this.isFastForward) return;
+        if(!this.config.isFastForward) return;
         const maxWidth = this.getProgressWidth();
         let layerX = event.layerX;
         if (layerX > maxWidth) { layerX = maxWidth; }
