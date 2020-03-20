@@ -148,7 +148,7 @@ class prettyVideo {
     }
     
     /** 更新当前状态 */
-    setState(state: 'loadstart' | 'canplay' | 'play' | 'pause' | 'waiting' | 'playing' | 'ended' | 'error') {
+    setState(state: 'loadstart' | 'canplay' | 'play' | 'pause' | 'waiting' | 'playing' | 'ended' | 'error' | 'seeked') {
       const video_cover = this.containerElemelt.getElementsByClassName('video_cover');
       for(let cover of video_cover) { cover.style.display = 'none'; }
       switch (state) {
@@ -168,6 +168,8 @@ class prettyVideo {
         case 'waiting':
           this.containerElemelt.querySelector('#v_waiting').style.display = 'block';
           break;
+        case 'seeked':
+          this.containerElemelt.querySelector('#v_waiting').style.display = 'none';
         default:
           break;
       }
@@ -458,14 +460,12 @@ class prettyVideo {
       video.addEventListener('pause', (e) => this.setState('pause'));
     
       // seeking：查找开始。当用户开始移动/跳跃到音频/视频中新的位置时触发
-      video.addEventListener('seeking', (e) => {
-        console.log('开始移动进度条');
-      });
+      // video.addEventListener('seeking', (e) => {
+      //   console.log('开始移动进度条');
+      // });
     
       // // seeked：查找结束。当用户已经移动/跳跃到视频中新的位置时触发
-      video.addEventListener('seeked', (e) => {
-        console.log('进度条已经移动到了新的位置');
-      });
+      video.addEventListener('seeked', (e) => this.setState('seeked'));
     
       // waiting：视频加载等待。当视频由于需要缓冲下一帧而停止，等待时触发
       video.addEventListener('waiting', (e) => this.setState('waiting'));
