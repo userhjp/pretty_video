@@ -605,5 +605,5 @@ class prettyVideo {
     </div>
     `
 }
-export default prettyVideo;
+// export default prettyVideo;
 export { prettyVideo };
