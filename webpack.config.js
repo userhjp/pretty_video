@@ -1,6 +1,8 @@
 const path = require('path');
 //导入htm-webpack-plugin插件
 const htmlWebpackPlugin = require('html-webpack-plugin');
+// 抽离样式
+// const MiniCssExtractPlugin = require('mini-css-extract-plugin'); 
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
@@ -39,7 +41,14 @@ module.exports = {
               { loader: 'style-loader' },
               { loader: 'css-loader' },
               { loader: 'less-loader' }
-          ]
+          ],
+          // use: [
+          //   {
+          //     loader: MiniCssExtractPlugin.loader
+          //   },
+          //   'css-loader',
+          //   'less-loader'
+          // ]
         },
         { // 处理图片
           test: /\.(png|svg|jpg|gif)$/,
@@ -61,6 +70,12 @@ module.exports = {
         template:path.join(__dirname,'./src/index.html'),    //指定模版页面生成内存中的hmtl
         filename:'index.html'   //指定生成的页面名称
       }),
+      // // 提取css文件
+      // new MiniCssExtractPlugin({
+      //   // 类似 webpackOptions.output里面的配置 可以忽略
+      //   filename: '[name].css',
+      //   chunkFilename: '[id].css',
+      // }),
       // new CopyWebpackPlugin([ // 打包复制目录
       //   {
       //     from:__dirname+'/src/assets',
