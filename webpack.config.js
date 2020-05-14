@@ -1,9 +1,10 @@
 const path = require('path');
 //导入htm-webpack-plugin插件
 const htmlWebpackPlugin = require('html-webpack-plugin');
-// 抽离样式
-// const MiniCssExtractPlugin = require('mini-css-extract-plugin'); 
-const CopyWebpackPlugin = require('copy-webpack-plugin');
+// const CopyWebpackPlugin = require('copy-webpack-plugin');
+// const MiniCssExtractPlugin = require('mini-css-extract-plugin'); // 抽离样式
+// const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin'); // 压缩样式
+// const UglifyJsPlugin = require('uglifyjs-webpack-plugin'); // 压缩js
 
 module.exports = {
     // mode: "production",
@@ -27,16 +28,20 @@ module.exports = {
     },
     module: {
       rules: [
-        { // 处理ts
+        {
           test: /\.tsx?$/,
           exclude: /node_modules/,
-          use: [
-            { loader: 'awesome-typescript-loader' },
-          ]
+          loader: 'babel-loader?cacheDirectory=true',
+          options: {
+            presets: [
+              '@babel/preset-env',
+              '@babel/preset-typescript'
+            ]
+          }
         },
         { // 处理less
           test: /\.less?$/,
-          exclude: /node_modules/,
+          exclude: /(node_modules|bower_components)/,
           use: [
               { loader: 'style-loader' },
               { loader: 'css-loader' },
@@ -64,6 +69,20 @@ module.exports = {
     },
     resolve: {
       extensions: ['.tsx', '.ts', '.js', '.jsx']
+    },
+    optimization: {//优化项
+      // minimizer: [
+      //   new UglifyJsPlugin({
+      //     cache: true,  //是否启用文件缓存
+      //     parallel: true, //使用多进程并行运行来提高构建速度
+      //   }),
+      //   new OptimizeCssAssetsPlugin({
+      //     assetNameRegExp: /\.css$/g, // 匹配需要优化或者压缩的资源名
+      //     cssProcessor: require('cssnano'), // 用于压缩和优化CSS 的处理器
+      //     cssProcessorOptions: { safe: true, discardComments: { removeAll: true } },
+      //     canPrint: true // 表示插件能够在console中打印信息，默认值是true
+      //   }),
+      // ],
     },
     plugins: [//插件数组
       new htmlWebpackPlugin({ //创建一个在内存中生成html页面插件的配置对象
