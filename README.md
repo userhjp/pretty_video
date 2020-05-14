@@ -52,6 +52,6 @@
 ## 注意
 
 1. webpack打包编译成js 执行 npm run build 会将less ts svg文件打包为一个js文件， 然后只需要dist目录下 video.bundle.js，将该文件复制到您的项目直接引入即可。
-2. 如果使用webpack打包js，目前不支持IE，若需要自行添加webpack 配置babel-polyfill或者其他相应babel。(好吧我承认我尝试引入babel-polyfill ie还是在报错，懒得折腾了)
+2. 目前不支持IE，若需要自行添加webpack 配置babel-polyfill或者其他相应babel。(好吧我承认我尝试引入babel-polyfill ie还是在报错，懒得折腾了)
 3. 源码本身是一个类，如果在TypeSrcipt 环境下使用，例如Angular 中，可以不经过webpack打包，可修改少量代码封装为Angular组件。
 4. 由于第一次使用webpack自定义配置打包，不是太熟悉，有什么不足的地方请指点，谢谢。

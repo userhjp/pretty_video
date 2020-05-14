@@ -6,7 +6,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 module.exports = {
     // mode: "production",
     entry: {
-      video: path.resolve(__dirname, 'src/video.ts'),
+      video: [path.resolve(__dirname, 'src/video.ts')], // 'babel-polyfill', 
     }, // 入口，如果传入一个字符串或字符串数组，chunk 会被命名为 main。如果传入一个对象，则每个键(key)会是 chunk 的名称，该值描述了 chunk 的入口起点。
     output: {
         filename: "[name].bundle.js", // 输出名称
