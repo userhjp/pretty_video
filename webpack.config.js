@@ -12,11 +12,16 @@ module.exports = {
         filename: "[name].bundle.js", // 输出名称
         path: path.resolve(__dirname, "dist"), // 输出路径
         publicPath: "/dist", // 输出解析文件的目录，url 相对于 HTML 页面
-        // library: "prettyVideo", // 导出库(exported library)的名称
+        library: "prettyVideo", // 导出库(exported library)的名称
         libraryTarget: "umd", // 通用模块定义
+        libraryExport: 'default',
     },
     devServer: {
-      contentBase: './src'
+      contentBase: './src',
+      inline: true, // 自动刷新
+      host: 'localhost',
+      port: '8080',
+      open: true,
     },
     module: {
       rules: [

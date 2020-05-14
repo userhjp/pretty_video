@@ -1,4 +1,5 @@
 import './index.less';
+// import "babel-polyfill";
 
 interface Config {
   /** 视频加载是否自动播放 */
@@ -605,5 +606,4 @@ class prettyVideo {
     </div>
     `
 }
-// export default prettyVideo;
-export { prettyVideo };
+export default prettyVideo;
