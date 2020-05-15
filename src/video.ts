@@ -1,4 +1,5 @@
 import './index.less';
+import Utils from './utils';
 
 interface Config {
   /** 视频加载是否自动播放 */
@@ -245,8 +246,13 @@ class prettyVideo {
       })
 
       // 进度条变粗大
-      const progressHover = (isHover) => {
+      const progressHover = (isHover: boolean) => {
         if(!this.config.isFastForward) return;
+        if(isHover) {
+          Utils.addClass(this.progressElement, 'hover_cls')
+      } else {
+          Utils.removeClass(this.progressElement, 'hover_cls')
+      }
         this.progressElement.style.top = isHover ? '-4px' : '-2px';
         this.progressElement.style.height = isHover ? '4px' : '2px';
         this.progressElement.children[2].style.width = isHover ? '12px' : '8px';
