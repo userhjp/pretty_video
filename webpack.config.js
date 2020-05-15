@@ -23,15 +23,15 @@ module.exports = {
       contentBase: './src',
       inline: true, // 自动刷新
       host: 'localhost',
-      port: '8080',
-      open: true,
+      // port: 'auto',
+      // open: true,
     },
     module: {
       rules: [
         {
           test: /\.tsx?$/,
           exclude: /node_modules/,
-          loader: 'babel-loader?cacheDirectory=true',
+          loader: 'babel-loader',
           options: {
             presets: [
               '@babel/preset-env',
