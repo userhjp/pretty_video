@@ -270,13 +270,9 @@ class prettyVideo {
         if(!this.config.isFastForward) return;
         if(isHover) {
           Utils.addClass(this.progressElement, 'hover_cls')
-      } else {
-          Utils.removeClass(this.progressElement, 'hover_cls')
-      }
-        this.progressElement.style.top = isHover ? '-4px' : '-2px';
-        this.progressElement.style.height = isHover ? '4px' : '2px';
-        this.progressElement.children[2].style.width = isHover ? '12px' : '8px';
-        this.progressElement.children[2].style.height = isHover ? '12px' : '8px';
+        } else {
+            Utils.removeClass(this.progressElement, 'hover_cls')
+        }
       }
 
       // 改变label位置
@@ -284,9 +280,9 @@ class prettyVideo {
         if(clientX < 0) clientX = 0;
         this.dateLabelElement.innerText = this.getCurrentLocationTime(clientX);
         const minLeft = this.dateLabelElement.clientWidth / 2;
-        const maxLeft = this.progressElement.clientWidth - minLeft;
+        const maxRight = this.progressElement.clientWidth - minLeft;
         if(clientX < minLeft) clientX = minLeft; // 防止被遮掩
-        if(clientX > maxLeft) clientX = maxLeft; 
+        if(clientX > maxRight) clientX = maxRight; 
         this.dateLabelElement.style.left = clientX + 'px';
         this.dateLabelElement.style.visibility = 'visible';
       }
@@ -424,7 +420,7 @@ class prettyVideo {
       // 阻止事件冒泡到点击进度条
       this.dotElement.onmousedown = (event) => event.stopPropagation();
     
-      // 鼠标点击的时候，跳转进度
+      // 鼠标按下时候，跳转进度
       this.progressElement.onmousedown = (event) => {
         if(!this.config.isFastForward) return;
         const maxWidth = this.getProgressWidth();
