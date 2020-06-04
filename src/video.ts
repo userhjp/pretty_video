@@ -40,6 +40,7 @@ class prettyVideo {
     private isFullscreen = false; // 全屏状态
     private isMove = false; // 进度条是否拖动中，防止拖动时候视频正常播放更新进度条
     private currentvolum = 1; // 当前视频播放音量 0 - 1
+    private envents: { [key: string]: Function } = {}; // 监听事件列表
 
     // 开始加载 | 加载完成 | 播放中 | 暂停中 | 缓冲中 | 缓冲就绪 | 播放完毕 | 错误
 
@@ -120,6 +121,22 @@ class prettyVideo {
         volume_bth.classList.add('mute');
       }
     }
+
+    /**
+     * 监听事件
+     * @param eventName 事件名称
+     * @param callback 回调
+     */
+    on(eventName: string, callback: Function) {
+      this.envents[eventName] = callback;
+    }
+
+    /**
+     * 取消事件监听
+     */
+    unOn(eventName: string){
+      delete this.envents[eventName];
+    }
     
     /** 全屏 */
     fullscreen() {
@@ -150,6 +167,9 @@ class prettyVideo {
     
     /** 更新当前状态 */
     setState(state: 'loadstart' | 'canplay' | 'play' | 'pause' | 'waiting' | 'playing' | 'ended' | 'error' | 'seeked') {
+      if(typeof this.envents[state] === 'function') {
+        this.envents[state]({type: 'state'})
+      };
       const video_cover = this.containerElemelt.getElementsByClassName('video_cover');
       for(let cover of video_cover) { cover.style.display = 'none'; }
       switch (state) {
