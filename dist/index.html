@@ -26,9 +26,11 @@
             poster: 'http://a3.att.hudong.com/68/61/300000839764127060614318218_950.jpg'
         },
     }
-    myVideo.on('play', function() {
-        console.log('播放事件')
-    })
+    setTimeout(() => {
+    
+    const aaa = myVideo.getDuration();
+    debugger
+    }, 6000);
     function changeurl(type) {
         myVideo.setUrl({
             src: obj[type].url,

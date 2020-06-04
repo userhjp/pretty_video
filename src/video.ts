@@ -75,6 +75,19 @@ class prettyVideo {
       }
     }
 
+    /**
+     * 获取总视频时长和当前播放进度
+     */
+    getDuration() {
+      const currentSecond = this.playerElement?.currentTime || 0; // 当前播放时长 单位：秒
+      const durationSecond = this.playerElement?.duration || 0;// 总时长 单位：秒
+
+      // 转换格式HH:mm:ss  HH如果有的话才展示 否则展示mm:ss
+      const currentText = this.formatSeconds(this.playerElement?.currentTime || 0); 
+      const durationText = this.formatSeconds(this.playerElement?.duration || 0);
+      return { currentSecond, durationSecond, currentText, durationText };
+    }
+
     /** 播放器配置 */
     setupConfig(newConfig: Config) {
       this.config = {...this.config, ...newConfig};
@@ -544,7 +557,7 @@ class prettyVideo {
         }
       }
       let joinDate = `${this.PrefixInteger(minuteTime)}:${this.PrefixInteger(secondTime)}`;
-      if(hourTime > 0 || this.playerElement.duration >= 3600) joinDate = `${this.PrefixInteger(hourTime)}:${joinDate}`;
+      if(hourTime > 0 || value >= 3600) joinDate = `${this.PrefixInteger(hourTime)}:${joinDate}`;
       return joinDate;
     }
     
