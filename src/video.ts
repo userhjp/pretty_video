@@ -270,7 +270,7 @@ class prettyVideo {
       const playBtn = this.containerElemelt.getElementsByClassName('play_btn');
       for(const el of playBtn) { 
         el.addEventListener('click', (e) => {
-          if(this.isPause) {
+          if(this.isPause()) {
             this.play()
           } else {
             this.pause()
@@ -435,7 +435,7 @@ class prettyVideo {
       this.playerElement.addEventListener('click', () => {
         const nowTime = new Date().getTime();
         if(nowTime - clickTime < 300) {
-            if(this.isPause) {
+            if(this.isPause()) {
               this.play()
             } else {
               this.pause()
