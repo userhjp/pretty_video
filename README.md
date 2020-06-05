@@ -54,13 +54,15 @@
 ``` javaSrcipt
     init(id, config) // 初始化
     getDuration() // 获取视频当前进度和总时长
-    setupConfig(newConfig: Config) // 更新config
-    setUrl(object: { src: string, poster?: string }) // 设置播放地址
-    reload() // 重新加载视频
-    play() // 如果播放中则暂停 如果暂停中则播放
-    setVolum() // 设置音量 0-1
-    on(eventName: string, callback: () => {}) // 事件监听 同video事件 'loadstart' | 'canplay' | 'play' | 'pause' | 'waiting' | 'playing' | 'ended' | 'error' | 'seeked'
-    unOn(eventName: string) // 取消事件监听
+    setupConfig(newConfig: Config): void // 更新config
+    setUrl(object: { src: string, poster?: string }): void // 设置播放地址
+    reload(): void // 重新加载视频
+    play(): void // 播放
+    pause(): void // 暂停
+    isPause(): boolean // 当前是否暂停状态
+    setVolum(): void // 设置音量 0-1
+    on(eventName: string, callback: () => {}): void // 事件监听 同video事件 'loadstart' | 'canplay' | 'play' | 'pause' | 'waiting' | 'playing' | 'ended' | 'error' | 'seeked'
+    unOn(eventName: string): void // 取消事件监听
 ```
 
 ## 注意

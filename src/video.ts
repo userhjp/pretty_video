@@ -105,15 +105,19 @@ class prettyVideo {
     /** 重新加载视频 */
     reload = () => this.playerElement.load();
     
-    /** 开始、暂停播放 */
+    /** 开始播放 */
     play() {
-      if (this.playerElement.paused) {
-        this.playerElement.play();
-        this.playBtnElement.add('suspend');
-      } else {
-        this.playerElement.pause();
-        this.playBtnElement.remove('suspend');
-      }
+      this.playerElement.play();
+      this.playBtnElement.add('suspend');
+    }
+
+    /** 是否暂停状态 */
+    isPause() { return this.playerElement.paused }
+
+    /** 暂停播放 */
+    pause() {
+      this.playerElement.pause();
+      this.playBtnElement.remove('suspend');
     }
     
     /** 设置倍速 */
@@ -265,7 +269,13 @@ class prettyVideo {
       // 播放按钮点击
       const playBtn = this.containerElemelt.getElementsByClassName('play_btn');
       for(const el of playBtn) { 
-        el.addEventListener('click', (e) => this.play());
+        el.addEventListener('click', (e) => {
+          if(this.isPause) {
+            this.play()
+          } else {
+            this.pause()
+          }
+        });
       }
 
       // 全屏按钮点击
@@ -425,7 +435,11 @@ class prettyVideo {
       this.playerElement.addEventListener('click', () => {
         const nowTime = new Date().getTime();
         if(nowTime - clickTime < 300) {
-            this.play()
+            if(this.isPause) {
+              this.play()
+            } else {
+              this.pause()
+            }
         }
         clickTime = nowTime;
       });
