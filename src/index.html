@@ -18,18 +18,18 @@
     var myVideo = new prettyVideo();
     var obj = {
         one: {
-            url: 'https://media.w3.org/2010/05/sintel/trailer.mp4',
+            url: 'https://media.w3.org/2010/05/sintel/trailer2.mp4',
             poster: 'http://a3.att.hudong.com/68/61/300000839764127060614318218_950.jpg'
         },
         two: {
-            url: 'http://vjs.zencdn.net/v/oceans.mp4',
+            url: 'http://vjs.zencdn.net/v/oceans2.mp4',
             poster: 'http://a3.att.hudong.com/68/61/300000839764127060614318218_950.jpg'
         },
     }
     setTimeout(() => {
     
     const aaa = myVideo.getDuration();
-    debugger
+        console.log(aaa);
     }, 6000);
     function changeurl(type) {
         myVideo.setUrl({

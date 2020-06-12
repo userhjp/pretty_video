@@ -471,6 +471,7 @@ class prettyVideo {
       // durationchange：时长变化。当指定的音频/视频的时长数据发生变化时触发，加载后，时长由 NaN 变为音频/视频的实际时长
       video.addEventListener('durationchange', (e) => {
         const maxWidth = this.getProgressWidth();
+        this.videoControlsElement.style.display = 'flex';
         this.setDuration(video.currentTime / video.duration * maxWidth);
       });
     
