@@ -1,22 +1,8 @@
 import './index.less';
 import Utils from './utils';
+import { Config } from 'index';
 
-interface Config {
-  /** 视频加载是否自动播放 */
-  autoplay?: boolean;
-  /** 播放地址 */
-  src?: string;
-  /** 封面 */
-  poster?: string;
-  /** 是否自动隐藏控制栏 */
-  autoHideControls?: boolean;
-  /** 是否允许点击、拖动进度条跳转进度 */
-  isFastForward?: boolean; 
-  /** 是否隐藏全屏按钮 */
-  hideFullScreen?: boolean; 
-};
-
-class prettyVideo {
+class PrettyVideo {
    private containerElemelt: any; // 容器
    private playerElement: any; // 播放器
    private videoControlsElement: any; // 整个控制条
@@ -655,4 +641,4 @@ class prettyVideo {
     </div>
     `
 }
-export default prettyVideo;
+export default PrettyVideo;

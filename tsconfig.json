@@ -11,6 +11,7 @@
     "moduleResolution": "node",
     "importHelpers": true,
     "target": "es2015",
+    "declaration": true
     // "paths": {
     //   "@shared/*": [ "src/app/shared/*" ],
     //   "@routes/*":[ "src/app/routes/*" ],
@@ -22,6 +23,6 @@
     "node_modules"
   ],
   "include":[
-    "./src/**/*"
+    "./src/**/*", "index.d.ts"
   ]
 }
