@@ -223,21 +223,12 @@ class PrettyVideo {
       this.dotElement.style.left = position + 'px';
     }
     
-    /** 是否是PC端 */
-    isPC() {
-      const userAgentInfo = navigator.userAgent;
-      const Agents = ['Android', 'iPhone', 'SymbianOS', 'Windows Phone', 'iPad', 'iPod'];  // 判断用户代理头信息
-      let flag = true;
-      for (const i in Agents) {
-        if (userAgentInfo.indexOf(Agents[i]) !== -1) { flag = false; break; }
-      }
-      return flag;   // true为pc端，false为非pc端
-    }
+
     
     /** 各种初始化事件 */
     initEvent() {
       const video = this.playerElement;
-      const isPc = this.isPC();
+      const isPc = Utils.isPC();
       // pc端 和移动端事件区分
       const touchstart = isPc ? 'mousedown' : 'touchstart'; // 鼠标按下/触摸
       const touchmove = isPc ? 'mousemove' : 'touchmove'; // 开始移动/拖动
