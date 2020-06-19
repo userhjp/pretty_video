@@ -822,7 +822,7 @@ var src_PrettyVideo = /*#__PURE__*/function () {
       return _this.playerElement.load();
     });
 
-    _defineProperty(this, "videoElement", "\n        <div class=\"video_player showControls\" id=\"video_container\">\n        <video id=\"_pretty_video\" class=\"video\" width=\"100%\" webkit-playsinline playsinline x5-playsinline x-webkit-airplay='allow'>\n            \u60A8\u7684\u6D4F\u89C8\u5668\u4E0D\u652F\u6301Video\u64AD\u653E\u5668\n        </video>\n        <div class=\"controls\" id=\"video_controls\">\n            <span class=\"date_label\">00:00</span>\n            <div id=\"progress\" class=\"progress_bar\">\n                <div class=\"current_progress\"></div>\n                <div class=\"current_buffer\"></div>\n                <i class=\"current_dot\"></i>\n            </div>\n            <div class=\"controls_left\">\n                <i class=\"button_img play play_btn\"></i>\n                <div class=\"time\"></div>\n            </div>\n            <div class=\"controls_right\">\n                <!-- \u97F3\u91CF -->\n                <div class=\"volume_bth\">\n                    <div class=\"volume_con\">\n                        <div class=\"volume_slider\">\n                            <input id=\"volumeslider\" type='range' min=\"0\" max=\"1\" step=\"0.01\" value=\"0.8\"/>\n                        </div>\n                    </div>\n                    <i id=\"volume_img\" class=\"button_img sound\"></i>\n                </div>\n                <!-- \u500D\u901F -->\n                <div class=\"speed_bth\">\n                    <div id=\"speed_con\" class=\"speed_li\">\n                        <div>2.0x</div>\n                        <div>1.5x</div>\n                        <div>1.2x</div>\n                        <div class=\"on\">1.0x</div>\n                        <div>0.5x</div>\n                    </div>\n                    <span id=\"speed_btn\">1.0x</span>\n                </div>\n                <!-- \u5168\u5C4F -->\n                <i id=\"v_fullscreen\" class=\"button_img full\"></i>\n            </div>\n        </div>\n        <div class=\"video_cover\" id=\"v_error\">\n            <div class=\"cover_content\">\n                <div class=\"cover_img error\"></div>\n                <div class=\"tips_text tips_error\">\u8D44\u6E90\u52A0\u8F7D\u5931\u8D25~</div>\n            </div>\n        </div>\n        <div class=\"video_cover\" id=\"v_play\">\n            <div class=\"cover_content\">\n                <div class=\"cover_img play play_btn\"></div>\n            </div>\n        </div>\n        <div class=\"video_cover\" id=\"v_waiting\">\n            <div class=\"cover_content\">\n                <div class=\"video_loading\">\n                    <div>\n                        <div class=\"spot\"></div>\n                        <div class=\"spot\"></div>\n                        <div class=\"spot\"></div>\n                        <div class=\"spot\"></div>\n                        <div class=\"spot\"></div>\n                    </div>\n                    <div class=\"tips_text\">\u7F13\u51B2\u4E2D...</div>\n                </div>\n            </div>\n        </div>\n    </div>\n    ");
+    _defineProperty(this, "videoElement", "\n        <div class=\"video_player showControls\" id=\"video_container\">\n        <video id=\"_pretty_video\" class=\"video\" width=\"100%\"\n         webkit-playsinline \n         playsinline \n         x5-playsinline \n         x-webkit-airplay='allow'\n         x5-video-player-type=\"h5\"\n         >\n            \u60A8\u7684\u6D4F\u89C8\u5668\u4E0D\u652F\u6301Video\u64AD\u653E\u5668\n        </video>\n        <div class=\"controls\" id=\"video_controls\">\n            <span class=\"date_label\">00:00</span>\n            <div id=\"progress\" class=\"progress_bar\">\n                <div class=\"current_progress\"></div>\n                <div class=\"current_buffer\"></div>\n                <i class=\"current_dot\"></i>\n            </div>\n            <div class=\"controls_left\">\n                <i class=\"button_img play play_btn\"></i>\n                <div class=\"time\"></div>\n            </div>\n            <div class=\"controls_right\">\n                <!-- \u97F3\u91CF -->\n                <div class=\"volume_bth\">\n                    <div class=\"volume_con\">\n                        <div class=\"volume_slider\">\n                            <input id=\"volumeslider\" type='range' min=\"0\" max=\"1\" step=\"0.01\" value=\"0.8\"/>\n                        </div>\n                    </div>\n                    <i id=\"volume_img\" class=\"button_img sound\"></i>\n                </div>\n                <!-- \u500D\u901F -->\n                <div class=\"speed_bth\">\n                    <div id=\"speed_con\" class=\"speed_li\">\n                        <div>2.0x</div>\n                        <div>1.5x</div>\n                        <div>1.2x</div>\n                        <div class=\"on\">1.0x</div>\n                        <div>0.5x</div>\n                    </div>\n                    <span id=\"speed_btn\">1.0x</span>\n                </div>\n                <!-- \u5168\u5C4F -->\n                <i id=\"v_fullscreen\" class=\"button_img full\"></i>\n            </div>\n        </div>\n        <div class=\"video_cover\" id=\"v_error\">\n            <div class=\"cover_content\">\n                <div class=\"cover_img error\"></div>\n                <div class=\"tips_text tips_error\">\u8D44\u6E90\u52A0\u8F7D\u5931\u8D25~</div>\n            </div>\n        </div>\n        <div class=\"video_cover\" id=\"v_play\">\n            <div class=\"cover_content\">\n                <div class=\"cover_img play play_btn\"></div>\n            </div>\n        </div>\n        <div class=\"video_cover\" id=\"v_waiting\">\n            <div class=\"cover_content\">\n                <div class=\"video_loading\">\n                    <div>\n                        <div class=\"spot\"></div>\n                        <div class=\"spot\"></div>\n                        <div class=\"spot\"></div>\n                        <div class=\"spot\"></div>\n                        <div class=\"spot\"></div>\n                    </div>\n                    <div class=\"tips_text\">\u7F13\u51B2\u4E2D...</div>\n                </div>\n            </div>\n        </div>\n    </div>\n    ");
   }
 
   src_createClass(PrettyVideo, [{
@@ -1034,12 +1034,17 @@ var src_PrettyVideo = /*#__PURE__*/function () {
 
         case 'play':
           this.playBtnElement.add('suspend');
+          console.log('play');
           break;
 
         case 'ended':
           this.playBtnElement.remove('suspend');
 
         case 'canplay':
+          if (this.config.autoplay) {
+            this.playBtnElement.add('suspend');
+          }
+
         case 'pause':
           this.containerElemelt.querySelector('#v_play').style.display = 'block';
           break;
@@ -1395,10 +1400,12 @@ var src_PrettyVideo = /*#__PURE__*/function () {
 
         _this2.setDuration(video.currentTime / video.duration * maxWidth);
       }); // loadedmetadata ：元数据加载。当指定的音频/视频的元数据已加载时触发，元数据包括：时长、尺寸（仅视频）以及文本轨道
-      // video.addEventListener('loadedmetadata', (e) => {
-      //   console.log('视频的元数据已加载');
-      // });
-      // loadeddata：视频下载监听。当当前帧的数据已加载，但没有足够的数据来播放指定音频/视频的下一帧时触发
+
+      video.addEventListener('loadedmetadata', function (e) {
+        _this2.setState('loadedmetadata');
+
+        console.log('视频的元数据已加载');
+      }); // loadeddata：视频下载监听。当当前帧的数据已加载，但没有足够的数据来播放指定音频/视频的下一帧时触发
       // video.addEventListener('loadeddata', (e) => {
       //   console.log('提示当前帧的数据是可用的');
       //   this.setState('loadeddata');
@@ -1417,10 +1424,10 @@ var src_PrettyVideo = /*#__PURE__*/function () {
       video.addEventListener('canplay', function (e) {
         return _this2.setState('canplay');
       }); // canplaythrough：可流畅播放。当浏览器预计能够在不停下来进行缓冲的情况下持续播放指定的音频/视频时触发
-      // video.addEventListener('canplaythrough', (e) => {
-      //   console.log('提示视频能够不停顿地一直播放');
-      // });
-      // play：播放监听
+
+      video.addEventListener('canplaythrough', function (e) {
+        _this2.setState('canplaythrough');
+      }); // play：播放监听
 
       video.addEventListener('play', function (e) {
         return _this2.setState('play');
