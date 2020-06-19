@@ -565,7 +565,7 @@ class PrettyVideo {
 
     videoElement = `
         <div class="video_player showControls" id="video_container">
-        <video id="_pretty_video" class="video" width="100%">
+        <video id="_pretty_video" class="video" width="100%" webkit-playsinline playsinline x5-playsinline x-webkit-airplay='allow'>
             您的浏览器不支持Video播放器
         </video>
         <div class="controls" id="video_controls">
