@@ -33,7 +33,7 @@ export default class PrettyVideo {
     isPause(): boolean;
      /** 设置音量 0-1 */
     setVolum(num: number): void;
-    /** 监听事件 'loadstart' | 'canplay' | 'play' | 'pause' | 'waiting' | 'playing' | 'ended' | 'error' | 'seeked' */
+    /** 监听事件 'loadstart' | 'canplay' | 'play' | 'pause' | 'waiting' | 'playing' | 'ended' | 'error' | 'seeked' | 'loadedmetadata' */
     on(eventName: string, callback: () => {}): void;
     /** 取消事件监听 */
     unOn(eventName: string): void

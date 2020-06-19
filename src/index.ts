@@ -169,7 +169,7 @@ class PrettyVideo {
     }
     
     /** 更新当前状态 */
-    setState(state: 'loadstart' | 'canplay' | 'play' | 'pause' | 'waiting' | 'playing' | 'ended' | 'error' | 'seeked') {
+    setState(state: 'loadstart' | 'canplay' | 'play' | 'pause' | 'waiting' | 'playing' | 'ended' | 'error' | 'seeked' | 'loadedmetadata' | 'canplaythrough') {
       if(typeof this.envents[state] === 'function') {
         this.envents[state]({type: 'state'})
       };
@@ -181,10 +181,14 @@ class PrettyVideo {
           break;
         case 'play':
           this.playBtnElement.add('suspend');
+          console.log('play')
           break
         case 'ended':
           this.playBtnElement.remove('suspend');
         case 'canplay':
+          if(this.config.autoplay) {
+            this.playBtnElement.add('suspend');
+          }
         case 'pause':
           this.containerElemelt.querySelector('#v_play').style.display = 'block';
           break;
@@ -453,9 +457,10 @@ class PrettyVideo {
       });
     
       // loadedmetadata ：元数据加载。当指定的音频/视频的元数据已加载时触发，元数据包括：时长、尺寸（仅视频）以及文本轨道
-      // video.addEventListener('loadedmetadata', (e) => {
-      //   console.log('视频的元数据已加载');
-      // });
+      video.addEventListener('loadedmetadata', (e) => {
+        this.setState('loadedmetadata')
+        console.log('视频的元数据已加载');
+      });
     
       // loadeddata：视频下载监听。当当前帧的数据已加载，但没有足够的数据来播放指定音频/视频的下一帧时触发
       // video.addEventListener('loadeddata', (e) => {
@@ -476,9 +481,9 @@ class PrettyVideo {
       video.addEventListener('canplay', (e) => this.setState('canplay'));
     
       // canplaythrough：可流畅播放。当浏览器预计能够在不停下来进行缓冲的情况下持续播放指定的音频/视频时触发
-      // video.addEventListener('canplaythrough', (e) => {
-      //   console.log('提示视频能够不停顿地一直播放');
-      // });
+      video.addEventListener('canplaythrough', (e) => {
+        this.setState('canplaythrough')
+      });
     
       // play：播放监听
       video.addEventListener('play', (e) => this.setState('play'));
@@ -565,7 +570,13 @@ class PrettyVideo {
 
     videoElement = `
         <div class="video_player showControls" id="video_container">
-        <video id="_pretty_video" class="video" width="100%" webkit-playsinline playsinline x5-playsinline x-webkit-airplay='allow'>
+        <video id="_pretty_video" class="video" width="100%"
+         webkit-playsinline 
+         playsinline 
+         x5-playsinline 
+         x-webkit-airplay='allow'
+         x5-video-player-type="h5"
+         >
             您的浏览器不支持Video播放器
         </video>
         <div class="controls" id="video_controls">
