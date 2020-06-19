@@ -617,7 +617,7 @@ class PrettyVideo {
         </div>
         <div class="video_cover" id="v_waiting">
             <div class="cover_content">
-                <div class="loading">
+                <div class="video_loading">
                     <div>
                         <div class="spot"></div>
                         <div class="spot"></div>
