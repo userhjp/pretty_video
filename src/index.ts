@@ -3,25 +3,42 @@ import Utils from './utils';
 import { Config } from 'index';
 
 class PrettyVideo {
-   private containerElemelt: any; // 容器
-   private playerElement: any; // 播放器
-   private videoControlsElement: any; // 整个控制条
-   private volumesliderElement: any; // 音量滑动
-   private progressElement: any; // 进度条
-   private progressBufferElement: any; // 缓冲进度条
-   private currentSpElement: any; // 进度条当前进度
-   private dotElement: any; // 进度条拖动点按钮
-   private dateLabelElement: any; // 当前鼠标位置提示label
-   private timeElement: any; // 当前播放时间进度
-   private speedListElement: any; // 倍速列表
-   private speedBtnElement: any; // 倍速按钮
-   private playBtnElement: any; // 播放按钮
-
+   /** 容器 */
+   private containerElemelt: any;
+   /** video播放器 */
+   private videoElement: any;
+   /** 控制条 */
+   private controlsElement: any;
+   /** 音量滑动按钮 */
+   private volumesliderElement: any;
+   /** 进度条容器 */
+   private progressElement: any;
+   /** 缓冲进度条 */
+   private progressBufferElement: any;
+   /** 进度条当前进度 */
+   private currentSpElement: any;
+   /** 进度条拖动点按钮 */
+   private dotElement: any;
+   /** 当前鼠标位置提示label */
+   private dateLabelElement: any;
+   /** 当前播放时间进度 */
+   private timeElement: any;
+   /** 倍速列表 */
+   private speedListElement: any;
+   /** 倍速按钮 */
+   private speedBtnElement: any;
+   /** 播放按钮 */
+   private playBtnElement: any;
    private config: Config = {
-      autoplay: false, // 视频加载是否自动播放
-      autoHideControls: true, // 自动隐藏控制条
-      isFastForward: true, // 是否允许快进
-      hideFullScreen: false, // 是否隐藏全屏按钮
+      autoplay: false,
+      autoHideControls: true,
+      isFastForward: true,
+      hideFullScreen: false,
+      controls: true, 
+      height: 'auto',
+      width: 'auto',
+      loop: false, 
+      preload: 'auto'
     }
     private isFullscreen = false; // 全屏状态
     private isMove = false; // 进度条是否拖动中，防止拖动时候视频正常播放更新进度条
@@ -35,15 +52,18 @@ class PrettyVideo {
     init(el: string | HTMLElement, config: Config) {
       try {
         const videoContainer = typeof el === 'string' ? document.getElementById(el) : el;
-        videoContainer.innerHTML = this.videoElement;
+        if(!videoContainer) throw new Error("无效的dom元素，请在页面加载完成后初始化播放器。");
+        videoContainer.innerHTML = this.videoHtml;
         this.containerElemelt = videoContainer.querySelector('#video_container');;
-        this.playerElement = videoContainer.querySelector('#_pretty_video');
-        this.videoControlsElement = videoContainer.querySelector('#video_controls')
+        this.videoElement = videoContainer.querySelector('#_pretty_video');
+        this.controlsElement = videoContainer.querySelector('#video_controls');
+        this.controlsElement.innerHTML = this.controlsHtml;
         this.progressElement = videoContainer.querySelector('#progress');
-        this.volumesliderElement = videoContainer.querySelector('#volumeslider');
         this.currentSpElement = this.progressElement.querySelector('.current_progress');
         this.progressBufferElement = this.progressElement.querySelector('.current_buffer');
         this.dotElement = this.progressElement.querySelector('.current_dot');
+        this.volumesliderElement = videoContainer.querySelector('#volumeslider');
+   
         this.dateLabelElement = videoContainer.querySelector('.date_label');
         this.timeElement = videoContainer.querySelector('.time');
         this.speedListElement = videoContainer.querySelector('#speed_con').children;
@@ -65,64 +85,71 @@ class PrettyVideo {
      * 获取总视频时长和当前播放进度
      */
     getDuration() {
-      const currentSecond = this.playerElement?.currentTime || 0; // 当前播放时长 单位：秒
-      const durationSecond = this.playerElement?.duration || 0;// 总时长 单位：秒
+      const currentSecond = this.videoElement?.currentTime || 0; // 当前播放时长 单位：秒
+      const durationSecond = this.videoElement?.duration || 0;// 总时长 单位：秒
 
       // 转换格式HH:mm:ss  HH如果有的话才展示 否则展示mm:ss
-      const currentText = this.formatSeconds(this.playerElement?.currentTime || 0); 
-      const durationText = this.formatSeconds(this.playerElement?.duration || 0);
+      const currentText = Utils.formatSeconds(this.videoElement?.currentTime || 0); 
+      const durationText = Utils.formatSeconds(this.videoElement?.duration || 0);
       return { currentSecond, durationSecond, currentText, durationText };
     }
 
     /** 播放器配置 */
     setupConfig(newConfig: Config) {
       this.config = {...this.config, ...newConfig};
-      this.playerElement.autoplay = this.config.autoplay ? true : false;
-      this.containerElemelt.querySelector('#v_fullscreen').style.display = this.config.hideFullScreen === true ? 'none' : 'block';
+      this.videoElement.autoplay = this.config.autoplay ? true : false;
+      this.videoElement.loop = this.config.loop ? true : false;
+      this.videoElement.preload = this.config.preload;
+      this.initControls();
     }
 
     /** 播放地址 */
     setUrl(object: { src: string, poster?: string }) {
-      if(!this.playerElement) throw new Error("请先初始化播放器!");
-      this.playerElement.src = object.src || '';
-      this.playerElement.poster = object.poster || '';
+      if(!this.videoElement) throw new Error("请先初始化播放器!");
+      this.videoElement.src = object.src || '';
+      this.videoElement.poster = object.poster || '';
     }
     
     /** 重新加载视频 */
-    reload = () => this.playerElement.load();
+    reload = () => this.videoElement.load();
     
     /** 开始播放 */
     play() {
-      this.playerElement.play();
+      this.videoElement.play();
       this.playBtnElement.add('suspend');
     }
 
     /** 是否暂停状态 */
-    isPause() { return this.playerElement.paused }
+    isPause() { return this.videoElement.paused }
 
     /** 暂停播放 */
     pause() {
-      this.playerElement.pause();
+      this.videoElement.pause();
       this.playBtnElement.remove('suspend');
     }
     
     /** 设置倍速 */
     setPlaybackRate(e: string) {
       this.speedBtnElement.innerText = e;
-      this.playerElement.playbackRate = parseFloat(e);
+      this.videoElement.playbackRate = parseFloat(e);
     }
     
     /** 设置音量 */
     setVolum(value) {
       value = parseFloat(value);
-      this.playerElement.volume = value;
+      this.videoElement.volume = value;
       this.volumesliderElement.style.backgroundSize = `${value * 100}% 100%`; /*设置左右宽度比例*/
       const volume_bth = this.containerElemelt.querySelector('#volume_img');
-      if(value) {
+      if(value && volume_bth) {
         volume_bth.classList.remove('mute');
       } else {
         volume_bth.classList.add('mute');
       }
+    }
+
+    /** 销毁video */
+    dispose() {
+      this.containerElemelt.innerHTML = '';
     }
 
     /**
@@ -213,80 +240,70 @@ class PrettyVideo {
     getCurrentLocationTime(position: number): string {
       const maxWidth = this.getProgressWidth(); // 进度总长度，进度条-按钮
       if(position > maxWidth) position = maxWidth;
-      const slitherCurrentTime = position / maxWidth * this.playerElement.duration; // 当前拖动进度位置时间
-      const currentTime = `${this.formatSeconds(slitherCurrentTime)}`; // 当前播放进度- 分:秒
+      const slitherCurrentTime = position / maxWidth * this.videoElement.duration; // 当前拖动进度位置时间
+      const currentTime = `${Utils.formatSeconds(slitherCurrentTime)}`; // 当前播放进度- 分:秒
       return currentTime;
     }
     
     /** 视频当前播放进度/进度条样式 */
     setDuration(position: number) {
       const currentTime = this.getCurrentLocationTime(position);
-      const duration = this.formatSeconds(this.playerElement.duration); // 视频总长度- 分:秒
+      const duration = Utils.formatSeconds(this.videoElement.duration); // 视频总长度- 分:秒
       this.timeElement.innerHTML = `${currentTime} / ${duration}`
       this.currentSpElement.style.width = position + 'px';
       this.dotElement.style.left = position + 'px';
     }
     
-
-    
-    /** 各种初始化事件 */
-    initEvent() {
-      const video = this.playerElement;
+    /** 初始化控制条 */
+    private initControls() {
+      const controls = this.controlsElement;
+      if(!this.config.controls) {
+        return controls.style.display = 'none';
+      }
+      const video = this.videoElement;
       const isPc = Utils.isPC();
       // pc端 和移动端事件区分
       const touchstart = isPc ? 'mousedown' : 'touchstart'; // 鼠标按下/触摸
       const touchmove = isPc ? 'mousemove' : 'touchmove'; // 开始移动/拖动
       const touchend = isPc ? 'mouseup' : 'touchend'; // 松开/手指移开
-      
-      // 倍速列表点击事件
-      for(const i of this.speedListElement) {
-          i.addEventListener('click', (e) => {
-            for(const el of this.speedListElement) { el.classList.remove("on"); }
-              e.target.classList.add("on");
-              this.setPlaybackRate(e.target.innerText);
-          })
+
+      /** 倍速列表点击事件 */
+      for (const i of this.speedListElement) {
+        i.addEventListener('click', (e) => {
+          for (const el of this.speedListElement) { el.classList.remove("on"); }
+          e.target.classList.add("on");
+          this.setPlaybackRate(e.target.innerText);
+        })
       }
 
-      // 播放按钮点击
-      const playBtn = this.containerElemelt.getElementsByClassName('play_btn');
-      for(const el of playBtn) { 
-        el.addEventListener('click', (e) => {
-          if(this.isPause()) {
-            this.play()
-          } else {
-            this.pause()
-          }
-        });
-      }
-
-      // 全屏按钮点击
-      this.containerElemelt.querySelector('#v_fullscreen').addEventListener('click', (e) => { 
+      /** 全屏按钮点击 */
+      this.containerElemelt.querySelector('#v_fullscreen').addEventListener('click', (e) => {
         this.fullscreen();
-        if(this.isFullscreen) {
+        if (this.isFullscreen) {
           e.target.classList.add('scale');
         } else {
           e.target.classList.remove('scale');
         }
       })
 
-      // 进度条变粗大
+      /** 进度条变粗大 */
       const progressHover = (isHover: boolean) => {
-        if(!this.config.isFastForward) return;
-        if(isHover) {
+        if (!this.config.isFastForward) return;
+        if (isHover) {
           Utils.addClass(this.progressElement, 'hover_cls')
         } else {
-            Utils.removeClass(this.progressElement, 'hover_cls')
+          Utils.removeClass(this.progressElement, 'hover_cls')
         }
       }
 
-      // 改变label位置
+      /** 改变label位置 */
       const showmoveLabel = (clientX) => {
-        if(clientX < 0) clientX = 0;
+        if (clientX < 0) clientX = 0;
         this.dateLabelElement.innerText = this.getCurrentLocationTime(clientX);
         const minLeft = this.dateLabelElement.clientWidth / 2;
         const maxRight = this.progressElement.clientWidth - minLeft;
-        if(clientX < minLeft) clientX = minLeft; // 防止被遮掩
-        if(clientX > maxRight) clientX = maxRight; 
+        if (clientX < minLeft) clientX = minLeft; // 防止被遮掩
+        if (clientX > maxRight) clientX = maxRight;
         this.dateLabelElement.style.left = clientX + 'px';
         this.dateLabelElement.style.visibility = 'visible';
       }
@@ -298,12 +315,12 @@ class PrettyVideo {
 
       // 进度条开始拖动
       this.dotElement.addEventListener(touchstart, (event) => {
-        if(!this.config.isFastForward) return;
+        if (!this.config.isFastForward) return;
         event.preventDefault();
         // 这里处理移动端进度条焦点变化
-        if(!isPc) { 
+        if (!isPc) {
           progressHover(true);
-        } 
+        }
         const maxWidth = this.getProgressWidth();
         // 如果这个元素的位置内只有一个手指
         if (isPc || event.targetTouches.length === 1) {
@@ -317,7 +334,7 @@ class PrettyVideo {
             return l;
           };
           const position = getPosition(touch);
-          if(!isPc) showmoveLabel(position);
+          if (!isPc) showmoveLabel(position);
           // 开始拖动
           const move = (e) => {
             this.isMove = true;
@@ -326,7 +343,7 @@ class PrettyVideo {
             this.setDuration(position);
             showmoveLabel(position);
           };
-    
+
           // 如果浏览器下，需要全局监听拖动
           const dotElmt = isPc ? window : this.dotElement;
           // 拖动完成 删除事件
@@ -337,10 +354,10 @@ class PrettyVideo {
             // 更新视频实际播放时间
             video.currentTime = position / maxWidth * video.duration;
             this.isMove = false;
-            if(!isPc) { // 这里处理移动端进度条变化
+            if (!isPc) { // 这里处理移动端进度条变化
               progressHover(false);
               hidemoveLabel();
-            } 
+            }
             dotElmt.removeEventListener(touchmove, move);
             dotElmt.removeEventListener(touchend, chend);
           };
@@ -348,40 +365,40 @@ class PrettyVideo {
           dotElmt.addEventListener(touchend, chend);
         }
       }, false);
-    
+
       let timeout = null;
       // 实现效果，pc端鼠标移入视频显示控制条，3秒无操作隐藏控制条
       // 移动端触摸视频时展示控制条, 3秒无操作隐藏控制条
       const onmouseover = () => {
-        if(!this.config.autoHideControls) return;
+        if (!this.config.autoHideControls) return;
         this.containerElemelt.classList.add('showControls');
         clearTimeout(timeout);
         timeout = setTimeout(() => {
           this.containerElemelt.classList.remove('showControls');
         }, 3000);
       };
-    
-      
+
+
       if (isPc) {
         // 鼠标在容器移动时候触发显示
         this.containerElemelt.addEventListener('mousemove', onmouseover);
         // 当鼠标移动到控制条上，取消隐藏，一直显示
-        this.videoControlsElement.addEventListener('mouseenter', (e) => {
+        this.controlsElement.addEventListener('mouseenter', (e) => {
           this.containerElemelt.removeEventListener('mousemove', onmouseover);
           clearTimeout(timeout)
         });
 
         // 鼠标移开
-        this.videoControlsElement.addEventListener('mouseleave', () => {
+        this.controlsElement.addEventListener('mouseleave', () => {
           onmouseover();
           this.containerElemelt.addEventListener('mousemove', onmouseover);
         });
 
         // PC端点击音量按钮禁音
         this.containerElemelt.querySelector('#volume_img').addEventListener('click', (e) => {
-            const val = parseFloat(this.volumesliderElement.value) > 0 ? 0.0 : this.currentvolum;
-            this.volumesliderElement.value = val;
-            this.setVolum(val);
+          const val = parseFloat(this.volumesliderElement.value) > 0 ? 0.0 : this.currentvolum;
+          this.volumesliderElement.value = val;
+          this.setVolum(val);
         })
 
         ///进度条控制样式 mouseover mouseout：鼠标移入子元素时会重复触发所以使用mouseenter mouseleave
@@ -396,6 +413,60 @@ class PrettyVideo {
         this.progressElement.addEventListener('mousemove', (e) => showmoveLabel(e.clientX))
       } else {
         this.containerElemelt.ontouchstart = onmouseover;
+      }
+
+      // 阻止事件冒泡到点击进度条
+      this.dotElement.onmousedown = (event) => event.stopPropagation();
+
+      // 鼠标按下时候，跳转进度
+      this.progressElement.onmousedown = (event) => {
+        if (!this.config.isFastForward) return;
+        const maxWidth = this.getProgressWidth();
+        let layerX = event.layerX;
+        if (layerX > maxWidth) { layerX = maxWidth; }
+        video.currentTime = layerX / maxWidth * video.duration; // 计算出点击的位置在总时间里面占多少。
+        this.setDuration(layerX);
+      };
+
+      // 音量拖动事件
+      this.volumesliderElement.oninput = (e) => {
+        e.stopPropagation();
+        const value = e.target.value;
+        this.currentvolum = value;
+        this.setVolum(value);
+      };
+    }
+
+    
+    /** 监听video事件 */
+    initEvent() {
+      const video = this.videoElement;
+      // const ua = navigator.userAgent.toLocaleLowerCase();
+
+      // // x5内核
+      // if (ua.match(/tencenttraveler/) != null || ua.match(/qqbrowse/) != null) {
+      //   this.renderer.setAttribute(video, 'x5-video-player-fullscreen', 'true'); // 进入全屏通知
+      //   // this.renderer.setAttribute(video, 'x-webkit-airplay', 'true'); // 设置允许设备播放
+      //   // this.renderer.setAttribute(video, 'x5-playsinline', 'true'); // 设置android在微信中内联播放视频 这是坑微信无法正常横屏
+      //   this.renderer.setAttribute(video, 'x5-video-player-type', 'h5'); // 关闭同层X5内核播放器    x5-video-player-type='h5' 启用Ｈ5同层播放器
+      //   this.renderer.setAttribute(video, 'x5-video-orientation', 'landscape|portrait'); // 控制横竖屏 可选值： landscape 横屏, portraint竖屏  默认值：portraint
+      // } else {
+      //   // ios端
+      //   this.renderer.setAttribute(video, 'webkit-playsinline', 'true'); // // 设置ios在微信中内联播放视频 ios9
+      //   this.renderer.setAttribute(video, 'playsinline', 'true'); // 设置ios在微信中内联播放视频 ios10/ios11
+      // }
+
+
+      /** 播放按钮点击 */
+      const playBtn = this.containerElemelt.getElementsByClassName('play_btn');
+      for (const el of playBtn) {
+        el.addEventListener('click', (e) => {
+          if (this.isPause()) {
+            this.play()
+          } else {
+            this.pause()
+          }
+        });
       }
 
       // 右键
@@ -413,46 +484,24 @@ class PrettyVideo {
 
       // 双击播放器暂停，移动端无双击事件，用两次点击时间模拟 300 毫秒2次点击为双击
       let clickTime = 0;
-      this.playerElement.addEventListener('click', () => {
+      video.addEventListener('click', () => {
         const nowTime = new Date().getTime();
-        if(nowTime - clickTime < 300) {
-            if(this.isPause()) {
-              this.play()
-            } else {
-              this.pause()
-            }
+        if (nowTime - clickTime < 300) {
+          if (this.isPause()) {
+            this.play()
+          } else {
+            this.pause()
+          }
         }
         clickTime = nowTime;
       });
-    
-      // 阻止事件冒泡到点击进度条
-      this.dotElement.onmousedown = (event) => event.stopPropagation();
-    
-      // 鼠标按下时候，跳转进度
-      this.progressElement.onmousedown = (event) => {
-        if(!this.config.isFastForward) return;
-        const maxWidth = this.getProgressWidth();
-        let layerX = event.layerX;
-        if (layerX > maxWidth) { layerX = maxWidth; }
-        video.currentTime = layerX / maxWidth * video.duration; // 计算出点击的位置在总时间里面占多少。
-        this.setDuration(layerX);
-      };
-    
-      // 音量拖动事件
-      this.volumesliderElement.oninput = (e) => {
-        e.stopPropagation();
-        const value = e.target.value;
-        this.currentvolum = value;
-        this.setVolum(value);
-      };
-    
+
       // loadstart：视频查找。当浏览器开始寻找指定的音频/视频时触发，也就是当加载过程开始时
       video.addEventListener('loadstart', (e) => this.setState('loadstart'));
     
       // durationchange：时长变化。当指定的音频/视频的时长数据发生变化时触发，加载后，时长由 NaN 变为音频/视频的实际时长
       video.addEventListener('durationchange', (e) => {
         const maxWidth = this.getProgressWidth();
-        this.videoControlsElement.style.display = 'flex';
         this.setDuration(video.currentTime / video.duration * maxWidth);
       });
     
@@ -538,83 +587,13 @@ class PrettyVideo {
       // });
     }
 
-    /** 时间秒转换为时分秒 
-     * @param value 秒
-    */
-    formatSeconds(value): string {
-      let secondTime = parseInt(value);// 秒
-      let minuteTime = 0;// 分
-      let hourTime = 0;// 小时
-      if(secondTime >= 60) {
-        minuteTime = Math.floor(secondTime / 60);
-        secondTime = Math.floor(secondTime % 60);
-        if(minuteTime >= 60) {
-            hourTime = Math.floor(minuteTime / 60);
-            minuteTime = Math.floor(minuteTime % 60);
-        }
-      }
-      let joinDate = `${this.PrefixInteger(minuteTime)}:${this.PrefixInteger(secondTime)}`;
-      if(hourTime > 0 || value >= 3600) joinDate = `${this.PrefixInteger(hourTime)}:${joinDate}`;
-      return joinDate;
-    }
-    
-    /**
-     * utils 数字向下取整
-     * @param num 数字
-     * @param len 长度
-     */
-    PrefixInteger(num: number, len: number = 2) {
-      num = isNaN(num) ? 0 : Math.floor(num); // 向下取整
-      return (Array(len).join('0') + num).slice(-len);
-    }
-
-    videoElement = `
-        <div class="video_player showControls" id="video_container">
-        <video id="_pretty_video" class="video" width="100%"
-         webkit-playsinline 
-         playsinline 
-         x5-playsinline 
-         x-webkit-airplay='allow'
-         x5-video-player-type="h5"
-         >
+    // 播放器element
+    private videoHtml = `
+      <div class="video_player showControls" id="video_container">
+        <video id="_pretty_video" class="p_video" width="100%">
             您的浏览器不支持Video播放器
         </video>
-        <div class="controls" id="video_controls">
-            <span class="date_label">00:00</span>
-            <div id="progress" class="progress_bar">
-                <div class="current_progress"></div>
-                <div class="current_buffer"></div>
-                <i class="current_dot"></i>
-            </div>
-            <div class="controls_left">
-                <i class="button_img play play_btn"></i>
-                <div class="time"></div>
-            </div>
-            <div class="controls_right">
-                <!-- 音量 -->
-                <div class="volume_bth">
-                    <div class="volume_con">
-                        <div class="volume_slider">
-                            <input id="volumeslider" type='range' min="0" max="1" step="0.01" value="0.8"/>
-                        </div>
-                    </div>
-                    <i id="volume_img" class="button_img sound"></i>
-                </div>
-                <!-- 倍速 -->
-                <div class="speed_bth">
-                    <div id="speed_con" class="speed_li">
-                        <div>2.0x</div>
-                        <div>1.5x</div>
-                        <div>1.2x</div>
-                        <div class="on">1.0x</div>
-                        <div>0.5x</div>
-                    </div>
-                    <span id="speed_btn">1.0x</span>
-                </div>
-                <!-- 全屏 -->
-                <i id="v_fullscreen" class="button_img full"></i>
-            </div>
-        </div>
+        <div id="video_controls"></div>
         <div class="video_cover" id="v_error">
             <div class="cover_content">
                 <div class="cover_img error"></div>
@@ -641,6 +620,47 @@ class PrettyVideo {
             </div>
         </div>
     </div>
+    `
+
+    // 控制条element
+    private controlsHtml = `
+      <div class="p_controls">
+        <span class="date_label">00:00</span>
+        <div id="progress" class="progress_bar">
+            <div class="current_progress"></div>
+            <div class="current_buffer"></div>
+            <i class="current_dot"></i>
+        </div>
+        <div class="controls_left">
+            <i class="button_img play play_btn"></i>
+            <div class="time"></div>
+        </div>
+        <div class="controls_right">
+            <!-- 音量 -->
+            <div class="volume_bth">
+                <div class="volume_con">
+                    <div class="volume_slider">
+                        <input id="volumeslider" type='range' min="0" max="1" step="0.01" value="0.8"/>
+                    </div>
+                </div>
+                <i id="volume_img" class="button_img sound"></i>
+            </div>
+            <!-- 倍速 -->
+            <div class="speed_bth">
+                <div id="speed_con" class="speed_li">
+                    <div>2.0x</div>
+                    <div>1.5x</div>
+                    <div>1.2x</div>
+                    <div class="on">1.0x</div>
+                    <div>0.5x</div>
+                </div>
+                <span id="speed_btn">1.0x</span>
+            </div>
+            <!-- 全屏 -->
+            <i id="v_fullscreen" class="button_img full"></i>
+        </div>
+      </div>
+     
     `
 }
 export default PrettyVideo;
