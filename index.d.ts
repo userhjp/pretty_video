@@ -14,10 +14,10 @@ export interface Config {
     hideFullScreen?: boolean;
     /** 显示控制条 默认true */
     controls?: boolean;
-    /** 视频容器高度 默认充满父级 */
-    height?: 'auto' | string | boolean;
-    /** 视频容器宽度 默认充满父级 */
-    width?: 'auto' | string | boolean;
+    // /** 视频容器高度 默认充满父级 */
+    // height?: 'auto' | string | boolean;
+    // /** 视频容器宽度 默认充满父级 */
+    // width?: 'auto' | string | boolean;
     /** 视频结束是否循环播放 */
     loop?: boolean;
     /** 预加载 默认 auto*/

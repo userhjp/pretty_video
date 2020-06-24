@@ -1,4 +1,19 @@
 const path = require('path');
+const os = require('os')
+
+function getHost() {
+    const ifaces = os.networkInterfaces()
+    let ip = '';
+    for(const dev in ifaces) {
+        ifaces[dev].forEach((details) => {
+            if(ip === '' && details.family === 'IPv4' && !details.internal) {
+                ip = details.address
+                return;
+            }
+        })
+    }
+    return ip || '127.0.0.1'
+}
 //导入htm-webpack-plugin插件
 // const htmlWebpackPlugin = require('html-webpack-plugin');
 // const CopyWebpackPlugin = require('copy-webpack-plugin');
@@ -23,7 +38,7 @@ module.exports = {
     devServer: {
       contentBase: './src',
       inline: true, // 自动刷新
-      host: 'localhost',
+      host: getHost(),
       // port: 'auto',
       // open: true,
     },

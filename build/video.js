@@ -121,11 +121,9 @@ options.singleton = false;
 
 var update = api(content, options);
 
-var exported = content.locals ? content.locals : {};
 
 
-
-module.exports = exported;
+module.exports = content.locals || {};
 
 /***/ }),
 /* 2 */
@@ -425,7 +423,7 @@ var ___CSS_LOADER_URL_REPLACEMENT_4___ = ___CSS_LOADER_GET_URL_IMPORT___(___CSS_
 var ___CSS_LOADER_URL_REPLACEMENT_5___ = ___CSS_LOADER_GET_URL_IMPORT___(___CSS_LOADER_URL_IMPORT_5___);
 var ___CSS_LOADER_URL_REPLACEMENT_6___ = ___CSS_LOADER_GET_URL_IMPORT___(___CSS_LOADER_URL_IMPORT_6___);
 // Module
-exports.push([module.i, "body {\n  margin: 0;\n}\n.video_player {\n  width: 100%;\n  position: relative;\n  overflow: hidden;\n}\n.video_player .video {\n  width: 100%;\n  height: 100%;\n  display: block;\n  background: #000;\n  z-index: auto;\n}\n.video_player .controls {\n  position: absolute;\n  width: 100%;\n  height: 40px;\n  background-color: rgba(0, 16, 27, 0.7);\n  bottom: -40px;\n  transition: bottom 0.3s;\n  left: 0;\n  display: none;\n  justify-content: space-between;\n  align-items: center;\n  z-index: 999;\n  /* 进度条 */\n}\n.video_player .controls .progress_bar {\n  position: absolute;\n  cursor: pointer;\n  top: -2px;\n  left: 0;\n  width: 100%;\n  height: 2px;\n  background-color: hsla(0, 0%, 100%, 0.35);\n  transition: height 0.15s linear, top 0.15s linear;\n}\n.video_player .controls .progress_bar .current_dot {\n  position: absolute;\n  opacity: 0;\n  z-index: 101;\n  top: 50%;\n  left: 0px;\n  width: 8px;\n  height: 8px;\n  background-color: #fff;\n  transform: translateY(-50%) translateX(-50%);\n  border-radius: 50%;\n  transition: height 0.15s linear, top 0.15s linear, width 0.15s linear;\n}\n.video_player .controls .progress_bar .current_progress {\n  width: 0px;\n  height: 100%;\n  position: relative;\n  z-index: 100;\n  background-color: #2d7dc2;\n}\n.video_player .controls .progress_bar .current_buffer {\n  z-index: 99;\n  width: 0;\n  height: 100%;\n  position: absolute;\n  top: 0;\n  background-color: hsla(0, 0%, 100%, 0.35);\n}\n.video_player .controls .date_label {\n  position: absolute;\n  width: 48px;\n  height: 22px;\n  line-height: 20px;\n  top: -34px;\n  left: 0;\n  visibility: hidden;\n  font-size: 12px;\n  transform: translateX(-50%);\n  color: #fff;\n  text-align: center;\n  border-radius: 4px;\n  background-color: rgba(0, 16, 27, 0.7);\n}\n.video_player .controls .date_label::after {\n  content: '';\n  position: absolute;\n  bottom: -4px;\n  left: 50%;\n  transform: translateX(-50%);\n  width: 0;\n  height: 0;\n  border-top: 4px solid rgba(0, 16, 27, 0.7);\n  border-left: 4px solid transparent;\n  border-right: 4px solid transparent;\n}\n.video_player .controls .controls_left {\n  display: flex;\n  align-items: center;\n  margin-left: 16px;\n}\n.video_player .controls .controls_right {\n  display: flex;\n  z-index: 999;\n  align-items: center;\n  justify-content: flex-end;\n  /* 倍速 */\n  /* 音量 */\n}\n.video_player .controls .controls_right > * {\n  cursor: pointer;\n  margin-right: 14px;\n}\n.video_player .controls .controls_right .speed_bth {\n  position: relative;\n}\n.video_player .controls .controls_right .speed_bth .speed_li {\n  position: absolute;\n  display: none;\n  bottom: 0px;\n  width: 58px;\n  padding-bottom: 34px;\n  text-align: center;\n  color: #fff;\n  font-size: 14px;\n}\n.video_player .controls .controls_right .speed_bth .speed_li div {\n  cursor: pointer;\n  background-color: rgba(0, 16, 27, 0.7);\n  line-height: 22px;\n  margin-bottom: 1px;\n  border-radius: 2px;\n}\n.video_player .controls .controls_right .speed_bth .speed_li div.on {\n  color: #2d7dc2;\n}\n.video_player .controls .controls_right .speed_bth .speed_li div:hover {\n  color: #2d7dc2;\n}\n.video_player .controls .controls_right .speed_bth span {\n  cursor: pointer;\n  display: inline-block;\n  color: #fff;\n  text-align: center;\n  min-width: 40px;\n  padding: 0 10px;\n  line-height: 22px;\n  background-color: rgba(0, 0, 0, 0.35);\n  border-radius: 12px;\n  font-size: 15px;\n}\n.video_player .controls .controls_right .speed_bth:hover span {\n  background-color: #2d7dc2;\n}\n.video_player .controls .controls_right .speed_bth:hover .speed_li {\n  display: block;\n}\n.video_player .controls .controls_right .volume_bth {\n  position: relative;\n  display: flex;\n}\n.video_player .controls .controls_right .volume_bth .volume_con {\n  position: absolute;\n  display: none;\n  bottom: 0;\n  width: 34px;\n  height: 112px;\n  left: -8px;\n}\n.video_player .controls .controls_right .volume_bth .volume_con .volume_slider {\n  position: absolute;\n  text-align: center;\n  border-radius: 10px;\n  padding: 14px 14px;\n  background-color: rgba(0, 0, 0, 0.5);\n  right: -46px;\n  top: 0;\n  transform: rotate(-90deg);\n}\n.video_player .controls .controls_right .volume_bth:hover .volume_con {\n  display: block;\n}\n.video_player .controls .button_img {\n  width: 14px;\n  height: 14px;\n  box-sizing: border-box;\n  z-index: 9;\n}\n.video_player .controls .button_img.suspend {\n  background: url(" + ___CSS_LOADER_URL_REPLACEMENT_0___ + ");\n  background-size: cover;\n}\n.video_player .controls .button_img.sound {\n  background: url(" + ___CSS_LOADER_URL_REPLACEMENT_1___ + ");\n  background-size: cover;\n}\n.video_player .controls .button_img.mute {\n  background: url(" + ___CSS_LOADER_URL_REPLACEMENT_2___ + ");\n  background-size: cover;\n}\n.video_player .controls .button_img.full {\n  background: url(" + ___CSS_LOADER_URL_REPLACEMENT_3___ + ");\n  background-size: cover;\n}\n.video_player .controls .button_img.scale {\n  background: url(" + ___CSS_LOADER_URL_REPLACEMENT_4___ + ");\n  background-size: cover;\n}\n.video_player .controls .time {\n  color: #fff;\n  padding-left: 10px;\n  font-size: 14px;\n}\n.video_player .button_img.play,\n.video_player .cover_img.play {\n  background: url(" + ___CSS_LOADER_URL_REPLACEMENT_5___ + ");\n  background-size: cover;\n}\n.video_player .video_cover {\n  position: absolute;\n  display: none;\n  height: 100%;\n  width: 100%;\n  top: 0;\n  left: 0;\n  background-color: rgba(0, 0, 0, 0.7);\n}\n.video_player .video_cover .cover_content {\n  width: 200px;\n  height: 200px;\n  overflow: auto;\n  position: absolute;\n  margin: auto;\n  top: 0;\n  bottom: 0;\n  left: 0;\n  right: 0;\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  justify-content: center;\n}\n.video_player .video_cover .cover_content .cover_img {\n  width: 40px;\n  height: 40px;\n  box-sizing: border-box;\n}\n.video_player .video_cover .cover_content .cover_img.error {\n  background: url(" + ___CSS_LOADER_URL_REPLACEMENT_6___ + ");\n  background-size: cover;\n}\n.video_player .video_cover .cover_content .tips_error {\n  margin-top: 8px;\n}\n.video_player .video_cover .cover_content .tips_text {\n  color: #fff;\n  font-size: 12px;\n  text-align: center;\n}\n.video_player .video_cover .cover_content .video_loading .spot {\n  width: 4px;\n  height: 4px;\n  border-radius: 2px;\n  background: #ffffff;\n  float: left;\n  margin: 8px 4px;\n  animation: spot linear 1s infinite;\n  -webkit-animation: spot linear 1s infinite;\n}\n.video_player .video_cover .cover_content .video_loading .spot:nth-child(1) {\n  animation-delay: 0s;\n}\n.video_player .video_cover .cover_content .video_loading .spot:nth-child(2) {\n  animation-delay: 0.15s;\n}\n.video_player .video_cover .cover_content .video_loading .spot:nth-child(3) {\n  animation-delay: 0.3s;\n}\n.video_player .video_cover .cover_content .video_loading .spot:nth-child(4) {\n  animation-delay: 0.45s;\n}\n.video_player .video_cover .cover_content .video_loading .spot:nth-child(5) {\n  animation-delay: 0.6s;\n}\n@keyframes spot {\n  0%,\n  60%,\n  100% {\n    transform: scale(1);\n  }\n  30% {\n    transform: scale(2.5);\n  }\n}\n@-webkit-keyframes spot {\n  0%,\n  60%,\n  100% {\n    transform: scale(1);\n  }\n  30% {\n    transform: scale(2.5);\n  }\n}\n.video_player.showControls .controls {\n  bottom: 0 !important;\n}\n.video_player.showControls .progress_bar .current_dot {\n  opacity: 1 !important;\n}\n.video_player.showControls .hover_cls.progress_bar {\n  height: 6px;\n}\n.video_player.showControls .hover_cls.progress_bar .current_dot {\n  width: 10px;\n  height: 10px;\n}\ninput[type=\"range\"] {\n  display: block;\n  -webkit-appearance: none;\n  background: -webkit-linear-gradient(#2d7dc2, #2d7dc2) no-repeat, #ddd;\n  /*设置左边颜色为#61bd12，右边颜色为#ddd*/\n  background-size: 75% 100%;\n  /*设置左右宽度比例*/\n  width: 100px;\n  height: 4px;\n  border-radius: 5px;\n  margin: 0 auto;\n  outline: 0;\n}\ninput[type=\"range\"]::-webkit-slider-thumb {\n  -webkit-appearance: none;\n  background-color: #fff;\n  width: 10px;\n  height: 10px;\n  border-radius: 50%;\n  cursor: pointer;\n  transition: 0.3s ease-in-out;\n}\ninput[type=\"range\"]::-webkit-slider-thumb:hover {\n  background-color: white;\n  border: 2px solid #49a9ee;\n}\ninput[type=\"range\"]::-webkit-slider-thumb:active {\n  transform: scale(1.6);\n}\n", ""]);
+exports.push([module.i, "body {\n  margin: 0;\n}\n.video_player {\n  width: 100%;\n  position: relative;\n  overflow: hidden;\n}\n.video_player .p_video {\n  width: 100%;\n  height: 100%;\n  min-height: 220px;\n  display: block;\n  background: #000;\n  z-index: auto;\n}\n.video_player .p_controls {\n  display: flex;\n  position: absolute;\n  width: 100%;\n  height: 40px;\n  background-color: rgba(0, 16, 27, 0.7);\n  bottom: -40px;\n  transition: bottom 0.3s;\n  left: 0;\n  justify-content: space-between;\n  align-items: center;\n  z-index: 999;\n  /* 进度条 */\n}\n.video_player .p_controls .progress_bar {\n  position: absolute;\n  cursor: pointer;\n  top: -2px;\n  left: 0;\n  width: 100%;\n  height: 2px;\n  background-color: hsla(0, 0%, 100%, 0.35);\n  transition: height 0.15s linear, top 0.15s linear;\n}\n.video_player .p_controls .progress_bar .current_dot {\n  position: absolute;\n  opacity: 0;\n  z-index: 101;\n  top: 50%;\n  left: 0px;\n  width: 8px;\n  height: 8px;\n  background-color: #fff;\n  transform: translateY(-50%) translateX(-50%);\n  border-radius: 50%;\n  transition: height 0.15s linear, top 0.15s linear, width 0.15s linear;\n}\n.video_player .p_controls .progress_bar .current_progress {\n  width: 0px;\n  height: 100%;\n  position: relative;\n  z-index: 100;\n  background-color: #2d7dc2;\n}\n.video_player .p_controls .progress_bar .current_buffer {\n  z-index: 99;\n  width: 0;\n  height: 100%;\n  position: absolute;\n  top: 0;\n  background-color: hsla(0, 0%, 100%, 0.35);\n}\n.video_player .p_controls .date_label {\n  position: absolute;\n  width: 48px;\n  height: 22px;\n  line-height: 20px;\n  top: -34px;\n  left: 0;\n  visibility: hidden;\n  font-size: 12px;\n  transform: translateX(-50%);\n  color: #fff;\n  text-align: center;\n  border-radius: 4px;\n  background-color: rgba(0, 16, 27, 0.7);\n}\n.video_player .p_controls .date_label::after {\n  content: '';\n  position: absolute;\n  bottom: -4px;\n  left: 50%;\n  transform: translateX(-50%);\n  width: 0;\n  height: 0;\n  border-top: 4px solid rgba(0, 16, 27, 0.7);\n  border-left: 4px solid transparent;\n  border-right: 4px solid transparent;\n}\n.video_player .p_controls .controls_left {\n  display: flex;\n  align-items: center;\n  margin-left: 16px;\n}\n.video_player .p_controls .controls_right {\n  display: flex;\n  z-index: 999;\n  align-items: center;\n  justify-content: flex-end;\n  /* 倍速 */\n  /* 音量 */\n}\n.video_player .p_controls .controls_right > * {\n  cursor: pointer;\n  margin-right: 14px;\n}\n.video_player .p_controls .controls_right .speed_bth {\n  position: relative;\n}\n.video_player .p_controls .controls_right .speed_bth .speed_li {\n  position: absolute;\n  display: none;\n  bottom: 0px;\n  width: 58px;\n  padding-bottom: 34px;\n  text-align: center;\n  color: #fff;\n  font-size: 14px;\n}\n.video_player .p_controls .controls_right .speed_bth .speed_li div {\n  cursor: pointer;\n  background-color: rgba(0, 16, 27, 0.7);\n  line-height: 22px;\n  margin-bottom: 1px;\n  border-radius: 2px;\n}\n.video_player .p_controls .controls_right .speed_bth .speed_li div.on {\n  color: #2d7dc2;\n}\n.video_player .p_controls .controls_right .speed_bth .speed_li div:hover {\n  color: #2d7dc2;\n}\n.video_player .p_controls .controls_right .speed_bth span {\n  cursor: pointer;\n  display: inline-block;\n  color: #fff;\n  text-align: center;\n  min-width: 40px;\n  padding: 0 10px;\n  line-height: 22px;\n  background-color: rgba(0, 0, 0, 0.35);\n  border-radius: 12px;\n  font-size: 15px;\n}\n.video_player .p_controls .controls_right .speed_bth:hover span {\n  background-color: #2d7dc2;\n}\n.video_player .p_controls .controls_right .speed_bth:hover .speed_li {\n  display: block;\n}\n.video_player .p_controls .controls_right .volume_bth {\n  position: relative;\n  display: flex;\n}\n.video_player .p_controls .controls_right .volume_bth .volume_con {\n  position: absolute;\n  display: none;\n  bottom: 0;\n  width: 34px;\n  height: 112px;\n  left: -8px;\n}\n.video_player .p_controls .controls_right .volume_bth .volume_con .volume_slider {\n  position: absolute;\n  text-align: center;\n  border-radius: 10px;\n  padding: 14px 14px;\n  background-color: rgba(0, 0, 0, 0.5);\n  right: -46px;\n  top: 0;\n  transform: rotate(-90deg);\n}\n.video_player .p_controls .controls_right .volume_bth:hover .volume_con {\n  display: block;\n}\n.video_player .p_controls .button_img {\n  width: 14px;\n  height: 14px;\n  box-sizing: border-box;\n  z-index: 9;\n}\n.video_player .p_controls .button_img.suspend {\n  background: url(" + ___CSS_LOADER_URL_REPLACEMENT_0___ + ");\n  background-size: cover;\n}\n.video_player .p_controls .button_img.sound {\n  background: url(" + ___CSS_LOADER_URL_REPLACEMENT_1___ + ");\n  background-size: cover;\n}\n.video_player .p_controls .button_img.mute {\n  background: url(" + ___CSS_LOADER_URL_REPLACEMENT_2___ + ");\n  background-size: cover;\n}\n.video_player .p_controls .button_img.full {\n  background: url(" + ___CSS_LOADER_URL_REPLACEMENT_3___ + ");\n  background-size: cover;\n}\n.video_player .p_controls .button_img.scale {\n  background: url(" + ___CSS_LOADER_URL_REPLACEMENT_4___ + ");\n  background-size: cover;\n}\n.video_player .p_controls .time {\n  color: #fff;\n  padding-left: 10px;\n  font-size: 14px;\n}\n.video_player .button_img.play,\n.video_player .cover_img.play {\n  background: url(" + ___CSS_LOADER_URL_REPLACEMENT_5___ + ");\n  background-size: cover;\n}\n.video_player .video_cover {\n  position: absolute;\n  display: none;\n  height: 100%;\n  width: 100%;\n  top: 0;\n  left: 0;\n  background-color: rgba(0, 0, 0, 0.7);\n}\n.video_player .video_cover .cover_content {\n  width: 200px;\n  height: 200px;\n  overflow: auto;\n  position: absolute;\n  margin: auto;\n  top: 0;\n  bottom: 0;\n  left: 0;\n  right: 0;\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  justify-content: center;\n}\n.video_player .video_cover .cover_content .cover_img {\n  width: 40px;\n  height: 40px;\n  box-sizing: border-box;\n}\n.video_player .video_cover .cover_content .cover_img.error {\n  background: url(" + ___CSS_LOADER_URL_REPLACEMENT_6___ + ");\n  background-size: cover;\n}\n.video_player .video_cover .cover_content .tips_error {\n  margin-top: 8px;\n}\n.video_player .video_cover .cover_content .tips_text {\n  color: #fff;\n  font-size: 12px;\n  text-align: center;\n}\n.video_player .video_cover .cover_content .video_loading .spot {\n  width: 4px;\n  height: 4px;\n  border-radius: 2px;\n  background: #ffffff;\n  float: left;\n  margin: 8px 4px;\n  animation: spot linear 1s infinite;\n  -webkit-animation: spot linear 1s infinite;\n}\n.video_player .video_cover .cover_content .video_loading .spot:nth-child(1) {\n  animation-delay: 0s;\n}\n.video_player .video_cover .cover_content .video_loading .spot:nth-child(2) {\n  animation-delay: 0.15s;\n}\n.video_player .video_cover .cover_content .video_loading .spot:nth-child(3) {\n  animation-delay: 0.3s;\n}\n.video_player .video_cover .cover_content .video_loading .spot:nth-child(4) {\n  animation-delay: 0.45s;\n}\n.video_player .video_cover .cover_content .video_loading .spot:nth-child(5) {\n  animation-delay: 0.6s;\n}\n@keyframes spot {\n  0%,\n  60%,\n  100% {\n    transform: scale(1);\n  }\n  30% {\n    transform: scale(2.5);\n  }\n}\n@-webkit-keyframes spot {\n  0%,\n  60%,\n  100% {\n    transform: scale(1);\n  }\n  30% {\n    transform: scale(2.5);\n  }\n}\n.video_player.showControls .p_controls {\n  bottom: 0 !important;\n}\n.video_player.showControls .progress_bar .current_dot {\n  opacity: 1 !important;\n}\n.video_player.showControls .hover_cls.progress_bar {\n  height: 6px;\n}\n.video_player.showControls .hover_cls.progress_bar .current_dot {\n  width: 10px;\n  height: 10px;\n}\ninput[type=\"range\"] {\n  display: block;\n  -webkit-appearance: none;\n  background: -webkit-linear-gradient(#2d7dc2, #2d7dc2) no-repeat, #ddd;\n  /*设置左边颜色为#61bd12，右边颜色为#ddd*/\n  background-size: 75% 100%;\n  /*设置左右宽度比例*/\n  width: 100px;\n  height: 4px;\n  border-radius: 5px;\n  margin: 0 auto;\n  outline: 0;\n}\ninput[type=\"range\"]::-webkit-slider-thumb {\n  -webkit-appearance: none;\n  background-color: #fff;\n  width: 10px;\n  height: 10px;\n  border-radius: 50%;\n  cursor: pointer;\n  transition: 0.3s ease-in-out;\n}\ninput[type=\"range\"]::-webkit-slider-thumb:hover {\n  background-color: white;\n  border: 2px solid #49a9ee;\n}\ninput[type=\"range\"]::-webkit-slider-thumb:active {\n  transform: scale(1.6);\n}\n", ""]);
 // Exports
 module.exports = exports;
 
@@ -721,6 +719,47 @@ var Utils = /*#__PURE__*/function () {
 
       return flag; // true为pc端，false为非pc端
     }
+    /** 时间秒转换为时分秒 
+     * @param value 秒
+    */
+
+  }, {
+    key: "formatSeconds",
+    value: function formatSeconds(value) {
+      var secondTime = parseInt(value); // 秒
+
+      var minuteTime = 0; // 分
+
+      var hourTime = 0; // 小时
+
+      if (secondTime >= 60) {
+        minuteTime = Math.floor(secondTime / 60);
+        secondTime = Math.floor(secondTime % 60);
+
+        if (minuteTime >= 60) {
+          hourTime = Math.floor(minuteTime / 60);
+          minuteTime = Math.floor(minuteTime % 60);
+        }
+      }
+
+      var joinDate = "".concat(this.PrefixInteger(minuteTime), ":").concat(this.PrefixInteger(secondTime));
+      if (hourTime > 0 || value >= 3600) joinDate = "".concat(this.PrefixInteger(hourTime), ":").concat(joinDate);
+      return joinDate;
+    }
+    /**
+     * utils 数字向下取整
+     * @param num 数字
+     * @param len 长度
+     */
+
+  }, {
+    key: "PrefixInteger",
+    value: function PrefixInteger(num) {
+      var len = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 2;
+      num = isNaN(num) ? 0 : Math.floor(num); // 向下取整
+
+      return (Array(len).join('0') + num).slice(-len);
+    }
   }]);
 
   return Utils;
@@ -728,7 +767,7 @@ var Utils = /*#__PURE__*/function () {
 
 /* harmony default export */ var utils = (new Utils());
 // CONCATENATED MODULE: ./src/index.ts
-function _createForOfIteratorHelper(o) { if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (o = _unsupportedIterableToArray(o))) { var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var it, normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+function _createForOfIteratorHelper(o, allowArrayLike) { var it; if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
 
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
 
@@ -750,19 +789,31 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 var src_PrettyVideo = /*#__PURE__*/function () {
-  // 容器
-  // 播放器
-  // 整个控制条
-  // 音量滑动
-  // 进度条
-  // 缓冲进度条
-  // 进度条当前进度
-  // 进度条拖动点按钮
-  // 当前鼠标位置提示label
-  // 当前播放时间进度
-  // 倍速列表
-  // 倍速按钮
-  // 播放按钮
+  /** 容器 */
+
+  /** video播放器 */
+
+  /** 控制条 */
+
+  /** 音量滑动按钮 */
+
+  /** 进度条容器 */
+
+  /** 缓冲进度条 */
+
+  /** 进度条当前进度 */
+
+  /** 进度条拖动点按钮 */
+
+  /** 当前鼠标位置提示label */
+
+  /** 当前播放时间进度 */
+
+  /** 倍速列表 */
+
+  /** 倍速按钮 */
+
+  /** 播放按钮 */
   // 全屏状态
   // 进度条是否拖动中，防止拖动时候视频正常播放更新进度条
   // 当前视频播放音量 0 - 1
@@ -775,9 +826,9 @@ var src_PrettyVideo = /*#__PURE__*/function () {
 
     _defineProperty(this, "containerElemelt", void 0);
 
-    _defineProperty(this, "playerElement", void 0);
+    _defineProperty(this, "videoElement", void 0);
 
-    _defineProperty(this, "videoControlsElement", void 0);
+    _defineProperty(this, "controlsElement", void 0);
 
     _defineProperty(this, "volumesliderElement", void 0);
 
@@ -801,13 +852,12 @@ var src_PrettyVideo = /*#__PURE__*/function () {
 
     _defineProperty(this, "config", {
       autoplay: false,
-      // 视频加载是否自动播放
       autoHideControls: true,
-      // 自动隐藏控制条
       isFastForward: true,
-      // 是否允许快进
-      hideFullScreen: false // 是否隐藏全屏按钮
-
+      hideFullScreen: false,
+      controls: true,
+      loop: false,
+      preload: 'auto'
     });
 
     _defineProperty(this, "isFullscreen", false);
@@ -819,10 +869,20 @@ var src_PrettyVideo = /*#__PURE__*/function () {
     _defineProperty(this, "envents", {});
 
     _defineProperty(this, "reload", function () {
-      return _this.playerElement.load();
+      return _this.videoElement.load();
     });
 
-    _defineProperty(this, "videoElement", "\n        <div class=\"video_player showControls\" id=\"video_container\">\n        <video id=\"_pretty_video\" class=\"video\" width=\"100%\"\n         webkit-playsinline \n         playsinline \n         x5-playsinline \n         x-webkit-airplay='allow'\n         x5-video-player-type=\"h5\"\n         >\n            \u60A8\u7684\u6D4F\u89C8\u5668\u4E0D\u652F\u6301Video\u64AD\u653E\u5668\n        </video>\n        <div class=\"controls\" id=\"video_controls\">\n            <span class=\"date_label\">00:00</span>\n            <div id=\"progress\" class=\"progress_bar\">\n                <div class=\"current_progress\"></div>\n                <div class=\"current_buffer\"></div>\n                <i class=\"current_dot\"></i>\n            </div>\n            <div class=\"controls_left\">\n                <i class=\"button_img play play_btn\"></i>\n                <div class=\"time\"></div>\n            </div>\n            <div class=\"controls_right\">\n                <!-- \u97F3\u91CF -->\n                <div class=\"volume_bth\">\n                    <div class=\"volume_con\">\n                        <div class=\"volume_slider\">\n                            <input id=\"volumeslider\" type='range' min=\"0\" max=\"1\" step=\"0.01\" value=\"0.8\"/>\n                        </div>\n                    </div>\n                    <i id=\"volume_img\" class=\"button_img sound\"></i>\n                </div>\n                <!-- \u500D\u901F -->\n                <div class=\"speed_bth\">\n                    <div id=\"speed_con\" class=\"speed_li\">\n                        <div>2.0x</div>\n                        <div>1.5x</div>\n                        <div>1.2x</div>\n                        <div class=\"on\">1.0x</div>\n                        <div>0.5x</div>\n                    </div>\n                    <span id=\"speed_btn\">1.0x</span>\n                </div>\n                <!-- \u5168\u5C4F -->\n                <i id=\"v_fullscreen\" class=\"button_img full\"></i>\n            </div>\n        </div>\n        <div class=\"video_cover\" id=\"v_error\">\n            <div class=\"cover_content\">\n                <div class=\"cover_img error\"></div>\n                <div class=\"tips_text tips_error\">\u8D44\u6E90\u52A0\u8F7D\u5931\u8D25~</div>\n            </div>\n        </div>\n        <div class=\"video_cover\" id=\"v_play\">\n            <div class=\"cover_content\">\n                <div class=\"cover_img play play_btn\"></div>\n            </div>\n        </div>\n        <div class=\"video_cover\" id=\"v_waiting\">\n            <div class=\"cover_content\">\n                <div class=\"video_loading\">\n                    <div>\n                        <div class=\"spot\"></div>\n                        <div class=\"spot\"></div>\n                        <div class=\"spot\"></div>\n                        <div class=\"spot\"></div>\n                        <div class=\"spot\"></div>\n                    </div>\n                    <div class=\"tips_text\">\u7F13\u51B2\u4E2D...</div>\n                </div>\n            </div>\n        </div>\n    </div>\n    ");
+    _defineProperty(this, "play", function () {
+      return _this.videoElement.play();
+    });
+
+    _defineProperty(this, "pause", function () {
+      return _this.videoElement.pause();
+    });
+
+    _defineProperty(this, "videoHtml", "\n      <div class=\"video_player showControls\" id=\"video_container\">\n        <video id=\"_pretty_video\" class=\"p_video\" width=\"100%\">\n            \u60A8\u7684\u6D4F\u89C8\u5668\u4E0D\u652F\u6301Video\u64AD\u653E\u5668\n        </video>\n        <div id=\"video_controls\" style=\"display: none;\"></div>\n        <div class=\"video_cover\" id=\"v_error\">\n            <div class=\"cover_content\">\n                <div class=\"cover_img error\"></div>\n                <div class=\"tips_text tips_error\">\u8D44\u6E90\u52A0\u8F7D\u5931\u8D25~</div>\n            </div>\n        </div>\n        <div class=\"video_cover\" id=\"v_play\">\n            <div class=\"cover_content\">\n                <div class=\"cover_img play play_btn\"></div>\n            </div>\n        </div>\n        <div class=\"video_cover\" id=\"v_waiting\">\n            <div class=\"cover_content\">\n                <div class=\"video_loading\">\n                    <div>\n                        <div class=\"spot\"></div>\n                        <div class=\"spot\"></div>\n                        <div class=\"spot\"></div>\n                        <div class=\"spot\"></div>\n                        <div class=\"spot\"></div>\n                    </div>\n                    <div class=\"tips_text\">\u7F13\u51B2\u4E2D...</div>\n                </div>\n            </div>\n        </div>\n    </div>\n    ");
+
+    _defineProperty(this, "controlsHtml", "\n      <div class=\"p_controls\">\n        <span class=\"date_label\">00:00</span>\n        <div id=\"progress\" class=\"progress_bar\">\n            <div class=\"current_progress\"></div>\n            <div class=\"current_buffer\"></div>\n            <i class=\"current_dot\"></i>\n        </div>\n        <div class=\"controls_left\">\n            <i class=\"button_img play play_btn\"></i>\n            <div class=\"time\"></div>\n        </div>\n        <div class=\"controls_right\">\n            <!-- \u97F3\u91CF -->\n            <div class=\"volume_bth\">\n                <div class=\"volume_con\">\n                    <div class=\"volume_slider\">\n                        <input id=\"volumeslider\" type='range' min=\"0\" max=\"1\" step=\"0.01\" value=\"0.8\"/>\n                    </div>\n                </div>\n                <i id=\"volume_img\" class=\"button_img sound\"></i>\n            </div>\n            <!-- \u500D\u901F -->\n            <div class=\"speed_bth\">\n                <div id=\"speed_con\" class=\"speed_li\">\n                    <div>2.0x</div>\n                    <div>1.5x</div>\n                    <div>1.2x</div>\n                    <div class=\"on\">1.0x</div>\n                    <div>0.5x</div>\n                </div>\n                <span id=\"speed_btn\">1.0x</span>\n            </div>\n            <!-- \u5168\u5C4F -->\n            <i id=\"v_fullscreen\" class=\"button_img full\"></i>\n        </div>\n      </div>\n     \n    ");
   }
 
   src_createClass(PrettyVideo, [{
@@ -830,21 +890,23 @@ var src_PrettyVideo = /*#__PURE__*/function () {
     value: function init(el, config) {
       try {
         var videoContainer = typeof el === 'string' ? document.getElementById(el) : el;
-        videoContainer.innerHTML = this.videoElement;
+        if (!videoContainer) throw new Error("无效的dom元素，请在页面加载完成后初始化播放器。");
+        videoContainer.innerHTML = this.videoHtml;
         this.containerElemelt = videoContainer.querySelector('#video_container');
         ;
-        this.playerElement = videoContainer.querySelector('#_pretty_video');
-        this.videoControlsElement = videoContainer.querySelector('#video_controls');
+        this.videoElement = videoContainer.querySelector('#_pretty_video');
+        this.controlsElement = videoContainer.querySelector('#video_controls');
+        this.controlsElement.innerHTML = this.controlsHtml;
         this.progressElement = videoContainer.querySelector('#progress');
-        this.volumesliderElement = videoContainer.querySelector('#volumeslider');
         this.currentSpElement = this.progressElement.querySelector('.current_progress');
         this.progressBufferElement = this.progressElement.querySelector('.current_buffer');
         this.dotElement = this.progressElement.querySelector('.current_dot');
+        this.volumesliderElement = videoContainer.querySelector('#volumeslider');
         this.dateLabelElement = videoContainer.querySelector('.date_label');
         this.timeElement = videoContainer.querySelector('.time');
         this.speedListElement = videoContainer.querySelector('#speed_con').children;
         this.speedBtnElement = videoContainer.querySelector('#speed_btn');
-        this.playBtnElement = videoContainer.querySelector('.play_btn').classList;
+        this.playBtnElement = videoContainer.querySelectorAll('.play_btn');
         this.setupConfig(config);
         this.setUrl({
           src: config.src,
@@ -862,15 +924,15 @@ var src_PrettyVideo = /*#__PURE__*/function () {
   }, {
     key: "getDuration",
     value: function getDuration() {
-      var _this$playerElement, _this$playerElement2, _this$playerElement3, _this$playerElement4;
+      var _this$videoElement, _this$videoElement2, _this$videoElement3, _this$videoElement4;
 
-      var currentSecond = ((_this$playerElement = this.playerElement) === null || _this$playerElement === void 0 ? void 0 : _this$playerElement.currentTime) || 0; // 当前播放时长 单位：秒
+      var currentSecond = ((_this$videoElement = this.videoElement) === null || _this$videoElement === void 0 ? void 0 : _this$videoElement.currentTime) || 0; // 当前播放时长 单位：秒
 
-      var durationSecond = ((_this$playerElement2 = this.playerElement) === null || _this$playerElement2 === void 0 ? void 0 : _this$playerElement2.duration) || 0; // 总时长 单位：秒
+      var durationSecond = ((_this$videoElement2 = this.videoElement) === null || _this$videoElement2 === void 0 ? void 0 : _this$videoElement2.duration) || 0; // 总时长 单位：秒
       // 转换格式HH:mm:ss  HH如果有的话才展示 否则展示mm:ss
 
-      var currentText = this.formatSeconds(((_this$playerElement3 = this.playerElement) === null || _this$playerElement3 === void 0 ? void 0 : _this$playerElement3.currentTime) || 0);
-      var durationText = this.formatSeconds(((_this$playerElement4 = this.playerElement) === null || _this$playerElement4 === void 0 ? void 0 : _this$playerElement4.duration) || 0);
+      var currentText = utils.formatSeconds(((_this$videoElement3 = this.videoElement) === null || _this$videoElement3 === void 0 ? void 0 : _this$videoElement3.currentTime) || 0);
+      var durationText = utils.formatSeconds(((_this$videoElement4 = this.videoElement) === null || _this$videoElement4 === void 0 ? void 0 : _this$videoElement4.duration) || 0);
       return {
         currentSecond: currentSecond,
         durationSecond: durationSecond,
@@ -884,50 +946,38 @@ var src_PrettyVideo = /*#__PURE__*/function () {
     key: "setupConfig",
     value: function setupConfig(newConfig) {
       this.config = _objectSpread(_objectSpread({}, this.config), newConfig);
-      this.playerElement.autoplay = this.config.autoplay ? true : false;
-      this.containerElemelt.querySelector('#v_fullscreen').style.display = this.config.hideFullScreen === true ? 'none' : 'block';
+      this.videoElement.autoplay = this.config.autoplay ? true : false;
+      this.videoElement.loop = this.config.loop ? true : false;
+      this.videoElement.preload = this.config.preload;
+      this.initControls();
     }
     /** 播放地址 */
 
   }, {
     key: "setUrl",
     value: function setUrl(object) {
-      if (!this.playerElement) throw new Error("请先初始化播放器!");
-      this.playerElement.src = object.src || '';
-      this.playerElement.poster = object.poster || '';
+      if (!this.videoElement) throw new Error("请先初始化播放器!");
+      this.videoElement.src = object.src || '';
+      this.videoElement.poster = object.poster || '';
     }
     /** 重新加载视频 */
 
   }, {
-    key: "play",
-
-    /** 开始播放 */
-    value: function play() {
-      this.playerElement.play();
-      this.playBtnElement.add('suspend');
-    }
-    /** 是否暂停状态 */
-
-  }, {
     key: "isPause",
+
+    /** 是否暂停状态 */
     value: function isPause() {
-      return this.playerElement.paused;
+      return this.videoElement.paused;
     }
     /** 暂停播放 */
 
   }, {
-    key: "pause",
-    value: function pause() {
-      this.playerElement.pause();
-      this.playBtnElement.remove('suspend');
-    }
-    /** 设置倍速 */
-
-  }, {
     key: "setPlaybackRate",
+
+    /** 设置倍速 */
     value: function setPlaybackRate(e) {
       this.speedBtnElement.innerText = e;
-      this.playerElement.playbackRate = parseFloat(e);
+      this.videoElement.playbackRate = parseFloat(e);
     }
     /** 设置音量 */
 
@@ -935,17 +985,24 @@ var src_PrettyVideo = /*#__PURE__*/function () {
     key: "setVolum",
     value: function setVolum(value) {
       value = parseFloat(value);
-      this.playerElement.volume = value;
+      this.videoElement.volume = value;
       this.volumesliderElement.style.backgroundSize = "".concat(value * 100, "% 100%");
       /*设置左右宽度比例*/
 
       var volume_bth = this.containerElemelt.querySelector('#volume_img');
 
-      if (value) {
+      if (value && volume_bth) {
         volume_bth.classList.remove('mute');
       } else {
         volume_bth.classList.add('mute');
       }
+    }
+    /** 销毁video */
+
+  }, {
+    key: "dispose",
+    value: function dispose() {
+      this.containerElemelt.innerHTML = '';
     }
     /**
      * 监听事件
@@ -999,6 +1056,30 @@ var src_PrettyVideo = /*#__PURE__*/function () {
         }
       }
     }
+    /** 设置播放按钮状态 */
+
+  }, {
+    key: "changePlayBtn",
+    value: function changePlayBtn() {
+      var _iterator = _createForOfIteratorHelper(this.playBtnElement),
+          _step;
+
+      try {
+        for (_iterator.s(); !(_step = _iterator.n()).done;) {
+          var el = _step.value;
+
+          if (this.isPause()) {
+            utils.removeClass(el, 'suspend');
+          } else {
+            utils.addClass(el, 'suspend');
+          }
+        }
+      } catch (err) {
+        _iterator.e(err);
+      } finally {
+        _iterator.f();
+      }
+    }
     /** 更新当前状态 */
 
   }, {
@@ -1011,20 +1092,21 @@ var src_PrettyVideo = /*#__PURE__*/function () {
       }
 
       ;
+      this.changePlayBtn();
       var video_cover = this.containerElemelt.getElementsByClassName('video_cover');
 
-      var _iterator = _createForOfIteratorHelper(video_cover),
-          _step;
+      var _iterator2 = _createForOfIteratorHelper(video_cover),
+          _step2;
 
       try {
-        for (_iterator.s(); !(_step = _iterator.n()).done;) {
-          var cover = _step.value;
+        for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
+          var cover = _step2.value;
           cover.style.display = 'none';
         }
       } catch (err) {
-        _iterator.e(err);
+        _iterator2.e(err);
       } finally {
-        _iterator.f();
+        _iterator2.f();
       }
 
       switch (state) {
@@ -1033,18 +1115,8 @@ var src_PrettyVideo = /*#__PURE__*/function () {
           break;
 
         case 'play':
-          this.playBtnElement.add('suspend');
-          console.log('play');
-          break;
-
         case 'ended':
-          this.playBtnElement.remove('suspend');
-
         case 'canplay':
-          if (this.config.autoplay) {
-            this.playBtnElement.add('suspend');
-          }
-
         case 'pause':
           this.containerElemelt.querySelector('#v_play').style.display = 'block';
           break;
@@ -1078,9 +1150,9 @@ var src_PrettyVideo = /*#__PURE__*/function () {
       var maxWidth = this.getProgressWidth(); // 进度总长度，进度条-按钮
 
       if (position > maxWidth) position = maxWidth;
-      var slitherCurrentTime = position / maxWidth * this.playerElement.duration; // 当前拖动进度位置时间
+      var slitherCurrentTime = position / maxWidth * this.videoElement.duration; // 当前拖动进度位置时间
 
-      var currentTime = "".concat(this.formatSeconds(slitherCurrentTime)); // 当前播放进度- 分:秒
+      var currentTime = "".concat(utils.formatSeconds(slitherCurrentTime)); // 当前播放进度- 分:秒
 
       return currentTime;
     }
@@ -1090,20 +1162,26 @@ var src_PrettyVideo = /*#__PURE__*/function () {
     key: "setDuration",
     value: function setDuration(position) {
       var currentTime = this.getCurrentLocationTime(position);
-      var duration = this.formatSeconds(this.playerElement.duration); // 视频总长度- 分:秒
+      var duration = utils.formatSeconds(this.videoElement.duration); // 视频总长度- 分:秒
 
       this.timeElement.innerHTML = "".concat(currentTime, " / ").concat(duration);
       this.currentSpElement.style.width = position + 'px';
       this.dotElement.style.left = position + 'px';
     }
-    /** 各种初始化事件 */
+    /** 初始化控制条 */
 
   }, {
-    key: "initEvent",
-    value: function initEvent() {
+    key: "initControls",
+    value: function initControls() {
       var _this2 = this;
 
-      var video = this.playerElement;
+      var controls = this.controlsElement;
+
+      if (!this.config.controls) {
+        return controls.style.display = 'none';
+      }
+
+      var video = this.videoElement;
       var isPc = utils.isPC(); // pc端 和移动端事件区分
 
       var touchstart = isPc ? 'mousedown' : 'touchstart'; // 鼠标按下/触摸
@@ -1111,14 +1189,15 @@ var src_PrettyVideo = /*#__PURE__*/function () {
       var touchmove = isPc ? 'mousemove' : 'touchmove'; // 开始移动/拖动
 
       var touchend = isPc ? 'mouseup' : 'touchend'; // 松开/手指移开
-      // 倍速列表点击事件
 
-      var _iterator2 = _createForOfIteratorHelper(this.speedListElement),
-          _step2;
+      /** 倍速列表点击事件 */
+
+      var _iterator3 = _createForOfIteratorHelper(this.speedListElement),
+          _step3;
 
       try {
-        for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
-          var i = _step2.value;
+        for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
+          var i = _step3.value;
           i.addEventListener('click', function (e) {
             var _iterator4 = _createForOfIteratorHelper(_this2.speedListElement),
                 _step4;
@@ -1138,30 +1217,8 @@ var src_PrettyVideo = /*#__PURE__*/function () {
 
             _this2.setPlaybackRate(e.target.innerText);
           });
-        } // 播放按钮点击
-
-      } catch (err) {
-        _iterator2.e(err);
-      } finally {
-        _iterator2.f();
-      }
-
-      var playBtn = this.containerElemelt.getElementsByClassName('play_btn');
-
-      var _iterator3 = _createForOfIteratorHelper(playBtn),
-          _step3;
-
-      try {
-        for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
-          var el = _step3.value;
-          el.addEventListener('click', function (e) {
-            if (_this2.isPause()) {
-              _this2.play();
-            } else {
-              _this2.pause();
-            }
-          });
-        } // 全屏按钮点击
+        }
+        /** 全屏按钮点击 */
 
       } catch (err) {
         _iterator3.e(err);
@@ -1173,11 +1230,12 @@ var src_PrettyVideo = /*#__PURE__*/function () {
         _this2.fullscreen();
 
         if (_this2.isFullscreen) {
-          e.target.classList.add('scale');
+          utils.addClass(e.target, 'scale');
         } else {
-          e.target.classList.remove('scale');
+          utils.removeClass(e.target, 'scale');
         }
-      }); // 进度条变粗大
+      });
+      /** 进度条变粗大 */
 
       var progressHover = function progressHover(isHover) {
         if (!_this2.config.isFastForward) return;
@@ -1187,7 +1245,8 @@ var src_PrettyVideo = /*#__PURE__*/function () {
         } else {
           utils.removeClass(_this2.progressElement, 'hover_cls');
         }
-      }; // 改变label位置
+      };
+      /** 改变label位置 */
 
 
       var showmoveLabel = function showmoveLabel(clientX) {
@@ -1278,31 +1337,36 @@ var src_PrettyVideo = /*#__PURE__*/function () {
       var timeout = null; // 实现效果，pc端鼠标移入视频显示控制条，3秒无操作隐藏控制条
       // 移动端触摸视频时展示控制条, 3秒无操作隐藏控制条
 
-      var onmouseover = function onmouseover() {
-        if (!_this2.config.autoHideControls) return;
-
-        _this2.containerElemelt.classList.add('showControls');
-
+      var showControls = function showControls() {
         clearTimeout(timeout);
+        utils.addClass(_this2.containerElemelt, 'showControls');
+      };
+
+      var hideControls = function hideControls() {
         timeout = setTimeout(function () {
-          _this2.containerElemelt.classList.remove('showControls');
-        }, 3000);
+          utils.removeClass(_this2.containerElemelt, 'showControls');
+        }, 4000);
+      };
+
+      var onmouseover = function onmouseover(e) {
+        showControls();
+        hideControls();
       };
 
       if (isPc) {
         // 鼠标在容器移动时候触发显示
         this.containerElemelt.addEventListener('mousemove', onmouseover); // 当鼠标移动到控制条上，取消隐藏，一直显示
 
-        this.videoControlsElement.addEventListener('mouseenter', function (e) {
+        this.controlsElement.addEventListener('mouseenter', function (e) {
           _this2.containerElemelt.removeEventListener('mousemove', onmouseover);
 
-          clearTimeout(timeout);
+          showControls();
         }); // 鼠标移开
 
-        this.videoControlsElement.addEventListener('mouseleave', function () {
-          onmouseover();
-
+        this.controlsElement.addEventListener('mouseleave', function (e) {
           _this2.containerElemelt.addEventListener('mousemove', onmouseover);
+
+          hideControls();
         }); // PC端点击音量按钮禁音
 
         this.containerElemelt.querySelector('#volume_img').addEventListener('click', function (e) {
@@ -1326,37 +1390,10 @@ var src_PrettyVideo = /*#__PURE__*/function () {
           return showmoveLabel(e.clientX);
         });
       } else {
-        this.containerElemelt.ontouchstart = onmouseover;
-      } // 右键
+        this.containerElemelt.ontouchstart = showControls;
+        this.containerElemelt.ontouchend = hideControls;
+      } // 阻止事件冒泡到点击进度条
 
-
-      this.containerElemelt.oncontextmenu = function (e) {
-        //鼠标点的坐标
-        var oX = e.layerX;
-        var oY = e.layerY; //菜单出现后的位置
-        // menu.style.display = "block";
-        // menu.style.left = oX + "px";
-        // menu.style.top = oY + "px";
-        //阻止浏览器默认事件
-
-        return false; //一般点击右键会出现浏览器默认的右键菜单，写了这句代码就可以阻止该默认事件。
-      }; // 双击播放器暂停，移动端无双击事件，用两次点击时间模拟 300 毫秒2次点击为双击
-
-
-      var clickTime = 0;
-      this.playerElement.addEventListener('click', function () {
-        var nowTime = new Date().getTime();
-
-        if (nowTime - clickTime < 300) {
-          if (_this2.isPause()) {
-            _this2.play();
-          } else {
-            _this2.pause();
-          }
-        }
-
-        clickTime = nowTime;
-      }); // 阻止事件冒泡到点击进度条
 
       this.dotElement.onmousedown = function (event) {
         return event.stopPropagation();
@@ -1386,24 +1423,112 @@ var src_PrettyVideo = /*#__PURE__*/function () {
         _this2.currentvolum = value;
 
         _this2.setVolum(value);
-      }; // loadstart：视频查找。当浏览器开始寻找指定的音频/视频时触发，也就是当加载过程开始时
+      };
+    }
+    /** 监听video事件 */
 
+  }, {
+    key: "initEvent",
+    value: function initEvent() {
+      var _this3 = this;
+
+      var video = this.videoElement;
+      var ua = navigator.userAgent.toLocaleLowerCase(); // x5内核
+
+      if (ua.match(/tencenttraveler/) != null || ua.match(/qqbrowse/) != null) {
+        video.setAttribute('x5-video-player-fullscreen', 'true'); // 进入全屏通知
+
+        video.setAttribute('x-webkit-airplay', 'true'); // 设置允许设备播放
+        // video.setAttribute('x5-playsinline', 'true'); // 设置android在微信中内联播放视频 这是坑微信无法正常横屏
+
+        video.setAttribute('x5-video-player-type', 'h5'); // 关闭同层X5内核播放器    x5-video-player-type='h5' 启用Ｈ5同层播放器
+
+        video.setAttribute('x5-video-orientation', 'landscape|portrait'); // 控制横竖屏 可选值： landscape 横屏, portraint竖屏  默认值：portraint
+        // 进入全屏
+
+        video.addEventListener('x5videoenterfullscreen', function () {
+          var btnEl = _this3.containerElemelt.querySelector('#v_fullscreen');
+
+          utils.addClass(btnEl, 'scale');
+        }, false); // 退出全屏时
+
+        video.addEventListener('x5videoexitfullscreen', function () {
+          var btnEl = _this3.containerElemelt.querySelector('#v_fullscreen');
+
+          utils.removeClass(btnEl, 'scale');
+        }, false);
+      } else {
+        // ios端
+        video.setAttribute('webkit-playsinline', 'true'); // // 设置ios在微信中内联播放视频 ios9
+
+        video.setAttribute('playsinline', 'true'); // 设置ios在微信中内联播放视频 ios10/ios11
+      }
+      /** 播放按钮点击 */
+
+
+      var _iterator5 = _createForOfIteratorHelper(this.playBtnElement),
+          _step5;
+
+      try {
+        for (_iterator5.s(); !(_step5 = _iterator5.n()).done;) {
+          var el = _step5.value;
+          el.addEventListener('click', function (e) {
+            if (_this3.isPause()) {
+              _this3.play();
+            } else {
+              _this3.pause();
+            }
+          });
+        } // 右键
+
+      } catch (err) {
+        _iterator5.e(err);
+      } finally {
+        _iterator5.f();
+      }
+
+      this.containerElemelt.oncontextmenu = function (e) {
+        //鼠标点的坐标
+        var oX = e.layerX;
+        var oY = e.layerY; //菜单出现后的位置
+        // menu.style.display = "block";
+        // menu.style.left = oX + "px";
+        // menu.style.top = oY + "px";
+        //阻止浏览器默认事件
+
+        return false; //一般点击右键会出现浏览器默认的右键菜单，写了这句代码就可以阻止该默认事件。
+      }; // 双击播放器暂停，移动端无双击事件，用两次点击时间模拟 300 毫秒2次点击为双击
+
+
+      var clickTime = 0;
+      video.addEventListener('click', function () {
+        var nowTime = new Date().getTime();
+
+        if (nowTime - clickTime < 300) {
+          if (_this3.isPause()) {
+            _this3.play();
+          } else {
+            _this3.pause();
+          }
+        }
+
+        clickTime = nowTime;
+      }); // loadstart：视频查找。当浏览器开始寻找指定的音频/视频时触发，也就是当加载过程开始时
 
       video.addEventListener('loadstart', function (e) {
-        return _this2.setState('loadstart');
+        return _this3.setState('loadstart');
       }); // durationchange：时长变化。当指定的音频/视频的时长数据发生变化时触发，加载后，时长由 NaN 变为音频/视频的实际时长
 
       video.addEventListener('durationchange', function (e) {
-        var maxWidth = _this2.getProgressWidth();
+        var maxWidth = _this3.getProgressWidth();
 
-        _this2.videoControlsElement.style.display = 'flex';
-
-        _this2.setDuration(video.currentTime / video.duration * maxWidth);
+        _this3.setDuration(video.currentTime / video.duration * maxWidth);
       }); // loadedmetadata ：元数据加载。当指定的音频/视频的元数据已加载时触发，元数据包括：时长、尺寸（仅视频）以及文本轨道
 
       video.addEventListener('loadedmetadata', function (e) {
-        _this2.setState('loadedmetadata');
+        _this3.setState('loadedmetadata');
 
+        _this3.controlsElement.style.display = 'block';
         console.log('视频的元数据已加载');
       }); // loadeddata：视频下载监听。当当前帧的数据已加载，但没有足够的数据来播放指定音频/视频的下一帧时触发
       // video.addEventListener('loadeddata', (e) => {
@@ -1417,24 +1542,24 @@ var src_PrettyVideo = /*#__PURE__*/function () {
 
         if (buffered.length) {
           var loaded = 100 * buffered.end(0) / e.target.duration;
-          _this2.progressBufferElement.style.width = loaded + '%';
+          _this3.progressBufferElement.style.width = loaded + '%';
         }
       }); // canplay：可播放监听。当浏览器能够开始播放指定的音频/视频时触发
 
       video.addEventListener('canplay', function (e) {
-        return _this2.setState('canplay');
+        return _this3.setState('canplay');
       }); // canplaythrough：可流畅播放。当浏览器预计能够在不停下来进行缓冲的情况下持续播放指定的音频/视频时触发
 
       video.addEventListener('canplaythrough', function (e) {
-        _this2.setState('canplaythrough');
+        _this3.setState('canplaythrough');
       }); // play：播放监听
 
       video.addEventListener('play', function (e) {
-        return _this2.setState('play');
+        return _this3.setState('play');
       }); // pause：暂停监听
 
       video.addEventListener('pause', function (e) {
-        return _this2.setState('pause');
+        return _this3.setState('pause');
       }); // seeking：查找开始。当用户开始移动/跳跃到音频/视频中新的位置时触发
       // video.addEventListener('seeking', (e) => {
       //   console.log('开始移动进度条');
@@ -1442,34 +1567,34 @@ var src_PrettyVideo = /*#__PURE__*/function () {
       // // seeked：查找结束。当用户已经移动/跳跃到视频中新的位置时触发
 
       video.addEventListener('seeked', function (e) {
-        return _this2.setState('seeked');
+        return _this3.setState('seeked');
       }); // waiting：视频加载等待。当视频由于需要缓冲下一帧而停止，等待时触发
 
       video.addEventListener('waiting', function (e) {
-        return _this2.setState('waiting');
+        return _this3.setState('waiting');
       }); // playing：当视频在已因缓冲而暂停或停止后已就绪时触发
 
       video.addEventListener('playing', function (e) {
-        return _this2.setState('playing');
+        return _this3.setState('playing');
       }); // timeupdate：目前的播放位置已更改时，播放时间更新
 
       video.addEventListener('timeupdate', function (e) {
-        if (!_this2.isMove) {
+        if (!_this3.isMove) {
           // 防止拖动进度条时候更新
-          var maxWidth = _this2.getProgressWidth();
+          var maxWidth = _this3.getProgressWidth();
 
-          _this2.setDuration(video.currentTime / video.duration * maxWidth);
+          _this3.setDuration(video.currentTime / video.duration * maxWidth);
         }
       }); // ended：播放结束
 
       video.addEventListener('ended', function (e) {
-        _this2.setState('ended');
+        _this3.setState('ended');
 
-        _this2.containerElemelt.getElementsByClassName('play_btn')[0].classList.remove('suspend');
+        _this3.containerElemelt.getElementsByClassName('play_btn')[0].classList.remove('suspend');
       }); // error：播放错误
 
       video.addEventListener('error', function (e) {
-        return _this2.setState('error');
+        return _this3.setState('error');
       }); // volumechange：当音量更改时
       // video.addEventListener('volumechange', (e) => {
       //   console.log('音量更改');
@@ -1482,48 +1607,8 @@ var src_PrettyVideo = /*#__PURE__*/function () {
       // video.addEventListener('ratechange', (e) => {
       //   console.log('ratechange');
       // });
-    }
-    /** 时间秒转换为时分秒 
-     * @param value 秒
-    */
+    } // 播放器element
 
-  }, {
-    key: "formatSeconds",
-    value: function formatSeconds(value) {
-      var secondTime = parseInt(value); // 秒
-
-      var minuteTime = 0; // 分
-
-      var hourTime = 0; // 小时
-
-      if (secondTime >= 60) {
-        minuteTime = Math.floor(secondTime / 60);
-        secondTime = Math.floor(secondTime % 60);
-
-        if (minuteTime >= 60) {
-          hourTime = Math.floor(minuteTime / 60);
-          minuteTime = Math.floor(minuteTime % 60);
-        }
-      }
-
-      var joinDate = "".concat(this.PrefixInteger(minuteTime), ":").concat(this.PrefixInteger(secondTime));
-      if (hourTime > 0 || value >= 3600) joinDate = "".concat(this.PrefixInteger(hourTime), ":").concat(joinDate);
-      return joinDate;
-    }
-    /**
-     * utils 数字向下取整
-     * @param num 数字
-     * @param len 长度
-     */
-
-  }, {
-    key: "PrefixInteger",
-    value: function PrefixInteger(num) {
-      var len = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 2;
-      num = isNaN(num) ? 0 : Math.floor(num); // 向下取整
-
-      return (Array(len).join('0') + num).slice(-len);
-    }
   }]);
 
   return PrettyVideo;

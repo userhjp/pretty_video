@@ -35,8 +35,6 @@ class PrettyVideo {
       isFastForward: true,
       hideFullScreen: false,
       controls: true, 
-      height: 'auto',
-      width: 'auto',
       loop: false, 
       preload: 'auto'
     }
@@ -68,7 +66,7 @@ class PrettyVideo {
         this.timeElement = videoContainer.querySelector('.time');
         this.speedListElement = videoContainer.querySelector('#speed_con').children;
         this.speedBtnElement = videoContainer.querySelector('#speed_btn');
-        this.playBtnElement = videoContainer.querySelector('.play_btn').classList;
+        this.playBtnElement = videoContainer.querySelectorAll('.play_btn');
 
         this.setupConfig(config);
         this.setUrl({
@@ -112,22 +110,12 @@ class PrettyVideo {
     
     /** 重新加载视频 */
     reload = () => this.videoElement.load();
-    
     /** 开始播放 */
-    play() {
-      this.videoElement.play();
-      this.playBtnElement.add('suspend');
-    }
-
+    play = () => this.videoElement.play();
     /** 是否暂停状态 */
-    isPause() { return this.videoElement.paused }
-
+    isPause(): boolean { return this.videoElement.paused }
     /** 暂停播放 */
-    pause() {
-      this.videoElement.pause();
-      this.playBtnElement.remove('suspend');
-    }
-    
+    pause = () => this.videoElement.pause();
     /** 设置倍速 */
     setPlaybackRate(e: string) {
       this.speedBtnElement.innerText = e;
@@ -194,12 +182,24 @@ class PrettyVideo {
         }
       }
     }
+
+    /** 设置播放按钮状态 */
+    private changePlayBtn() {
+      for (const el of this.playBtnElement) {
+        if(this.isPause()) {
+          Utils.removeClass(el, 'suspend');
+        } else {
+          Utils.addClass(el, 'suspend');
+        }
+      }
+    }
     
     /** 更新当前状态 */
     setState(state: 'loadstart' | 'canplay' | 'play' | 'pause' | 'waiting' | 'playing' | 'ended' | 'error' | 'seeked' | 'loadedmetadata' | 'canplaythrough') {
       if(typeof this.envents[state] === 'function') {
         this.envents[state]({type: 'state'})
       };
+      this.changePlayBtn();
       const video_cover = this.containerElemelt.getElementsByClassName('video_cover');
       for(let cover of video_cover) { cover.style.display = 'none'; }
       switch (state) {
@@ -207,15 +207,8 @@ class PrettyVideo {
           this.containerElemelt.querySelector('#v_error').style.display = 'block';
           break;
         case 'play':
-          this.playBtnElement.add('suspend');
-          console.log('play')
-          break
         case 'ended':
-          this.playBtnElement.remove('suspend');
         case 'canplay':
-          if(this.config.autoplay) {
-            this.playBtnElement.add('suspend');
-          }
         case 'pause':
           this.containerElemelt.querySelector('#v_play').style.display = 'block';
           break;
@@ -280,9 +273,9 @@ class PrettyVideo {
       this.containerElemelt.querySelector('#v_fullscreen').addEventListener('click', (e) => {
         this.fullscreen();
         if (this.isFullscreen) {
-          e.target.classList.add('scale');
+          Utils.addClass(e.target, 'scale');
         } else {
-          e.target.classList.remove('scale');
+          Utils.removeClass(e.target, 'scale')
         }
       })
 
@@ -369,15 +362,21 @@ class PrettyVideo {
       let timeout = null;
       // 实现效果，pc端鼠标移入视频显示控制条，3秒无操作隐藏控制条
       // 移动端触摸视频时展示控制条, 3秒无操作隐藏控制条
-      const onmouseover = () => {
-        if (!this.config.autoHideControls) return;
-        this.containerElemelt.classList.add('showControls');
+      const showControls = () => {
         clearTimeout(timeout);
+        Utils.addClass(this.containerElemelt, 'showControls');
+      }
+      const hideControls = () => {
         timeout = setTimeout(() => {
-          this.containerElemelt.classList.remove('showControls');
-        }, 3000);
-      };
+          Utils.removeClass(this.containerElemelt, 'showControls');
+        }, 4000);
+      }
 
+      
+      const onmouseover = (e) => {
+        showControls();
+        hideControls();
+      };
 
       if (isPc) {
         // 鼠标在容器移动时候触发显示
@@ -385,13 +384,13 @@ class PrettyVideo {
         // 当鼠标移动到控制条上，取消隐藏，一直显示
         this.controlsElement.addEventListener('mouseenter', (e) => {
           this.containerElemelt.removeEventListener('mousemove', onmouseover);
-          clearTimeout(timeout)
+          showControls();
         });
 
         // 鼠标移开
-        this.controlsElement.addEventListener('mouseleave', () => {
-          onmouseover();
+        this.controlsElement.addEventListener('mouseleave', (e) => {
           this.containerElemelt.addEventListener('mousemove', onmouseover);
+          hideControls();
         });
 
         // PC端点击音量按钮禁音
@@ -412,7 +411,8 @@ class PrettyVideo {
         // 鼠标移动
         this.progressElement.addEventListener('mousemove', (e) => showmoveLabel(e.clientX))
       } else {
-        this.containerElemelt.ontouchstart = onmouseover;
+        this.containerElemelt.ontouchstart = showControls;
+        this.containerElemelt.ontouchend = hideControls;
       }
 
       // 阻止事件冒泡到点击进度条
@@ -441,25 +441,35 @@ class PrettyVideo {
     /** 监听video事件 */
     initEvent() {
       const video = this.videoElement;
-      // const ua = navigator.userAgent.toLocaleLowerCase();
+      const ua = navigator.userAgent.toLocaleLowerCase();
 
-      // // x5内核
-      // if (ua.match(/tencenttraveler/) != null || ua.match(/qqbrowse/) != null) {
-      //   this.renderer.setAttribute(video, 'x5-video-player-fullscreen', 'true'); // 进入全屏通知
-      //   // this.renderer.setAttribute(video, 'x-webkit-airplay', 'true'); // 设置允许设备播放
-      //   // this.renderer.setAttribute(video, 'x5-playsinline', 'true'); // 设置android在微信中内联播放视频 这是坑微信无法正常横屏
-      //   this.renderer.setAttribute(video, 'x5-video-player-type', 'h5'); // 关闭同层X5内核播放器    x5-video-player-type='h5' 启用Ｈ5同层播放器
-      //   this.renderer.setAttribute(video, 'x5-video-orientation', 'landscape|portrait'); // 控制横竖屏 可选值： landscape 横屏, portraint竖屏  默认值：portraint
-      // } else {
-      //   // ios端
-      //   this.renderer.setAttribute(video, 'webkit-playsinline', 'true'); // // 设置ios在微信中内联播放视频 ios9
-      //   this.renderer.setAttribute(video, 'playsinline', 'true'); // 设置ios在微信中内联播放视频 ios10/ios11
-      // }
+      // x5内核
+      if (ua.match(/tencenttraveler/) != null || ua.match(/qqbrowse/) != null) {
+        video.setAttribute('x5-video-player-fullscreen', 'true'); // 进入全屏通知
+        video.setAttribute('x-webkit-airplay', 'true'); // 设置允许设备播放
+        // video.setAttribute('x5-playsinline', 'true'); // 设置android在微信中内联播放视频 这是坑微信无法正常横屏
+        video.setAttribute('x5-video-player-type', 'h5'); // 关闭同层X5内核播放器    x5-video-player-type='h5' 启用Ｈ5同层播放器
+        video.setAttribute('x5-video-orientation', 'landscape|portrait'); // 控制横竖屏 可选值： landscape 横屏, portraint竖屏  默认值：portraint
+        // 进入全屏
+        video.addEventListener('x5videoenterfullscreen', () => {
+          const btnEl = this.containerElemelt.querySelector('#v_fullscreen');
+          Utils.addClass(btnEl, 'scale');
+        }, false);
+
+        // 退出全屏时
+        video.addEventListener('x5videoexitfullscreen', () => {
+          const btnEl = this.containerElemelt.querySelector('#v_fullscreen');
+          Utils.removeClass(btnEl, 'scale')
+        }, false);
+      } else {
+        // ios端
+        video.setAttribute('webkit-playsinline', 'true'); // // 设置ios在微信中内联播放视频 ios9
+        video.setAttribute('playsinline', 'true'); // 设置ios在微信中内联播放视频 ios10/ios11
+      }
 
 
       /** 播放按钮点击 */
-      const playBtn = this.containerElemelt.getElementsByClassName('play_btn');
-      for (const el of playBtn) {
+      for (const el of this.playBtnElement) {
         el.addEventListener('click', (e) => {
           if (this.isPause()) {
             this.play()
@@ -507,7 +517,8 @@ class PrettyVideo {
     
       // loadedmetadata ：元数据加载。当指定的音频/视频的元数据已加载时触发，元数据包括：时长、尺寸（仅视频）以及文本轨道
       video.addEventListener('loadedmetadata', (e) => {
-        this.setState('loadedmetadata')
+        this.setState('loadedmetadata');
+        this.controlsElement.style.display = 'block';
         console.log('视频的元数据已加载');
       });
     
@@ -593,7 +604,7 @@ class PrettyVideo {
         <video id="_pretty_video" class="p_video" width="100%">
             您的浏览器不支持Video播放器
         </video>
-        <div id="video_controls"></div>
+        <div id="video_controls" style="display: none;"></div>
         <div class="video_cover" id="v_error">
             <div class="cover_content">
                 <div class="cover_img error"></div>
