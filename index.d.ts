@@ -14,22 +14,17 @@ export interface Config {
     hideFullScreen?: boolean;
     /** 显示控制条 默认true */
     controls?: boolean;
-    // /** 视频容器高度 默认充满父级 */
-    // height?: 'auto' | string | boolean;
-    // /** 视频容器宽度 默认充满父级 */
-    // width?: 'auto' | string | boolean;
     /** 视频结束是否循环播放 */
     loop?: boolean;
     /** 预加载 默认 auto*/
     preload?: 'auto' | 'meta' | 'none';
-
 }
 
 export default class PrettyVideo {
     /** 初始化 */
     init(el: string | HTMLElement, config: Config): void;
     /** 获取当前播放时长和总时长 */
-    getDuration(): { currentSecond: number, durationSecond: number };
+    getDuration(): { currentSecond: number, durationSecond: number, currentText: string, durationText: string };
     /** 修改config */
     setupConfig(newConfig: Config): void;
     /** 修改播放地址 */
@@ -48,4 +43,6 @@ export default class PrettyVideo {
     on(eventName: string, callback: () => {}): void;
     /** 取消事件监听 */
     unOn(eventName: string): void
+    /** 销毁video包括dom元素 */
+    dispose(): void
 }

@@ -814,6 +814,8 @@ var src_PrettyVideo = /*#__PURE__*/function () {
   /** 倍速按钮 */
 
   /** 播放按钮 */
+
+  /** 遮掩层 */
   // 全屏状态
   // 进度条是否拖动中，防止拖动时候视频正常播放更新进度条
   // 当前视频播放音量 0 - 1
@@ -849,6 +851,8 @@ var src_PrettyVideo = /*#__PURE__*/function () {
     _defineProperty(this, "speedBtnElement", void 0);
 
     _defineProperty(this, "playBtnElement", void 0);
+
+    _defineProperty(this, "coverElement", void 0);
 
     _defineProperty(this, "config", {
       autoplay: false,
@@ -907,6 +911,7 @@ var src_PrettyVideo = /*#__PURE__*/function () {
         this.speedListElement = videoContainer.querySelector('#speed_con').children;
         this.speedBtnElement = videoContainer.querySelector('#speed_btn');
         this.playBtnElement = videoContainer.querySelectorAll('.play_btn');
+        this.coverElement = this.containerElemelt.getElementsByClassName('video_cover');
         this.setupConfig(config);
         this.setUrl({
           src: config.src,
@@ -949,6 +954,7 @@ var src_PrettyVideo = /*#__PURE__*/function () {
       this.videoElement.autoplay = this.config.autoplay ? true : false;
       this.videoElement.loop = this.config.loop ? true : false;
       this.videoElement.preload = this.config.preload;
+      this.containerElemelt.querySelector('#v_fullscreen').style.display = this.config.hideFullScreen ? 'none' : 'block';
       this.initControls();
     }
     /** 播放地址 */
@@ -1092,24 +1098,16 @@ var src_PrettyVideo = /*#__PURE__*/function () {
       }
 
       ;
+      this.containerElemelt.querySelector('#v_play').style.display = state !== 'waiting' && this.isPause() ? 'block' : 'none';
+      console.info(state);
       this.changePlayBtn();
-      var video_cover = this.containerElemelt.getElementsByClassName('video_cover');
-
-      var _iterator2 = _createForOfIteratorHelper(video_cover),
-          _step2;
-
-      try {
-        for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
-          var cover = _step2.value;
-          cover.style.display = 'none';
-        }
-      } catch (err) {
-        _iterator2.e(err);
-      } finally {
-        _iterator2.f();
-      }
+      this.containerElemelt.querySelector('#v_waiting').style.display = 'none'; // for(let cover of this.coverElement) { cover.style.display = 'none'; }
 
       switch (state) {
+        case 'waiting':
+          this.containerElemelt.querySelector('#v_waiting').style.display = 'block';
+          break;
+
         case 'error':
           this.containerElemelt.querySelector('#v_error').style.display = 'block';
           break;
@@ -1118,22 +1116,14 @@ var src_PrettyVideo = /*#__PURE__*/function () {
         case 'ended':
         case 'canplay':
         case 'pause':
-          this.containerElemelt.querySelector('#v_play').style.display = 'block';
-          break;
-
+        case 'durationchange':
         case 'loadstart':
-        case 'waiting':
-          this.containerElemelt.querySelector('#v_waiting').style.display = 'block';
-          break;
-
         case 'seeked':
-          this.containerElemelt.querySelector('#v_waiting').style.display = 'none';
+          break;
 
         default:
           break;
       }
-
-      console.log(state);
     }
     /** 获取进度条宽度，存在旋转屏幕导致宽度不一致，实时获取 */
 
@@ -1175,6 +1165,7 @@ var src_PrettyVideo = /*#__PURE__*/function () {
     value: function initControls() {
       var _this2 = this;
 
+      if (!this.config.controls) return;
       var controls = this.controlsElement;
 
       if (!this.config.controls) {
@@ -1192,25 +1183,25 @@ var src_PrettyVideo = /*#__PURE__*/function () {
 
       /** 倍速列表点击事件 */
 
-      var _iterator3 = _createForOfIteratorHelper(this.speedListElement),
-          _step3;
+      var _iterator2 = _createForOfIteratorHelper(this.speedListElement),
+          _step2;
 
       try {
-        for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
-          var i = _step3.value;
+        for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
+          var i = _step2.value;
           i.addEventListener('click', function (e) {
-            var _iterator4 = _createForOfIteratorHelper(_this2.speedListElement),
-                _step4;
+            var _iterator3 = _createForOfIteratorHelper(_this2.speedListElement),
+                _step3;
 
             try {
-              for (_iterator4.s(); !(_step4 = _iterator4.n()).done;) {
-                var el = _step4.value;
+              for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
+                var el = _step3.value;
                 el.classList.remove("on");
               }
             } catch (err) {
-              _iterator4.e(err);
+              _iterator3.e(err);
             } finally {
-              _iterator4.f();
+              _iterator3.f();
             }
 
             e.target.classList.add("on");
@@ -1221,9 +1212,9 @@ var src_PrettyVideo = /*#__PURE__*/function () {
         /** 全屏按钮点击 */
 
       } catch (err) {
-        _iterator3.e(err);
+        _iterator2.e(err);
       } finally {
-        _iterator3.f();
+        _iterator2.f();
       }
 
       this.containerElemelt.querySelector('#v_fullscreen').addEventListener('click', function (e) {
@@ -1333,9 +1324,10 @@ var src_PrettyVideo = /*#__PURE__*/function () {
           dotElmt.addEventListener(touchmove, move);
           dotElmt.addEventListener(touchend, chend);
         }
-      }, false);
-      var timeout = null; // 实现效果，pc端鼠标移入视频显示控制条，3秒无操作隐藏控制条
+      }, false); // 实现效果，pc端鼠标移入视频显示控制条，3秒无操作隐藏控制条
       // 移动端触摸视频时展示控制条, 3秒无操作隐藏控制条
+
+      var timeout = null;
 
       var showControls = function showControls() {
         clearTimeout(timeout);
@@ -1354,20 +1346,23 @@ var src_PrettyVideo = /*#__PURE__*/function () {
       };
 
       if (isPc) {
-        // 鼠标在容器移动时候触发显示
-        this.containerElemelt.addEventListener('mousemove', onmouseover); // 当鼠标移动到控制条上，取消隐藏，一直显示
+        if (this.config.autoHideControls) {
+          // 鼠标在容器移动时候触发显示
+          this.containerElemelt.addEventListener('mousemove', onmouseover); // 当鼠标移动到控制条上，取消隐藏，一直显示
 
-        this.controlsElement.addEventListener('mouseenter', function (e) {
-          _this2.containerElemelt.removeEventListener('mousemove', onmouseover);
+          this.controlsElement.addEventListener('mouseenter', function (e) {
+            _this2.containerElemelt.removeEventListener('mousemove', onmouseover);
 
-          showControls();
-        }); // 鼠标移开
+            showControls();
+          }); // 鼠标移开
 
-        this.controlsElement.addEventListener('mouseleave', function (e) {
-          _this2.containerElemelt.addEventListener('mousemove', onmouseover);
+          this.controlsElement.addEventListener('mouseleave', function (e) {
+            _this2.containerElemelt.addEventListener('mousemove', onmouseover);
 
-          hideControls();
-        }); // PC端点击音量按钮禁音
+            hideControls();
+          });
+        } // PC端点击音量按钮禁音
+
 
         this.containerElemelt.querySelector('#volume_img').addEventListener('click', function (e) {
           var val = parseFloat(_this2.volumesliderElement.value) > 0 ? 0.0 : _this2.currentvolum;
@@ -1390,8 +1385,10 @@ var src_PrettyVideo = /*#__PURE__*/function () {
           return showmoveLabel(e.clientX);
         });
       } else {
-        this.containerElemelt.ontouchstart = showControls;
-        this.containerElemelt.ontouchend = hideControls;
+        if (this.config.autoHideControls) {
+          this.containerElemelt.ontouchstart = showControls;
+          this.containerElemelt.ontouchend = hideControls;
+        }
       } // 阻止事件冒泡到点击进度条
 
 
@@ -1466,12 +1463,12 @@ var src_PrettyVideo = /*#__PURE__*/function () {
       /** 播放按钮点击 */
 
 
-      var _iterator5 = _createForOfIteratorHelper(this.playBtnElement),
-          _step5;
+      var _iterator4 = _createForOfIteratorHelper(this.playBtnElement),
+          _step4;
 
       try {
-        for (_iterator5.s(); !(_step5 = _iterator5.n()).done;) {
-          var el = _step5.value;
+        for (_iterator4.s(); !(_step4 = _iterator4.n()).done;) {
+          var el = _step4.value;
           el.addEventListener('click', function (e) {
             if (_this3.isPause()) {
               _this3.play();
@@ -1482,9 +1479,9 @@ var src_PrettyVideo = /*#__PURE__*/function () {
         } // 右键
 
       } catch (err) {
-        _iterator5.e(err);
+        _iterator4.e(err);
       } finally {
-        _iterator5.f();
+        _iterator4.f();
       }
 
       this.containerElemelt.oncontextmenu = function (e) {
@@ -1523,13 +1520,14 @@ var src_PrettyVideo = /*#__PURE__*/function () {
         var maxWidth = _this3.getProgressWidth();
 
         _this3.setDuration(video.currentTime / video.duration * maxWidth);
+
+        _this3.setState('durationchange');
       }); // loadedmetadata ：元数据加载。当指定的音频/视频的元数据已加载时触发，元数据包括：时长、尺寸（仅视频）以及文本轨道
 
       video.addEventListener('loadedmetadata', function (e) {
         _this3.setState('loadedmetadata');
 
-        _this3.controlsElement.style.display = 'block';
-        console.log('视频的元数据已加载');
+        if (_this3.config.controls) _this3.controlsElement.style.display = 'block';
       }); // loadeddata：视频下载监听。当当前帧的数据已加载，但没有足够的数据来播放指定音频/视频的下一帧时触发
       // video.addEventListener('loadeddata', (e) => {
       //   console.log('提示当前帧的数据是可用的');

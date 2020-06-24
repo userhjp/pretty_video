@@ -29,6 +29,8 @@ class PrettyVideo {
    private speedBtnElement: any;
    /** 播放按钮 */
    private playBtnElement: any;
+   /** 遮掩层 */
+   private coverElement: any;
    private config: Config = {
       autoplay: false,
       autoHideControls: true,
@@ -67,6 +69,7 @@ class PrettyVideo {
         this.speedListElement = videoContainer.querySelector('#speed_con').children;
         this.speedBtnElement = videoContainer.querySelector('#speed_btn');
         this.playBtnElement = videoContainer.querySelectorAll('.play_btn');
+        this.coverElement = this.containerElemelt.getElementsByClassName('video_cover');
 
         this.setupConfig(config);
         this.setUrl({
@@ -98,6 +101,7 @@ class PrettyVideo {
       this.videoElement.autoplay = this.config.autoplay ? true : false;
       this.videoElement.loop = this.config.loop ? true : false;
       this.videoElement.preload = this.config.preload;
+      this.containerElemelt.querySelector('#v_fullscreen').style.display = this.config.hideFullScreen ? 'none' : 'block';
       this.initControls();
     }
 
@@ -195,14 +199,19 @@ class PrettyVideo {
     }
     
     /** 更新当前状态 */
-    setState(state: 'loadstart' | 'canplay' | 'play' | 'pause' | 'waiting' | 'playing' | 'ended' | 'error' | 'seeked' | 'loadedmetadata' | 'canplaythrough') {
+    setState(state: 'loadstart' | 'canplay' | 'play' | 'pause' | 'waiting' | 'playing' | 'ended' | 'error' | 'seeked' | 'loadedmetadata' | 'canplaythrough' | 'durationchange') {
       if(typeof this.envents[state] === 'function') {
         this.envents[state]({type: 'state'})
       };
+      this.containerElemelt.querySelector('#v_play').style.display = (state !== 'waiting' && this.isPause()) ? 'block' : 'none';
+      console.info(state);
       this.changePlayBtn();
-      const video_cover = this.containerElemelt.getElementsByClassName('video_cover');
-      for(let cover of video_cover) { cover.style.display = 'none'; }
+      this.containerElemelt.querySelector('#v_waiting').style.display = 'none';
+      // for(let cover of this.coverElement) { cover.style.display = 'none'; }
       switch (state) {
+        case 'waiting':
+          this.containerElemelt.querySelector('#v_waiting').style.display = 'block';
+          break;
         case 'error':
           this.containerElemelt.querySelector('#v_error').style.display = 'block';
           break;
@@ -210,18 +219,13 @@ class PrettyVideo {
         case 'ended':
         case 'canplay':
         case 'pause':
-          this.containerElemelt.querySelector('#v_play').style.display = 'block';
-          break;
+        case 'durationchange':
         case 'loadstart':
-        case 'waiting':
-          this.containerElemelt.querySelector('#v_waiting').style.display = 'block';
-          break;
         case 'seeked':
-          this.containerElemelt.querySelector('#v_waiting').style.display = 'none';
+          break;
         default:
           break;
       }
-      console.log(state);
     }
 
     /** 获取进度条宽度，存在旋转屏幕导致宽度不一致，实时获取 */
@@ -249,6 +253,7 @@ class PrettyVideo {
     
     /** 初始化控制条 */
     private initControls() {
+      if(!this.config.controls) return;
       const controls = this.controlsElement;
       if(!this.config.controls) {
         return controls.style.display = 'none';
@@ -358,10 +363,10 @@ class PrettyVideo {
           dotElmt.addEventListener(touchend, chend);
         }
       }, false);
-
-      let timeout = null;
+      
       // 实现效果，pc端鼠标移入视频显示控制条，3秒无操作隐藏控制条
       // 移动端触摸视频时展示控制条, 3秒无操作隐藏控制条
+      let timeout = null;
       const showControls = () => {
         clearTimeout(timeout);
         Utils.addClass(this.containerElemelt, 'showControls');
@@ -372,27 +377,28 @@ class PrettyVideo {
         }, 4000);
       }
 
-      
       const onmouseover = (e) => {
         showControls();
         hideControls();
       };
 
       if (isPc) {
-        // 鼠标在容器移动时候触发显示
-        this.containerElemelt.addEventListener('mousemove', onmouseover);
-        // 当鼠标移动到控制条上，取消隐藏，一直显示
-        this.controlsElement.addEventListener('mouseenter', (e) => {
-          this.containerElemelt.removeEventListener('mousemove', onmouseover);
-          showControls();
-        });
-
-        // 鼠标移开
-        this.controlsElement.addEventListener('mouseleave', (e) => {
+        if(this.config.autoHideControls) {
+          // 鼠标在容器移动时候触发显示
           this.containerElemelt.addEventListener('mousemove', onmouseover);
-          hideControls();
-        });
+          // 当鼠标移动到控制条上，取消隐藏，一直显示
+          this.controlsElement.addEventListener('mouseenter', (e) => {
+            this.containerElemelt.removeEventListener('mousemove', onmouseover);
+            showControls();
+          });
 
+          // 鼠标移开
+          this.controlsElement.addEventListener('mouseleave', (e) => {
+            this.containerElemelt.addEventListener('mousemove', onmouseover);
+            hideControls();
+          });
+        }
+      
         // PC端点击音量按钮禁音
         this.containerElemelt.querySelector('#volume_img').addEventListener('click', (e) => {
           const val = parseFloat(this.volumesliderElement.value) > 0 ? 0.0 : this.currentvolum;
@@ -411,8 +417,10 @@ class PrettyVideo {
         // 鼠标移动
         this.progressElement.addEventListener('mousemove', (e) => showmoveLabel(e.clientX))
       } else {
-        this.containerElemelt.ontouchstart = showControls;
-        this.containerElemelt.ontouchend = hideControls;
+        if(this.config.autoHideControls) {
+          this.containerElemelt.ontouchstart = showControls;
+          this.containerElemelt.ontouchend = hideControls;
+        }
       }
 
       // 阻止事件冒泡到点击进度条
@@ -513,13 +521,13 @@ class PrettyVideo {
       video.addEventListener('durationchange', (e) => {
         const maxWidth = this.getProgressWidth();
         this.setDuration(video.currentTime / video.duration * maxWidth);
+        this.setState('durationchange');
       });
     
       // loadedmetadata ：元数据加载。当指定的音频/视频的元数据已加载时触发，元数据包括：时长、尺寸（仅视频）以及文本轨道
       video.addEventListener('loadedmetadata', (e) => {
         this.setState('loadedmetadata');
-        this.controlsElement.style.display = 'block';
-        console.log('视频的元数据已加载');
+        if(this.config.controls) this.controlsElement.style.display = 'block';
       });
     
       // loadeddata：视频下载监听。当当前帧的数据已加载，但没有足够的数据来播放指定音频/视频的下一帧时触发
@@ -575,7 +583,7 @@ class PrettyVideo {
     
       // ended：播放结束
       video.addEventListener('ended', (e) => {
-        this.setState('ended')
+        this.setState('ended');
         this.containerElemelt.getElementsByClassName('play_btn')[0].classList.remove('suspend');
       });
     

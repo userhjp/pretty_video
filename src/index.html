@@ -36,8 +36,10 @@
         myVideo.init('MyVideo', {
             src: obj['one'].url,
             poster: obj['one'].poster,
-            autoplay: true,
-            controls: true
+            autoplay: false,
+            controls: true,
+            autoHideControls: false,
+            hideFullScreen: false
         });
     }
 
