@@ -30,7 +30,6 @@ class PrettyVideo {
    /** 播放按钮 */
    private playBtnElement: any;
    /** 遮掩层 */
-   private coverElement: any;
    private config: Config = {
       autoplay: false,
       autoHideControls: true,
@@ -53,23 +52,23 @@ class PrettyVideo {
       try {
         const videoContainer = typeof el === 'string' ? document.getElementById(el) : el;
         if(!videoContainer) throw new Error("无效的dom元素，请在页面加载完成后初始化播放器。");
-        videoContainer.innerHTML = this.videoHtml;
-        this.containerElemelt = videoContainer.querySelector('#video_container');;
-        this.videoElement = videoContainer.querySelector('#_pretty_video');
-        this.controlsElement = videoContainer.querySelector('#video_controls');
+        const container = document.createElement('div');
+        container.innerHTML = this.videoHtml;
+        this.containerElemelt = container.querySelector('#video_container');;
+        this.videoElement = container.querySelector('#_pretty_video');
+        this.controlsElement = container.querySelector('#video_controls');
         this.controlsElement.innerHTML = this.controlsHtml;
-        this.progressElement = videoContainer.querySelector('#progress');
+        this.progressElement = container.querySelector('#progress');
         this.currentSpElement = this.progressElement.querySelector('.current_progress');
         this.progressBufferElement = this.progressElement.querySelector('.current_buffer');
         this.dotElement = this.progressElement.querySelector('.current_dot');
-        this.volumesliderElement = videoContainer.querySelector('#volumeslider');
+        this.volumesliderElement = container.querySelector('#volumeslider');
    
-        this.dateLabelElement = videoContainer.querySelector('.date_label');
-        this.timeElement = videoContainer.querySelector('.time');
-        this.speedListElement = videoContainer.querySelector('#speed_con').children;
-        this.speedBtnElement = videoContainer.querySelector('#speed_btn');
-        this.playBtnElement = videoContainer.querySelectorAll('.play_btn');
-        this.coverElement = this.containerElemelt.getElementsByClassName('video_cover');
+        this.dateLabelElement = container.querySelector('.date_label');
+        this.timeElement = container.querySelector('.time');
+        this.speedListElement = container.querySelector('#speed_con').children;
+        this.speedBtnElement = container.querySelector('#speed_btn');
+        this.playBtnElement = container.querySelectorAll('.play_btn');
 
         this.setupConfig(config);
         this.setUrl({
@@ -77,6 +76,7 @@ class PrettyVideo {
           poster: config.poster,
         });
         this.initEvent();
+        videoContainer.appendChild(container);
       } catch (error) {
         console.error(error);
       }
@@ -108,8 +108,8 @@ class PrettyVideo {
     /** 播放地址 */
     setUrl(object: { src: string, poster?: string }) {
       if(!this.videoElement) throw new Error("请先初始化播放器!");
-      this.videoElement.src = object.src || '';
-      this.videoElement.poster = object.poster || '';
+      this.videoElement.setAttribute('src', object.src || '');
+      this.videoElement.setAttribute('poster', object.poster || '');
     }
     
     /** 重新加载视频 */
@@ -214,6 +214,7 @@ class PrettyVideo {
           break;
         case 'error':
           this.containerElemelt.querySelector('#v_error').style.display = 'block';
+          this.containerElemelt.querySelector('#v_play').style.display = 'none';
           break;
         case 'play':
         case 'ended':
@@ -450,7 +451,6 @@ class PrettyVideo {
     initEvent() {
       const video = this.videoElement;
       const ua = navigator.userAgent.toLocaleLowerCase();
-
       // x5内核
       if (ua.match(/tencenttraveler/) != null || ua.match(/qqbrowse/) != null) {
         video.setAttribute('x5-video-player-fullscreen', 'true'); // 进入全屏通知
@@ -619,7 +619,7 @@ class PrettyVideo {
                 <div class="tips_text tips_error">资源加载失败~</div>
             </div>
         </div>
-        <div class="video_cover" id="v_play">
+        <div class="video_cover" id="v_play" style="display: none;">
             <div class="cover_content">
                 <div class="cover_img play play_btn"></div>
             </div>
