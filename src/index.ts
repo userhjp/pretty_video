@@ -9,8 +9,6 @@ class PrettyVideo {
    private videoElement: any;
    /** 控制条 */
    private controlsElement: any;
-   /** 音量滑动按钮 */
-   private volumesliderElement: any;
    /** 进度条容器 */
    private progressElement: any;
    /** 缓冲进度条 */
@@ -29,7 +27,9 @@ class PrettyVideo {
    private speedBtnElement: any;
    /** 播放按钮 */
    private playBtnElement: any;
-   /** 遮掩层 */
+   /** 音量滑动按钮 */
+   private volumesliderElement: any;
+
    private config: Config = {
       autoplay: false,
       autoHideControls: true,
@@ -609,7 +609,7 @@ class PrettyVideo {
     // 播放器element
     private videoHtml = `
       <div class="video_player showControls" id="video_container">
-        <video id="_pretty_video" class="p_video" width="100%">
+        <video id="_pretty_video" class="p_video">
             您的浏览器不支持Video播放器
         </video>
         <div id="video_controls" style="display: none;"></div>

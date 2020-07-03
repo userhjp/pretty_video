@@ -1,45 +1,45 @@
 class Utils {
     /**
      * 判断class是否存在
-     * @param obj dom对象
+     * @param el dom对象
      * @param cls class名称
      */
-    hasClass(obj: any,cls: string) {  
-        return obj.className.match(new RegExp('(\\s|^)' + cls + '(\\s|$)'));  
+    hasClass(el: HTMLElement,cls: string) {  
+        return el.className.match(new RegExp('(\\s|^)' + cls + '(\\s|$)'));  
     }
 
     /**
      * 添加class
-     * @param obj dom对象
+     * @param el dom对象
      * @param cls class
      */
-    addClass(obj: any,cls: string) {  
-        if (!this.hasClass(obj,cls)) obj.className += " " + cls;  
+    addClass(el: HTMLElement,cls: string) {  
+        if (!this.hasClass(el,cls)) el.className += " " + cls;  
     } 
 
     /**
      * 删除class
-     * @param obj dom对象
+     * @param el dom对象
      * @param cls class
      */
-    removeClass(obj: any,cls: string) {  
-        if (this.hasClass(obj,cls)) {  
+    removeClass(el: HTMLElement,cls: string) {  
+        if (this.hasClass(el,cls)) {  
             var reg = new RegExp('(\\s|^)' + cls + '(\\s|$)');  
-            obj.className = obj.className.replace(reg, ' ');  
+            el.className = el.className.replace(reg, ' ');  
         }
     }
 
     /**
      * 切换class 有则删除，无则添加
-     * @param obj dom对象
+     * @param el dom对象
      * @param cls class
      */
-    toggleClass(obj: any,cls: string) {  
-        if (this.hasClass(obj,cls)) {  
-            if(this.hasClass(obj,cls)){  
-                this.removeClass(obj,cls);  
+    toggleClass(el: HTMLElement,cls: string) {  
+        if (this.hasClass(el,cls)) {  
+            if(this.hasClass(el,cls)){  
+                this.removeClass(el,cls);  
             }else{  
-                this.addClass(obj,cls);  
+                this.addClass(el,cls);  
             }  
         }
     }
