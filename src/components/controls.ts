@@ -47,6 +47,11 @@ export class Controls {
 
     // 控制条按钮
     createControlsBtn() {
+        this.labelEl = document.createElement('span');
+        this.labelEl.className='date_label';
+        this.labelEl.innerText = '00:00';
+        this.controlsEl.appendChild(this.labelEl);
+
         // 左边容器
         this.controls_left = document.createElement('div');
         this.controls_left.className="controls_left";
@@ -60,7 +65,7 @@ export class Controls {
         this.timeEl = document.createElement('div');
         this.timeEl.className = 'time';
         this.timeEl.innerText = '00:00 / 00:00';
-  
+        
         this.controls_left.appendChild(this.play_btn);
         this.controls_left.appendChild(this.timeEl);
         this.controlsEl.appendChild(this.controls_left);
@@ -80,13 +85,6 @@ export class Controls {
         }
     }
 
-    // 创建label
-    createLabelEl() {
-        this.labelEl = document.createElement('span');
-        this.labelEl.className='date_label';
-        this.labelEl.innerText = '00:00';
-    }
-
     /** 设置缓存进度条百分比值 */
     setBufferPer(per: number) {
         this.current_buffer.style.width = per + '%';
@@ -96,7 +94,6 @@ export class Controls {
     getProgressWidth() {
       return this.progress.clientWidth;
     }
-
 
     /**
      * 根据当前X位置计算当前时间进度 
@@ -136,5 +133,30 @@ export class Controls {
       this.timeout = setTimeout(() => {
         Utils.removeClass(this.controlsEl, 'showControls');
       }, 4000);
+    }
+
+    /** 改变label位置 */
+    showmoveLabel = (clientX: number, videoDuration: number) => {
+        if (clientX < 0) clientX = 0;
+        this.labelEl.innerText = this.getCurrentLocationTime(clientX, videoDuration);
+        const minLeft = this.labelEl.clientWidth / 2;
+        const maxRight = this.progress.clientWidth - minLeft;
+        if (clientX < minLeft) clientX = minLeft; // 防止被遮掩
+        if (clientX > maxRight) clientX = maxRight;
+        this.labelEl.style.left = clientX + 'px';
+        this.labelEl.style.visibility = 'visible';
+    }
+
+    hidemoveLabel = () => {
+        this.labelEl.style.visibility = 'hidden';
+    }
+
+    /** 进度条变粗大 */
+    progressHover = (isHover: boolean) => {
+        if (isHover) {
+            Utils.addClass(this.progress, 'hover_cls')
+        } else {
+            Utils.removeClass(this.progress, 'hover_cls')
+        }
     }
 }

@@ -65,6 +65,22 @@ class PrettyVideo {
   /** 暂停播放 */
   pause = () => this.video?.el.pause();
 
+  /**
+   * 监听事件
+   * @param eventName 事件名称
+   * @param callback 回调
+   */
+  on(eventName: string, callback: Function) {
+    this.envents[eventName] = callback;
+  }
+
+  /**
+   * 取消事件监听
+   */
+  unOn(eventName: string){
+    delete this.envents[eventName];
+  }
+
   /** 播放器配置 */
   private initConfig(cfg: Config) {
     this.config = {...this.config, ...cfg};
@@ -79,6 +95,10 @@ class PrettyVideo {
   // video事件
   private handleStateChange() {
     this.video.onEvent = (state, e) => {
+      if(typeof this.envents[state] === 'function') {
+        this.envents[state]({type: 'state'})
+      };
+      console.info(state);
       switch (state) {
         case 'waiting':
           break;
@@ -93,7 +113,6 @@ class PrettyVideo {
         case 'loadstart':
         case 'seeked':
           this.controls.changePlay(this.isPause());
-          console.info(state);
           break;
         case 'timeupdate': // 播放中
           if (!this.isMove) { // 防止拖动进度条时候更新
@@ -153,6 +172,133 @@ class PrettyVideo {
       this.fullscreenBtn = new FullscreenBtn(this.containerElemelt);
       this.controls.controls_right.appendChild(this.fullscreenBtn.el);
     }
+
+    const video = this.video.el;
+    const isPc = Utils.isPC();
+    // pc端 和移动端事件区分
+    const touchstart = isPc ? 'mousedown' : 'touchstart'; // 鼠标按下/触摸
+    const touchmove = isPc ? 'mousemove' : 'touchmove'; // 开始移动/拖动
+    const touchend = isPc ? 'mouseup' : 'touchend'; // 松开/手指移开
+
+
+    // 进度条开始拖动
+    this.controls.current_dot.addEventListener(touchstart, (event: any) => {
+      if (!this.config.isFastForward) return;
+      event.preventDefault();
+      // 这里处理移动端进度条焦点变化
+      if (!isPc && !this.config.isFastForward) {
+        this.controls.progressHover(true);
+      }
+      const maxWidth = this.controls.getProgressWidth();
+      // 如果这个元素的位置内只有一个手指
+      if (isPc || event.targetTouches.length === 1) {
+        const touch = isPc ? event : event.targetTouches[0];
+        // 把元素放在手指所在的位置
+        const disX = touch.clientX - this.controls.current_dot.offsetLeft;
+        const getPosition = (e) => {
+          let l = e.clientX - disX;
+          if (l < 0) { l = 0; }
+          if (l > maxWidth) { l = maxWidth; }
+          return l;
+        };
+        const position = getPosition(touch);
+        if (!isPc) this.controls.showmoveLabel(position, this.video.el.duration);
+        // 开始拖动
+        const move = (e) => {
+          this.isMove = true;
+          const touch2 = isPc ? e : e.targetTouches[0];
+          const position = getPosition(touch2);
+          this.controls.setDuration(position, this.video.el.duration);
+          this.controls.showmoveLabel(position, this.video.el.duration);
+        };
+
+        // 如果浏览器下，需要全局监听拖动
+        const dotElmt = isPc ? window : this.controls.current_dot;
+        // 拖动完成 删除事件
+        const chend = (e) => {
+          // 拖动完成更新播放器时间
+          const touch2 = isPc ? e : e.changedTouches[0];
+          const position = getPosition(touch2);
+          // 更新视频实际播放时间
+          video.currentTime = position / maxWidth * video.duration;
+          this.isMove = false;
+          if (!isPc) { // 这里处理移动端进度条变化
+            this.controls.progressHover(false);
+            this.controls.hidemoveLabel();
+          }
+          dotElmt.removeEventListener(touchmove, move);
+          dotElmt.removeEventListener(touchend, chend);
+        };
+        dotElmt.addEventListener(touchmove, move);
+        dotElmt.addEventListener(touchend, chend);
+      }
+    }, false);
+    
+    // 实现效果，pc端鼠标移入视频显示控制条，3秒无操作隐藏控制条
+    // 移动端触摸视频时展示控制条, 3秒无操作隐藏控制条
+    let timeout = null;
+    const showControls = () => {
+      clearTimeout(timeout);
+      Utils.addClass(this.containerElemelt, 'showControls');
+    }
+    const hideControls = () => {
+      timeout = setTimeout(() => {
+        Utils.removeClass(this.containerElemelt, 'showControls');
+      }, 4000);
+    }
+
+    const onmouseover = (e) => {
+      showControls();
+      hideControls();
+    };
+
+    if (isPc) {
+      if(this.config.autoHideControls) {
+        // 鼠标在容器移动时候触发显示
+        this.containerElemelt.addEventListener('mousemove', onmouseover);
+        // 当鼠标移动到控制条上，取消隐藏，一直显示
+        this.controls.controlsEl.addEventListener('mouseenter', (e) => {
+          this.containerElemelt.removeEventListener('mousemove', onmouseover);
+          showControls();
+        });
+
+        // 鼠标移开
+        this.controls.controlsEl.addEventListener('mouseleave', (e) => {
+          this.containerElemelt.addEventListener('mousemove', onmouseover);
+          hideControls();
+        });
+      }
+    
+      ///进度条控制样式 mouseover mouseout：鼠标移入子元素时会重复触发所以使用mouseenter mouseleave
+      // PC端鼠标移入控制条变粗变大
+      this.controls.progress.addEventListener('mouseenter', (e) => this.controls.progressHover(true));
+      // 鼠标移开
+      this.controls.progress.addEventListener('mouseleave', (e) => {
+        this.controls.progressHover(false);
+        this.controls.hidemoveLabel();
+      });
+      // 鼠标移动
+      this.controls.progress.addEventListener('mousemove', (e) => this.controls.showmoveLabel(e.clientX, this.video.el.duration))
+    } else {
+      if(this.config.autoHideControls) {
+        this.containerElemelt.ontouchstart = showControls;
+        this.containerElemelt.ontouchend = hideControls;
+      }
+    }
+
+    // 阻止事件冒泡到点击进度条
+    this.controls.current_dot.onmousedown = (event) => event.stopPropagation();
+
+    // 鼠标按下时候，跳转进度
+    this.controls.progress.onmousedown = (event: any) => {
+      if (!this.config.isFastForward) return;
+      const maxWidth = this.controls.getProgressWidth();
+      let layerX = event.layerX;
+      if (layerX > maxWidth) { layerX = maxWidth; }
+      video.currentTime = layerX / maxWidth * video.duration; // 计算出点击的位置在总时间里面占多少。
+      this.controls.setDuration(layerX, this.video.el.duration);
+    };
+
   }
 }
 
