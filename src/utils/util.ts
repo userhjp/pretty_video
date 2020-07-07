@@ -14,7 +14,8 @@ export class Utils {
      * @param cls class
      */
     static addClass(el: HTMLElement,cls: string) {  
-        if (!this.hasClass(el,cls)) el.className += ' ' + cls;  
+        // if (!this.hasClass(el,cls)) el.className += ' ' + cls; 
+        if (!this.hasClass(el,cls)) el.classList.add(cls);   
     } 
 
     /**
@@ -24,8 +25,9 @@ export class Utils {
      */
     static removeClass(el: HTMLElement,cls: string) {  
         if (this.hasClass(el,cls)) {  
-            var reg = new RegExp('(\\s|^)' + cls + '(\\s|$)');  
-            el.className = el.className.replace(reg, ' ');  
+            // var reg = new RegExp('(\\s|^)' + cls + '(\\s|$)');  
+            // el.className = el.className.replace(reg, ' ');  
+            el.classList.remove(cls);
         }
     }
 

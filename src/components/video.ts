@@ -3,14 +3,52 @@ export type VideoState = 'loadstart' | 'canplay' | 'play' | 'pause' | 'waiting' 
 export class Video {
     onEvent: (eventName: VideoState, e: any) => void; // 监听事件列表
     el: HTMLVideoElement;
+    posterEl: HTMLImageElement;
 
     constructor() {
         this.createVideoEl();
+        this.createPosterEl();
+    }
+
+    setCurrentTime(time: number) {
+        this.el.currentTime = time;
+    }
+
+    /** 播放地址 */
+    setUrl(object: { src: string, poster?: string }) {
+        if(!this?.el) throw new Error("请先初始化播放器!");
+        this.el.setAttribute('src', object.src || '');
+        this.posterEl.src = object.poster;
+
     }
 
     private setState(event: VideoState, e: any) {
         if(typeof this.onEvent === 'function') {
             this.onEvent(event, e);
+        }
+    }
+
+    showPoster() {
+        this.posterEl.style.display = 'block';
+    }
+
+    hidePoster() {
+        this.posterEl.style.display = 'none';
+    }
+
+    
+    createPosterEl() {
+        this.posterEl = document.createElement('img');
+        this.posterEl.className="poster_img";
+        this.posterEl.style.position = 'absolute';
+        this.posterEl.style.top = '0';
+        this.posterEl.style.left = '0';
+        this.posterEl.style.objectFit = 'cover';
+        this.posterEl.style.height = '100%';
+        this.posterEl.style.width = '100%';
+        this.posterEl.style.display = 'none';
+        this.posterEl.onerror = () => {
+            this.hidePoster();
         }
     }
 
@@ -37,6 +75,21 @@ export class Video {
             videoEl.setAttribute('webkit-playsinline', 'true'); // // 设置ios在微信中内联播放视频 ios9
             videoEl.setAttribute('playsinline', 'true'); // 设置ios在微信中内联播放视频 ios10/ios11
         };
+
+        // 双击播放器暂停，移动端无双击事件，用两次点击时间模拟 300 毫秒2次点击为双击
+        let clickTime = 0;
+        videoEl.addEventListener('click', () => {
+            const nowTime = new Date().getTime();
+            if (nowTime - clickTime < 300) {
+                if(videoEl.paused) {
+                    videoEl.play()
+                } else {
+                    videoEl.pause()
+                }
+            }
+            clickTime = nowTime;
+        });
+
         this.el = videoEl;
         this.initEvent();
     }
