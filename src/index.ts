@@ -25,7 +25,7 @@ class PrettyVideo {
     controls: true, 
     loop: false, 
     preload: 'auto',
-    debug: false
+    debug: false,
   }
 
   private envents: { [key: string]: Function } = {}; // 监听事件列表

@@ -6,6 +6,11 @@
   <base href="./">
   <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <!-- <style type="text/css">
+    #MyVideo {
+        height: 300px;
+    }
+  </style> -->
 </head>
 <body>
  <div id="MyVideo"></div>
@@ -34,11 +39,12 @@
     }
     window.onload = function () {
         myVideo.init('MyVideo', {
+            height: '210px',
             src: obj['one'].url,
             poster: obj['one'].poster,
             autoplay: false,
             controls: true,
-            autoHideControls: true,
+            autoHideControls: false,
             hideFullScreen: false
         });
         // myVideo.on('canplay', function(){

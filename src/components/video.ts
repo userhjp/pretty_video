@@ -47,8 +47,10 @@ export class Video {
         this.posterEl.style.position = 'absolute';
         this.posterEl.style.top = '0';
         this.posterEl.style.left = '0';
+        this.posterEl.style.right = '0';
+        this.posterEl.style.bottom = '0';
+        this.posterEl.style.margin = 'auto';
         this.posterEl.style.objectFit = 'cover';
-        this.posterEl.style.height = '100%';
         this.posterEl.style.width = '100%';
         this.posterEl.style.display = 'none';
         this.posterEl.onerror = () => {
