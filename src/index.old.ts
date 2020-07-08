@@ -37,7 +37,8 @@ class PrettyVideo {
       hideFullScreen: false,
       controls: true, 
       loop: false, 
-      preload: 'auto'
+      preload: 'auto',
+      debug: false
     }
     private isFullscreen = false; // 全屏状态
     private isMove = false; // 进度条是否拖动中，防止拖动时候视频正常播放更新进度条

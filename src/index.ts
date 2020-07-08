@@ -118,7 +118,7 @@ class PrettyVideo {
         this.envents[state]({type: 'state'})
       };
       this.videoCover.setState(this.isPause() ? 'play' : '');
-      console.log(state)
+      if(this.config.debug) console.log(state);
       switch (state) {
         case 'waiting':
           this.videoCover.setState('loading');
