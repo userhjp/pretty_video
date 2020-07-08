@@ -39,14 +39,14 @@
     }
     window.onload = function () {
         myVideo.init('MyVideo', {
-            height: '210px',
-            src: obj['one'].url,
-            poster: obj['one'].poster,
+            // src: obj['one'].url,
+            // poster: obj['one'].poster,
             autoplay: false,
             controls: true,
             autoHideControls: false,
             hideFullScreen: false
         });
+        this.changeurl('one');
         // myVideo.on('canplay', function(){
         //     console.log('hahahahahah ')
         // })

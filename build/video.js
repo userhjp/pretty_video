@@ -1806,8 +1806,10 @@ var src_PrettyVideo = /*#__PURE__*/function () {
   src_createClass(PrettyVideo, [{
     key: "init",
     // 监听事件列表
-    value: function init(el, config) {
+    value: function init(el) {
       var _this2 = this;
+
+      var config = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 
       try {
         var videoContainer = typeof el === 'string' ? document.getElementById(el) : el;
@@ -1832,10 +1834,16 @@ var src_PrettyVideo = /*#__PURE__*/function () {
         this.containerElemelt.appendChild(this.video.el);
         this.containerElemelt.appendChild(this.video.posterEl);
         this.initConfig(config);
-        this.setUrl({
-          src: config.src,
-          poster: config.poster
-        });
+
+        if (config.src) {
+          this.setUrl({
+            src: config.src,
+            poster: config.poster
+          });
+        } else {
+          this.videoCover.setState('loading');
+        }
+
         videoContainer.appendChild(this.containerElemelt);
       } catch (error) {
         console.error(error);

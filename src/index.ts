@@ -30,7 +30,7 @@ class PrettyVideo {
 
   private envents: { [key: string]: Function } = {}; // 监听事件列表
 
-  init(el: string | HTMLElement, config: Config) {
+  init(el: string | HTMLElement, config: Config = {}) {
     try {
       const videoContainer = typeof el === 'string' ? document.getElementById(el) : el;
       if(!videoContainer) throw new Error("无效的dom元素，请在页面加载完成后初始化播放器。");
@@ -46,13 +46,18 @@ class PrettyVideo {
       this.handleStateChange();
       this.containerElemelt.appendChild(this.video.el);
       this.containerElemelt.appendChild(this.video.posterEl);
-
       this.initConfig(config);
-      this.setUrl({
-        src: config.src,
-        poster: config.poster,
-      });
+
+      if(config.src) {
+        this.setUrl({
+          src: config.src,
+          poster: config.poster,
+        });
+      } else {
+        this.videoCover.setState('loading');
+      }
       videoContainer.appendChild(this.containerElemelt);
+ 
     } catch (error) {
       console.error(error);
     }
