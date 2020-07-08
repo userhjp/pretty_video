@@ -18,7 +18,7 @@ export interface Config {
     loop?: boolean;
     /** 预加载 默认 auto*/
     preload?: 'auto' | 'meta' | 'none';
-    debug: boolean
+    debug?: boolean
 }
 
 export default class PrettyVideo {

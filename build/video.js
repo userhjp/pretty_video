@@ -1900,7 +1900,7 @@ var src_PrettyVideo = /*#__PURE__*/function () {
 
         _this3.videoCover.setState(_this3.isPause() ? 'play' : '');
 
-        console.log(state);
+        if (_this3.config.debug) console.log(state);
 
         switch (state) {
           case 'waiting':

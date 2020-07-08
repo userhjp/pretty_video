@@ -1,6 +1,6 @@
 {
   "name": "pretty-video",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "author": "hujianping<819502953@qq.com>",
   "description": "基于video标签自定义播放器，原video播放器各个浏览器表现不一，自定义video控制栏",
   "main": "build/video.min.js",
