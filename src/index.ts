@@ -1,6 +1,7 @@
 import { Config } from "index";
 import { Video, Controls, VolumeBtn, SpeedBtn, FullscreenBtn, VideoCover } from './components';
 import './index.less';
+import { Utils } from './utils';
 
 class PrettyVideo {
    /** 容器 */
@@ -23,7 +24,8 @@ class PrettyVideo {
     hideFullScreen: false,
     controls: true, 
     loop: false, 
-    preload: 'auto'
+    preload: 'auto',
+    debug: false
   }
 
   private envents: { [key: string]: Function } = {}; // 监听事件列表
@@ -67,6 +69,22 @@ class PrettyVideo {
   isPause(): boolean { return this.video?.el.paused }
   /** 暂停播放 */
   pause = () => this.video?.el.pause();
+  /** 设置音量 */
+  setVolum = (value: number) => this.video.el.volume = value;
+  /** 销毁*/
+  dispose = () => {
+    this.containerElemelt.innerHTML = '';
+  }
+  /** 获取当前播放时长 */
+  getDuration = () => {
+    const currentSecond = this.video?.currentTime || 0; // 当前播放时长 单位：秒
+    const durationSecond = this.video?.duration || 0;// 总时长 单位：秒
+
+    // 转换格式HH:mm:ss  HH如果有的话才展示 否则展示mm:ss
+    const currentText = Utils.formatSeconds(this.video?.currentTime || 0); 
+    const durationText = Utils.formatSeconds(this.video?.duration || 0);
+    return { currentSecond, durationSecond, currentText, durationText };
+  }
 
   /**
    * 监听事件
@@ -167,9 +185,7 @@ class PrettyVideo {
     // 音量按钮
     this.volume = new VolumeBtn();
     this.controls.controls_right.appendChild(this.volume.el);
-    this.volume.valueChange = (value) => {
-      this.video.el.volume = value;
-    }
+    this.volume.valueChange = (value) => this.setVolum(value);
 
     // 倍速
     const speedBtn = new SpeedBtn();

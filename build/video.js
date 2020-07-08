@@ -1720,6 +1720,7 @@ function src_defineProperty(obj, key, value) { if (key in obj) { Object.definePr
 
 
 
+
 var src_PrettyVideo = /*#__PURE__*/function () {
   function PrettyVideo() {
     var _this = this;
@@ -1745,7 +1746,8 @@ var src_PrettyVideo = /*#__PURE__*/function () {
       hideFullScreen: false,
       controls: true,
       loop: false,
-      preload: 'auto'
+      preload: 'auto',
+      debug: false
     });
 
     src_defineProperty(this, "envents", {});
@@ -1770,6 +1772,32 @@ var src_PrettyVideo = /*#__PURE__*/function () {
       var _this$video3;
 
       return (_this$video3 = _this.video) === null || _this$video3 === void 0 ? void 0 : _this$video3.el.pause();
+    });
+
+    src_defineProperty(this, "setVolum", function (value) {
+      return _this.video.el.volume = value;
+    });
+
+    src_defineProperty(this, "dispose", function () {
+      _this.containerElemelt.innerHTML = '';
+    });
+
+    src_defineProperty(this, "getDuration", function () {
+      var _this$video4, _this$video5, _this$video6, _this$video7;
+
+      var currentSecond = ((_this$video4 = _this.video) === null || _this$video4 === void 0 ? void 0 : _this$video4.currentTime) || 0; // 当前播放时长 单位：秒
+
+      var durationSecond = ((_this$video5 = _this.video) === null || _this$video5 === void 0 ? void 0 : _this$video5.duration) || 0; // 总时长 单位：秒
+      // 转换格式HH:mm:ss  HH如果有的话才展示 否则展示mm:ss
+
+      var currentText = Utils.formatSeconds(((_this$video6 = _this.video) === null || _this$video6 === void 0 ? void 0 : _this$video6.currentTime) || 0);
+      var durationText = Utils.formatSeconds(((_this$video7 = _this.video) === null || _this$video7 === void 0 ? void 0 : _this$video7.duration) || 0);
+      return {
+        currentSecond: currentSecond,
+        durationSecond: durationSecond,
+        currentText: currentText,
+        durationText: durationText
+      };
     });
   }
 
@@ -1818,9 +1846,9 @@ var src_PrettyVideo = /*#__PURE__*/function () {
 
     /** 是否暂停状态 */
     value: function isPause() {
-      var _this$video4;
+      var _this$video8;
 
-      return (_this$video4 = this.video) === null || _this$video4 === void 0 ? void 0 : _this$video4.el.paused;
+      return (_this$video8 = this.video) === null || _this$video8 === void 0 ? void 0 : _this$video8.el.paused;
     }
     /** 暂停播放 */
 
@@ -1973,7 +2001,7 @@ var src_PrettyVideo = /*#__PURE__*/function () {
       this.controls.controls_right.appendChild(this.volume.el);
 
       this.volume.valueChange = function (value) {
-        _this4.video.el.volume = value;
+        return _this4.setVolum(value);
       }; // 倍速
 
 

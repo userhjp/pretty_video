@@ -18,6 +18,7 @@ export interface Config {
     loop?: boolean;
     /** 预加载 默认 auto*/
     preload?: 'auto' | 'meta' | 'none';
+    debug: boolean
 }
 
 export default class PrettyVideo {
@@ -25,8 +26,6 @@ export default class PrettyVideo {
     init(el: string | HTMLElement, config: Config): void;
     /** 获取当前播放时长和总时长 */
     getDuration(): { currentSecond: number, durationSecond: number, currentText: string, durationText: string };
-    /** 修改config */
-    setupConfig(newConfig: Config): void;
     /** 修改播放地址 */
     setUrl(obj: { src: string, poster?: string }): void;
     /** 重置播放 */
