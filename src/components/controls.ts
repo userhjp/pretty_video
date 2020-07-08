@@ -224,7 +224,7 @@ export class Controls {
     getOffsetXTimeText(offsetX: number) {
         const maxWidth = this.progressWidth; // 进度总长度，进度条-按钮
         if (offsetX > maxWidth) offsetX = maxWidth;
-        const slitherCurrentTime = offsetX / maxWidth * this.video.el.duration; // 当前拖动进度位置时间
+        const slitherCurrentTime = offsetX / maxWidth * this.video.duration; // 当前拖动进度位置时间
         const currentTime = `${Utils.formatSeconds(slitherCurrentTime)}`; // 当前播放进度- 分:秒
         return currentTime;
     }
@@ -240,10 +240,14 @@ export class Controls {
         this.current_dot.style.left = per + '%';
     }
 
-    /** 设置展示当前播放时间 */
+    /** 更新展示当前播放时间进度 */
     changePlayTimeText() {
-        const currentTime = Utils.formatSeconds(this.video.el.currentTime); // 当前播放时长
-        const duration = Utils.formatSeconds(this.video.el.duration); // 视频总长度- 分:秒
+        if (!this.isMove) { // 防止拖动进度条时候更新
+            const per = 100 * this.video.currentTime / this.video.duration;
+            this.setCurrentPlayPer(per);
+          }
+        const currentTime = Utils.formatSeconds(this.video.currentTime); // 当前播放时长
+        const duration = Utils.formatSeconds(this.video.duration); // 视频总长度- 分:秒
         this.timeEl.innerHTML = `${currentTime} / ${duration}`;
     }
 
@@ -253,7 +257,7 @@ export class Controls {
      */
     setPlayTime(offsetX: number) {
         if (offsetX > this.progressWidth) { offsetX = this.progressWidth; }
-        const time = offsetX / this.progressWidth * this.video.el.duration;
+        const time = offsetX / this.progressWidth * this.video.duration;
         this.video.setCurrentTime(time);
     }
 

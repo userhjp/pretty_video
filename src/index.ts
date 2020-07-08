@@ -110,32 +110,33 @@ class PrettyVideo {
           if(this.containerElemelt.contains(this.controls.controlsEl)) {
             this.containerElemelt.removeChild(this.controls.controlsEl);
           }
-          
           break;
-        case 'canplay':
+        case 'durationchange': // 视频时长变化
           if(!this.containerElemelt.contains(this.controls.controlsEl)) {
             this.containerElemelt.appendChild(this.controls.controlsEl);
+          };
+          if (!isNaN(this.video.duration)) { // 防止拖动进度条时候更新
+            const per = 100 * this.video.currentTime / this.video.duration;
+            this.controls.setCurrentPlayPer(per);
           }
-          this.controls.changePlayTimeText();
-          if(this.video.el.currentTime <= 0) {
-            this.video.showPoster();
-          }
-          
-        case 'play':
-          
-        case 'ended':
-   
-        case 'pause':
-        case 'durationchange':
         case 'loadstart':
+         this.videoCover.setState('loading');
+         break;
+        case 'play':
+        case 'ended':
+        case 'pause':
+
         case 'seeked':
           this.controls.changePlay(this.isPause());
           break;
+        case 'canplay':
+        case 'loadedmetadata': // 元数据加载完成
+            this.controls.changePlayTimeText();
+            if(this.video.currentTime <= 0) {
+              this.video.showPoster();
+            }
+          break;
         case 'timeupdate': // 播放中
-          if (!this.controls.isMove) { // 防止拖动进度条时候更新
-            const per = 100 * this.video.el.currentTime / this.video.el.duration;
-            this.controls.setCurrentPlayPer(per);
-          }
           this.controls.changePlayTimeText();
           this.video.hidePoster();
           break;
@@ -162,7 +163,6 @@ class PrettyVideo {
   /** 初始化控制条 */
   private initControls() {
     this.controls = new Controls(this.video, this.containerElemelt, this.config);
-    this.containerElemelt.appendChild(this.controls.controlsEl);
 
     // 音量按钮
     this.volume = new VolumeBtn();

@@ -36,6 +36,10 @@ export class Video {
         this.posterEl.style.display = 'none';
     }
 
+    get duration() { return isNaN(this.el.duration) ? 0 : this.el.duration };
+
+    get currentTime() { return isNaN(this.el.currentTime) ? 0 : this.el.currentTime }
+
     
     createPosterEl() {
         this.posterEl = document.createElement('img');
@@ -154,9 +158,9 @@ export class Video {
       // });
     
       // stalled：当浏览器尝试获取媒体数据，但数据不可用时
-      // this.el.addEventListener('stalled', (e) => {
-      //   console.log('媒体数据不可用');
-      // });
+    //   this.el.addEventListener('stalled', (e) => {
+    //     console.log('媒体数据不可用');
+    //   });
     
       // ratechange：当视频的播放速度已更改时
       // this.el.addEventListener('ratechange', (e) => {
