@@ -201,7 +201,7 @@ class PrettyVideo {
 
     if(!this.config.hideFullScreen) {
       // 全屏按钮
-      this.fullscreenBtn = new FullscreenBtn(this.containerElemelt);
+      this.fullscreenBtn = new FullscreenBtn(this.video.el);
       this.controls.controls_right.appendChild(this.fullscreenBtn.el);
     }
   }

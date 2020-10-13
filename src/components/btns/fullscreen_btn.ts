@@ -4,13 +4,12 @@ export class FullscreenBtn {
     el: HTMLElement;
     isFullscreen: boolean = false;
     
-    constructor(controlsEl: HTMLElement) {
+    constructor(videoEl: HTMLVideoElement) {
         this.el = document.createElement('i');
         this.el.className = 'button_img full';
 
         this.el.addEventListener('click', () => {
-            this.changeIcon(!this.isFullscreen);
-            this.fullscreen(this.isFullscreen, controlsEl);
+            this.fullscreen(this.isFullscreen, videoEl);
           })
     };
 
@@ -33,15 +32,18 @@ export class FullscreenBtn {
                 document['mozCancelFullScreen']();
             } else if (document['msExitFullscreen']) {
                 document['msExitFullscreen']();
-            } else {
+            } else if (document['webkitEnterFullscreen']){
                 return;
             }
             this.isFullscreen = false;
+            this.changeIcon(false);
         } else {
-            const requestMethod = el.requestFullScreen || el.webkitRequestFullScreen || el.mozRequestFullScreen || el.msRequestFullscreen;
+            const requestMethod = el.requestFullScreen || el.webkitRequestFullScreen || el.mozRequestFullScreen || el.msRequestFullscreen || el.webkitEnterFullscreen || el.enterFullScreen;
             if (requestMethod) {
                 requestMethod.call(el);
+                if(el.webkitEnterFullscreen || el.enterFullScreen) return;
                 this.isFullscreen = true;
+                this.changeIcon(true);
             } else {
                 alert('该浏览器不支持全屏')
             }

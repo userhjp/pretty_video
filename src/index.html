@@ -13,7 +13,7 @@
   </style> -->
 </head>
 <body>
- <div id="MyVideo"></div>
+ <div id="MyVideo" style="height: 220px;position: relative;"></div>
  <div id="button">
      <a href="#" onclick="changeurl('one')">测试视频1.mp4</a><br>
      <a href="#" onclick="changeurl('two')">测试视频2.mp4</a>
@@ -23,7 +23,7 @@
     var myVideo = new PrettyVideo();
     var obj = {
         one: {
-            url: 'https://media.w3.org/2010/05/sintel/trailer.mp4',
+            url: 'http://1251605855.vod2.myqcloud.com/07675748vodcq1251605855/c06a02805285890806589458296/p8Ak6DO8rj4A.mp4',
             poster: 'https://mjobh5.12582.cn/Uploads/2020/4/09dfcbe8-a2cb-4059-b7ea-ee3f96325845.jpg'
         },
         two: {
@@ -43,7 +43,7 @@
             // poster: obj['one'].poster,
             autoplay: false,
             controls: true,
-            autoHideControls: false,
+            autoHideControls: true,
             hideFullScreen: false
         });
         this.changeurl('one');
