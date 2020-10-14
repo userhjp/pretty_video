@@ -80,6 +80,7 @@ export class Video {
             // ios端
             videoEl.setAttribute('webkit-playsinline', 'true'); // // 设置ios在微信中内联播放视频 ios9
             videoEl.setAttribute('playsinline', 'true'); // 设置ios在微信中内联播放视频 ios10/ios11
+            videoEl.setAttribute('x5-video-player-type', 'h5');
         };
 
         // 双击播放器暂停，移动端无双击事件，用两次点击时间模拟 300 毫秒2次点击为双击
@@ -90,7 +91,7 @@ export class Video {
                 if(videoEl.paused) {
                     videoEl.play()
                 } else {
-                    videoEl.pause()
+                    videoEl.pause();
                 }
             }
             clickTime = nowTime;
