@@ -14,7 +14,7 @@ body {
       height: 100%;
       display: block;
       background: #000;
-      z-index: -1;
+      z-index: 9;
       object-fit: scale-down;
     }
   
@@ -22,9 +22,9 @@ body {
       display: flex;
       position: absolute;
       width: 100%;
-      height: 44px;
-      background-color: rgba(0, 16, 27, .7);
-      bottom: -44px;
+      height: 40px;
+      background-color: rgba(0, 16, 27, .6);
+      bottom: -40px;
       transition: bottom 0.3s;
       left: 0;
       justify-content: space-between;
@@ -119,6 +119,10 @@ body {
         /* 倍速 */
         .speed_bth {
           position: relative;
+
+          &:active {
+            background-color: none;
+          }
           .speed_li {
             position: absolute;
             display: none;
@@ -154,16 +158,16 @@ body {
             min-width: 40px;
             padding: 0 10px;
             line-height: 22px;
-            background-color: rgba(0, 0, 0, .35);
+            // background-color: rgba(0, 0, 0, .35);
             border-radius: 12px;
             font-size: 15px;
           }
         }
   
         .speed_bth:hover {
-          span {
-            background-color: @mainColor;
-          }
+          // span {
+          //   background-color: @mainColor;
+          // }
   
           .speed_li {
             display: block;
@@ -257,9 +261,11 @@ body {
         top: 0;
         left: 0;
         background-color: rgba(0, 0, 0, 0.7);
+        z-index: 999;
         .cover_content {
           width: 100px;
           height: 100px;
+          z-index: 999;
           overflow: auto;
           position: absolute;
           margin: auto;

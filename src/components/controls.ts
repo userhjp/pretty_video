@@ -272,7 +272,7 @@ export class Controls {
     hideControls = () => {
         this.timeout = setTimeout(() => {
             Utils.removeClass(this.controlsEl, 'showControls');
-        }, 4000);
+        }, 5000);
     }
 
     /** 改变label位置 */
