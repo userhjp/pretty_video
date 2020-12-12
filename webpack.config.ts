@@ -118,15 +118,10 @@ const config: Config = {
       // ])
     ],
     devServer: {
-      // dev: {
-      //   publicPath: path.resolve(__dirname, 'src'), 不知道这个啥意思 没搞懂
-      // },
       host: getHost(),
       port: '8080',
       open: false,
-      // proxy: {
-      //   '/api': 'http://localhost:3000'
-      // },
+      // proxy: { '/api': 'http://localhost:3000' },
       static: path.resolve(__dirname, 'src'), // 设置静态目录 服务器启动根目录
     },
 };
