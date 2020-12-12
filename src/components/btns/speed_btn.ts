@@ -18,17 +18,17 @@ export class SpeedBtn {
             <span id="speed_btn">1.0x</span>
         `;
 
-        const speed_con = this.el.querySelector('#speed_con').children;
+        const speed_con = this.el.querySelectorAll('#speed_con > div') || [];
         const speed_btn = this.el.querySelector('#speed_btn') as any;
         /** 倍速列表点击事件 */
-        for (const i of speed_con) {
-            i.addEventListener('click', (e: any) => {
-            for (const el of speed_con) { el.classList.remove("on"); }
-            e.target.classList.add("on");
-            speed_btn.innerText = e.target.innerText;
-            this.value = parseFloat(e.target.innerText);
-            this.valueChange && this.valueChange(this.value);
-          })
-        }
+        speed_con.forEach((f: Element) => {
+            f.addEventListener('click', (e: any) => {
+                speed_con.forEach((el: Element) => { el.classList.remove("on") })
+                e.target.classList.add("on");
+                speed_btn.innerText = e.target.innerText;
+                this.value = parseFloat(e.target.innerText);
+                this.valueChange && this.valueChange(this.value);
+            })
+        })
     };
 }

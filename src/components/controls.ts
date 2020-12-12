@@ -1,6 +1,6 @@
+import Config from 'src/config';
 import { Utils } from '../utils';
 import { Video } from './video';
-import { Config } from 'index';
 
 export class Controls {
     controlsEl: HTMLElement; // 控制条容器

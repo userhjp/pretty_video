@@ -1,7 +1,9 @@
-import { Config } from "index";
 import { Video, Controls, VolumeBtn, SpeedBtn, FullscreenBtn, VideoCover } from './components';
+import Config from './config';
 import './index.less';
 import { Utils } from './utils';
+
+
 
 class PrettyVideo {
    /** 容器 */
@@ -17,20 +19,13 @@ class PrettyVideo {
    /** cover */
    private videoCover: VideoCover;
 
-   private config: Config = {
-    autoplay: false,
-    autoHideControls: true,
-    isFastForward: true,
-    hideFullScreen: false,
-    controls: true, 
-    loop: false, 
-    preload: 'auto',
-    debug: false,
-  }
+   private config = new Config();
 
-  private envents: { [key: string]: Function } = {}; // 监听事件列表
+   private envents: { [key: string]: Function } = {}; // 监听事件列表
 
-  init(el: string | HTMLElement, config: Config = {}) {
+   constructor() {}
+
+   init(el: string | HTMLElement, config: Config = {}) {
     try {
       const videoContainer = typeof el === 'string' ? document.getElementById(el) : el;
       if(!videoContainer) throw new Error("无效的dom元素，请在页面加载完成后初始化播放器。");
