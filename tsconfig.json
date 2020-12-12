@@ -7,10 +7,11 @@
     "sourceMap": true,
     "downlevelIteration": true,
     "experimentalDecorators": true,
-    "module": "esnext",
+    "module": "commonjs",
     "moduleResolution": "node",
     "importHelpers": true,
-    "target": "es2015",
+    "target": "es5",
+    "esModuleInterop": true, // 支持使用import d from 'cjs'的方式引入commonjs包。
     "declaration": true
     // "paths": {
     //   "@shared/*": [ "src/app/shared/*" ],
