@@ -36,7 +36,7 @@ export class VolumeBtn {
         // 点击事件
         if(Utils.isPC()) {
             (this.el.querySelector('#volume_img') as any).addEventListener('click', (e) => {
-                e.preventDefault();
+                // e.preventDefault();
                 this.isMute = !this.isMute;
                 const val = this.isMute ? 0 : this.currentvolum;
                 this.setValue(val);
