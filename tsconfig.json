@@ -3,46 +3,29 @@
   "compilerOptions": {
     "sourceMap": true,
     "downlevelIteration": true,
-    "module": "esnext", // 指定模块生成方式，["commonjs", "amd", "umd", "system", "es6", "es2015", "esnext", "none"]
-    "target": "es2015", // 输出代码 ES 版本
-    "allowJs": true, // 编译时，允许有 js 文件
-    "allowSyntheticDefaultImports": true, // 允许引入没有默认导出的模块
-    "allowUnusedLabels": false, // 允许未使用的标签
-    "checkJs": true, // 验证 js 文件，与 allowJs 一同使用
-    "alwaysStrict":false, // 严格模式，为每个文件添加 "use strict"
-    "experimentalDecorators": true, // 允许注解语法
-    "emitDecoratorMetadata": true, // 装饰器
-    "esModuleInterop": true,
-    "noImplicitAny": false, // 是否默认禁用 any
-    "importHelpers": true, // 通过tslib 引入 helper 函数，文件必须是模块
-    "moduleResolution": "node", // 指定模块解析策略 'node' (Node) or 'classic'
-    // "sourceMap": false, // 生成对应的 map 文件
-    // "mapRoot": "dist", // 定义 source map 的存放位置
-    "inlineSourceMap": false, // 将 source map 一同生成到输出文件中
-    "inlineSources":false, // 将 ts 源码生成到 source map 中，需要同时设置 inlineSourceMap 或 sourceMap
-    "isolatedModules": false, // 将每个文件作为单独的模块
-    "noUnusedLocals":false, // 未使用的本地变量将报错
-    "noUnusedParameters": false, // 未使用的参数将报错
-    "removeComments": true, // 去除注释
-    "outDir": "dist", // 输出路径
-    "lib": ["es2017"], // TS 需要引用的库，即声明文件，es5 默认"dom", "es5", "scripthost"
-    "pretty": true, // 美化错误信息
+    "experimentalDecorators": true,
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "importHelpers": true,
+    "target": "es5",
+    "esModuleInterop": true, // 支持使用import d from 'cjs'的方式引入commonjs包。
     "declaration": true, // 生成 .d.ts 定义文件
-    // "declarationDir": "dist", // 生成定义文件的存放文件夹
-    "watch": false, // 监听文件变更
-    "baseUrl": "./",
-    "paths": {
-      "@models/*": ["src/models/*"],
-      "*": [
-        "node_modules/*",
-        "lib/types/*"
-      ],
-    }
+    "emitDeclarationOnly": true, // 只生成声明文件，而不会生成js文件
+    "declarationDir": "./dist/@types", // 生成定义文件的存放文件夹
+    // "paths": {
+    //   "@shared/*": [ "src/app/shared/*" ],
+    //   "@routes/*":[ "src/app/routes/*" ],
+    //   "@core/*": [ "src/app/core/*" ],
+    //   "@env/*": [ "src/environments/*" ]
+    // }
   },
-  "exclude": [
-    "node_modules"
+  "files": [
+    "src/index.ts"
   ],
-  "include":[
-    "./src/**/*", "index.d.ts"
-  ]
+  // "exclude": [
+  //   "node_modules"
+  // ],
+  // "include":[
+  //   "./src/**/*"
+  // ]
 }
