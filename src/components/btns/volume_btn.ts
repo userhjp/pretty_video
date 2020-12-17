@@ -27,7 +27,7 @@ export class VolumeBtn {
 
         // 音量拖动事件
         this.volumeSlider.oninput = (e: any) => {
-            e.stopPropagation();
+            e.preventDefault();
             this.currentvolum = e.target.value;
             this.setValue(this.currentvolum);
             this.valueChange && this.valueChange(this.currentvolum);
@@ -36,7 +36,7 @@ export class VolumeBtn {
         // 点击事件
         if(Utils.isPC()) {
             (this.el.querySelector('#volume_img') as any).addEventListener('click', (e) => {
-                e.stopPropagation();
+                e.preventDefault();
                 this.isMute = !this.isMute;
                 const val = this.isMute ? 0 : this.currentvolum;
                 this.setValue(val);

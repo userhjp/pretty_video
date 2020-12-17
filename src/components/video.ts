@@ -53,6 +53,7 @@ export class Video {
         this.posterEl.style.objectFit = 'cover';
         this.posterEl.style.width = '100%';
         this.posterEl.style.display = 'none';
+        this.posterEl.style.zIndex = '10';
         this.posterEl.onerror = () => {
             this.hidePoster();
         }

@@ -1,4 +1,4 @@
-import Config from 'src/config';
+import Config from '../config';
 import { Utils } from '../utils';
 import { Video } from './video';
 
@@ -81,7 +81,7 @@ export class Controls {
         // 进度条按钮拖动
         this.current_dot.addEventListener(touchstart, (event: any) => {
             event.preventDefault();
-            event.stopPropagation();
+            // event.stopPropagation();
             if (!this.config.isFastForward) return;
             // 移动端触摸到进度条变化
             if (!isPc && this.config.isFastForward) this.progressHover(true);
