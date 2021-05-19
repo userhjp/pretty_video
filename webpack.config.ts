@@ -86,19 +86,20 @@ const config: Config = {
   optimization: {
     // 优化项
     minimize: true,
-    // minimizer: [
-    // new UglifyJsPlugin({
-    //     include: /\.min\.js$/,  // 通过 include 设置只压缩 min.js 结尾的文件
-    //     // cache: true,  //是否启用文件缓存
-    //     // parallel: true, //使用多进程并行运行来提高构建速度
-    // }),
-    //   // new OptimizeCssAssetsPlugin({
-    //   //   assetNameRegExp: /\.css$/g, // 匹配需要优化或者压缩的资源名
-    //   //   cssProcessor: require('cssnano'), // 用于压缩和优化CSS 的处理器
-    //   //   cssProcessorOptions: { safe: true, discardComments: { removeAll: true } },
-    //   //   canPrint: true // 表示插件能够在console中打印信息，默认值是true
-    //   // }),
-    // ],
+    minimizer: [
+      // new UglifyJsPlugin({
+      //   include: /\.min\.js$/, // 通过 include 设置只压缩 min.js 结尾的文件
+      //   filename: '[name][base].js',
+      //   // cache: true,  //是否启用文件缓存
+      //   // parallel: true, //使用多进程并行运行来提高构建速度
+      // }),
+      //   // new OptimizeCssAssetsPlugin({
+      //   //   assetNameRegExp: /\.css$/g, // 匹配需要优化或者压缩的资源名
+      //   //   cssProcessor: require('cssnano'), // 用于压缩和优化CSS 的处理器
+      //   //   cssProcessorOptions: { safe: true, discardComments: { removeAll: true } },
+      //   //   canPrint: true // 表示插件能够在console中打印信息，默认值是true
+      //   // }),
+    ],
   },
   plugins: [
     // 插件数组

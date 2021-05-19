@@ -48,7 +48,7 @@ export declare class Controls {
      */
     setPlayTime(offsetX: number): void;
     private timeout;
-    /**显示控制条 */
+    /** 显示控制条 */
     showControls: () => void;
     /** 4秒后隐藏控制条 */
     hideControls: () => void;

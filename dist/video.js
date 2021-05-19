@@ -1,1 +1,5090 @@
-!function(t,e){"object"==typeof exports&&"object"==typeof module?module.exports=e():"function"==typeof define&&define.amd?define([],e):"object"==typeof exports?exports.PrettyVideo=e():t.PrettyVideo=e()}(self,(function(){return function(){var t={8762:function(t,e,n){"use strict";function r(t,e){for(var n=0;n<e.length;n++){var r=e[n];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(t,r.key,r)}}function i(t,e,n){return e in t?Object.defineProperty(t,e,{value:n,enumerable:!0,configurable:!0,writable:!0}):t[e]=n,t}n.d(e,{default:function(){return w}}),n(9070),n(3710),n(4916),n(4723);var o=function(){function t(){!function(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}(this,t),i(this,"onEvent",void 0),i(this,"el",void 0),i(this,"posterEl",void 0),this.createVideoEl(),this.createPosterEl()}var e,n;return e=t,(n=[{key:"setCurrentTime",value:function(t){this.el.currentTime=t}},{key:"setUrl",value:function(t){if(null==this||!this.el)throw new Error("请先初始化播放器!");this.el.setAttribute("src",t.src||""),this.posterEl.src=t.poster}},{key:"setState",value:function(t,e){"function"==typeof this.onEvent&&this.onEvent(t,e)}},{key:"showPoster",value:function(){this.posterEl.style.display="block"}},{key:"hidePoster",value:function(){this.posterEl.style.display="none"}},{key:"createPosterEl",value:function(){var t=this;this.posterEl=document.createElement("img"),this.posterEl.className="poster_img",this.posterEl.style.position="absolute",this.posterEl.style.top="0",this.posterEl.style.left="0",this.posterEl.style.right="0",this.posterEl.style.bottom="0",this.posterEl.style.margin="auto",this.posterEl.style.objectFit="cover",this.posterEl.style.width="100%",this.posterEl.style.display="none",this.posterEl.style.zIndex="10",this.posterEl.onerror=function(){t.hidePoster()}}},{key:"createVideoEl",value:function(){var t=this,e=document.createElement("video");e.className="p_video";var n=document.createTextNode("您的浏览器不支持Video播放器");e.appendChild(n);var r=navigator.userAgent.toLocaleLowerCase();null!=r.match(/tencenttraveler/)||null!=r.match(/qqbrowse/)?(e.setAttribute("x5-video-player-fullscreen","true"),e.setAttribute("x-webkit-airplay","true"),e.setAttribute("x5-video-player-type","h5"),e.setAttribute("x5-video-orientation","landscape|portrait"),e.addEventListener("x5videoenterfullscreen",(function(e){return t.setState("x5videoenterfullscreen",e)}),!1),e.addEventListener("x5videoexitfullscreen",(function(e){return t.setState("x5videoenterfullscreen",e)}),!1)):(e.setAttribute("webkit-playsinline","true"),e.setAttribute("playsinline","true"),e.setAttribute("x5-video-player-type","h5"));var i=0;e.addEventListener("click",(function(){var t=(new Date).getTime();t-i<300&&(e.paused?e.play():e.pause()),i=t})),this.el=e,this.initEvent()}},{key:"initEvent",value:function(){var t=this;this.el.addEventListener("loadstart",(function(e){return t.setState("loadstart",e)})),this.el.addEventListener("durationchange",(function(e){return t.setState("durationchange",e)})),this.el.addEventListener("loadedmetadata",(function(e){return t.setState("loadedmetadata",e)})),this.el.addEventListener("progress",(function(e){return t.setState("progress",e)})),this.el.addEventListener("canplay",(function(e){return t.setState("canplay",e)})),this.el.addEventListener("canplaythrough",(function(e){return t.setState("loadedmetadata",e)})),this.el.addEventListener("play",(function(e){return t.setState("play",e)})),this.el.addEventListener("pause",(function(e){return t.setState("pause",e)})),this.el.addEventListener("seeked",(function(e){return t.setState("seeked",e)})),this.el.addEventListener("waiting",(function(e){return t.setState("waiting",e)})),this.el.addEventListener("playing",(function(e){return t.setState("playing",e)})),this.el.addEventListener("timeupdate",(function(e){return t.setState("timeupdate",e)})),this.el.addEventListener("ended",(function(e){return t.setState("ended",e)})),this.el.addEventListener("error",(function(e){return t.setState("error",e)}))}},{key:"duration",get:function(){return isNaN(this.el.duration)?0:this.el.duration}},{key:"currentTime",get:function(){return isNaN(this.el.currentTime)?0:this.el.currentTime}}])&&r(e.prototype,n),t}();function c(t,e){for(var n=0;n<e.length;n++){var r=e[n];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(t,r.key,r)}}n(2222),n(2564),n(2772),n(9600),n(7042),n(1058),n(4603),n(9714);var a=function(){function t(){!function(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}(this,t)}var e,n;return e=t,n=[{key:"hasClass",value:function(t,e){return t.className.match(new RegExp("(\\s|^)"+e+"(\\s|$)"))}},{key:"addClass",value:function(t,e){this.hasClass(t,e)||t.classList.add(e)}},{key:"removeClass",value:function(t,e){this.hasClass(t,e)&&t.classList.remove(e)}},{key:"toggleClass",value:function(t,e){this.hasClass(t,e)&&(this.hasClass(t,e)?this.removeClass(t,e):this.addClass(t,e))}},{key:"isPC",value:function(){var t=navigator.userAgent,e=["Android","iPhone","SymbianOS","Windows Phone","iPad","iPod"],n=!0;for(var r in e)if(-1!==t.indexOf(e[r])){n=!1;break}return n}},{key:"formatSeconds",value:function(t){var e=parseInt(t),n=0,r=0;e>=60&&(n=Math.floor(e/60),e=Math.floor(e%60),n>=60&&(r=Math.floor(n/60),n=Math.floor(n%60)));var i="".concat(this.PrefixInteger(n),":").concat(this.PrefixInteger(e));return(r>0||t>=3600)&&(i="".concat(this.PrefixInteger(r),":").concat(i)),i}},{key:"PrefixInteger",value:function(t){var e=arguments.length>1&&void 0!==arguments[1]?arguments[1]:2;return t=isNaN(t)?0:Math.floor(t),(Array(e).join("0")+t).slice(-e)}}],null&&c(e.prototype,null),n&&c(e,n),t}();function s(t,e){for(var n=0;n<e.length;n++){var r=e[n];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(t,r.key,r)}}function u(t,e,n){return e in t?Object.defineProperty(t,e,{value:n,enumerable:!0,configurable:!0,writable:!0}):t[e]=n,t}var l=function(){function t(e,n,r){var i=this;!function(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}(this,t),this.video=e,this.containerElemelt=n,this.config=r,u(this,"controlsEl",void 0),u(this,"labelEl",void 0),u(this,"progress",void 0),u(this,"current_progress",void 0),u(this,"current_buffer",void 0),u(this,"current_dot",void 0),u(this,"play_btn",void 0),u(this,"timeEl",void 0),u(this,"controls_left",void 0),u(this,"controls_right",void 0),u(this,"isMove",!1),u(this,"timeout",null),u(this,"showControls",(function(){clearTimeout(i.timeout),a.addClass(i.controlsEl,"showControls")})),u(this,"hideControls",(function(){i.timeout=setTimeout((function(){a.removeClass(i.controlsEl,"showControls")}),5e3)})),u(this,"showmoveLabel",(function(t){t<0&&(t=0),i.labelEl.innerText=i.getOffsetXTimeText(t);var e=i.labelEl.clientWidth/2,n=i.progress.clientWidth-e;t<e&&(t=e),t>n&&(t=n),i.labelEl.style.left=t+"px",i.labelEl.style.visibility="visible"})),u(this,"hidemoveLabel",(function(){i.labelEl.style.visibility="hidden"})),u(this,"progressHover",(function(t){t?a.addClass(i.progress,"hover_cls"):a.removeClass(i.progress,"hover_cls")})),this.createControlsEl(),this.createControlsBtn(),r.controls&&this.showControls()}var e,n;return e=t,(n=[{key:"createControlsEl",value:function(){this.controlsEl=document.createElement("div"),this.controlsEl.className="p_controls",this.progress=document.createElement("div"),this.progress.className="progress_bar",this.current_progress=document.createElement("div"),this.current_progress.className="current_progress",this.current_buffer=document.createElement("div"),this.current_buffer.className="current_buffer",this.current_dot=document.createElement("i"),this.current_dot.className="current_dot",this.progress.appendChild(this.current_progress),this.progress.appendChild(this.current_buffer),this.progress.appendChild(this.current_dot),this.controlsEl.appendChild(this.progress),this.config.isFastForward&&this.config.controls&&this.initControlsEvent(),this.config.autoHideControls&&this.config.controls&&this.initAutoControls()}},{key:"initControlsEvent",value:function(){var t=this,e=a.isPC(),n=e?"mousedown":"touchstart",r=e?"mousemove":"touchmove",i=e?"mouseup":"touchend";this.progress.onmousedown=function(e){if(t.config.isFastForward){t.setPlayTime(e.offsetX);var n=100*e.offsetX/t.progressWidth;t.setCurrentPlayPer(n)}},this.current_dot.onmousedown=function(t){return t.stopPropagation()},this.current_dot.addEventListener(n,(function(n){if(n.preventDefault(),t.config.isFastForward&&(!e&&t.config.isFastForward&&t.progressHover(!0),e||1===n.targetTouches.length)){var o=e?n:n.targetTouches[0];e||t.showmoveLabel(o.clientX);var c=function(n){t.isMove=!0;var r=e?n:n.targetTouches[0],i=t.offsetXPer(r.clientX);t.setCurrentPlayPer(i),t.showmoveLabel(r.clientX)},a=e?window:t.current_dot;a.addEventListener(r,c),a.addEventListener(i,(function n(o){var s=e?o:o.changedTouches[0];t.setPlayTime(s.clientX),t.isMove=!1,e||t.progressHover(!1),t.hidemoveLabel(),a.removeEventListener(r,c),a.removeEventListener(i,n)}))}}),!1),e&&(this.progress.addEventListener("mouseenter",(function(e){return t.progressHover(!0)})),this.progress.addEventListener("mouseleave",(function(e){t.progressHover(!1),t.hidemoveLabel()})),this.progress.addEventListener("mousemove",(function(e){return t.showmoveLabel(e.clientX)})))}},{key:"initAutoControls",value:function(){var t=this,e=function(e){t.showControls(),t.hideControls()};a.isPC()?(this.containerElemelt.addEventListener("mousemove",e),this.controlsEl.addEventListener("mouseenter",(function(n){t.containerElemelt.removeEventListener("mousemove",e),t.showControls()})),this.controlsEl.addEventListener("mouseleave",(function(n){t.containerElemelt.addEventListener("mousemove",e),t.hideControls()}))):(this.containerElemelt.ontouchstart=this.showControls,this.containerElemelt.ontouchend=this.hideControls)}},{key:"createControlsBtn",value:function(){var t=this;this.labelEl=document.createElement("span"),this.labelEl.className="date_label",this.labelEl.innerText="00:00",this.controlsEl.appendChild(this.labelEl),this.controls_left=document.createElement("div"),this.controls_left.className="controls_left",this.play_btn=document.createElement("i"),this.play_btn.className="button_img play play_btn",this.play_btn.addEventListener("click",(function(){var e;null!==(e=t.video)&&void 0!==e&&e.el.paused?t.video.el.play():t.video.el.pause()})),this.timeEl=document.createElement("div"),this.timeEl.className="time",this.timeEl.innerText="00:00 / 00:00",this.controls_left.appendChild(this.play_btn),this.controls_left.appendChild(this.timeEl),this.controlsEl.appendChild(this.controls_left),this.controls_right=document.createElement("div"),this.controls_right.className="controls_right",this.controlsEl.appendChild(this.controls_right)}},{key:"changePlay",value:function(t){t?a.removeClass(this.play_btn,"suspend"):a.addClass(this.play_btn,"suspend")}},{key:"offsetXPer",value:function(t){return t<0&&(t=0),t>this.progressWidth&&(t=this.progressWidth),100*t/this.progressWidth}},{key:"getOffsetXTimeText",value:function(t){var e=this.progressWidth;t>e&&(t=e);var n=t/e*this.video.duration;return"".concat(a.formatSeconds(n))}},{key:"setBufferPer",value:function(t){this.current_buffer.style.width=t+"%"}},{key:"setCurrentPlayPer",value:function(t){this.current_progress.style.width=t+"%",this.current_dot.style.left=t+"%"}},{key:"changePlayTimeText",value:function(){if(!this.isMove){var t=100*this.video.currentTime/this.video.duration;this.setCurrentPlayPer(t)}var e=a.formatSeconds(this.video.currentTime),n=a.formatSeconds(this.video.duration);this.timeEl.innerHTML="".concat(e," / ").concat(n)}},{key:"setPlayTime",value:function(t){t>this.progressWidth&&(t=this.progressWidth);var e=t/this.progressWidth*this.video.duration;this.video.setCurrentTime(e)}},{key:"progressWidth",get:function(){return this.progress.clientWidth}}])&&s(e.prototype,n),t}();function M(t,e){for(var n=0;n<e.length;n++){var r=e[n];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(t,r.key,r)}}function d(t,e,n){return e in t?Object.defineProperty(t,e,{value:n,enumerable:!0,configurable:!0,writable:!0}):t[e]=n,t}var N=function(){function t(e){var n=this;!function(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}(this,t),this.containerElemelt=e,d(this,"el",void 0),d(this,"err_cover",void 0),d(this,"loading_cover",void 0),d(this,"play_btn_cover",void 0),d(this,"play",void 0),this.el=document.createElement("div"),this.el.className="video_cover";var r=document.createElement("div");r.className="cover_content",r.innerHTML='<div class="cover_img play play_btn"></div>',r.addEventListener("click",(function(){return n.play&&n.play()})),this.play_btn_cover=r;var i=document.createElement("div");i.className="cover_content",i.innerHTML='\n            <div class="cover_img error"></div>\n            <div class="tips_text tips_error">资源加载失败~</div>\n        ',this.err_cover=i;var o=document.createElement("div");o.className="cover_content",o.innerHTML='\n            <div class="video_loading">\n                <div>\n                    <div class="spot"></div>\n                    <div class="spot"></div>\n                    <div class="spot"></div>\n                    <div class="spot"></div>\n                    <div class="spot"></div>\n                </div>\n                <div class="tips_text">正在加载...</div>\n            </div>\n        ',this.loading_cover=o}var e,n;return e=t,(n=[{key:"setState",value:function(t){switch(this.containerElemelt.contains(this.el)&&this.containerElemelt.removeChild(this.el),this.el.innerHTML="",t){case"play":this.el.appendChild(this.play_btn_cover);break;case"loading":this.el.appendChild(this.loading_cover);break;case"error":this.el.appendChild(this.err_cover)}this.el.hasChildNodes()&&this.containerElemelt.appendChild(this.el)}}])&&M(e.prototype,n),t}();function y(t,e){for(var n=0;n<e.length;n++){var r=e[n];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(t,r.key,r)}}function f(t,e,n){return e in t?Object.defineProperty(t,e,{value:n,enumerable:!0,configurable:!0,writable:!0}):t[e]=n,t}n(4678);var v=function(){function t(){var e=this;!function(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}(this,t),f(this,"valueChange",void 0),f(this,"el",void 0),f(this,"volumeSlider",void 0),f(this,"currentvolum",.8),f(this,"isMute",!1),this.el=document.createElement("div"),this.el.className="volume_bth",this.el.innerHTML='\n            <div class="volume_con">\n                <div class="volume_slider">\n                    <input id="volumeslider" type=\'range\' min="0" max="1" step="0.01" value="0.8"/>\n                </div>\n            </div>\n            <i id="volume_img" class="button_img sound"></i>\n        ',this.volumeSlider=this.el.querySelector("#volumeslider"),this.volumeSlider.oninput=function(t){t.preventDefault(),e.currentvolum=t.target.value,e.setValue(e.currentvolum),e.valueChange&&e.valueChange(e.currentvolum)},a.isPC()&&this.el.querySelector("#volume_img").addEventListener("click",(function(t){e.isMute=!e.isMute;var n=e.isMute?0:e.currentvolum;e.setValue(n),e.valueChange&&e.valueChange(n)}))}var e,n;return e=t,(n=[{key:"setValue",value:function(t){var e="string"==typeof t?parseFloat(t):t;this.volumeSlider.style.backgroundSize="".concat(100*e,"% 100%"),this.volumeSlider.value="".concat(t);var n=this.el.querySelector("#volume_img");e&&n?n.classList.remove("mute"):n.classList.add("mute")}}])&&y(e.prototype,n),t}();function g(t,e){for(var n=0;n<e.length;n++){var r=e[n];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(t,r.key,r)}}function p(t,e,n){return e in t?Object.defineProperty(t,e,{value:n,enumerable:!0,configurable:!0,writable:!0}):t[e]=n,t}var h=function(){function t(e){var n=this;!function(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}(this,t),p(this,"el",void 0),p(this,"isFullscreen",!1),this.el=document.createElement("i"),this.el.className="button_img full",this.el.addEventListener("click",(function(){n.fullscreen(n.isFullscreen,e)}))}var e,n;return e=t,(n=[{key:"changeIcon",value:function(t){t?a.addClass(this.el,"scale"):a.removeClass(this.el,"scale")}},{key:"fullscreen",value:function(t,e){if(t){if(document.exitFullscreen)document.exitFullscreen();else if(document.webkitCancelFullScreen)document.webkitCancelFullScreen();else if(document.mozCancelFullScreen)document.mozCancelFullScreen();else if(document.msExitFullscreen)document.msExitFullscreen();else if(document.webkitEnterFullscreen)return;this.isFullscreen=!1,this.changeIcon(!1)}else{var n=e.requestFullScreen||e.webkitRequestFullScreen||e.mozRequestFullScreen||e.msRequestFullscreen||e.webkitEnterFullscreen||e.enterFullScreen;if(n){if(n.call(e),e.webkitEnterFullscreen||e.enterFullScreen)return;this.isFullscreen=!0,this.changeIcon(!0)}else alert("该浏览器不支持全屏")}}}])&&g(e.prototype,n),t}();function j(t,e,n){return e in t?Object.defineProperty(t,e,{value:n,enumerable:!0,configurable:!0,writable:!0}):t[e]=n,t}n(9554),n(4747);var T=function t(){var e=this;!function(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}(this,t),j(this,"valueChange",void 0),j(this,"el",void 0),j(this,"value",.8),this.el=document.createElement("div"),this.el.className="speed_bth",this.el.innerHTML='\n            <div id="speed_con" class="speed_li">\n                <div>2.0x</div>\n                <div>1.5x</div>\n                <div>1.2x</div>\n                <div class="on">1.0x</div>\n                <div>0.5x</div>\n            </div>\n            <span id="speed_btn">1.0x</span>\n        ';var n=this.el.querySelectorAll("#speed_con > div")||[],r=this.el.querySelector("#speed_btn");n.forEach((function(t){t.addEventListener("click",(function(t){n.forEach((function(t){t.classList.remove("on")})),t.target.classList.add("on"),r.innerText=t.target.innerText,e.value=parseFloat(t.target.innerText),e.valueChange&&e.valueChange(e.value)}))}))};function I(t,e,n){return e in t?Object.defineProperty(t,e,{value:n,enumerable:!0,configurable:!0,writable:!0}):t[e]=n,t}var D=function t(){!function(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}(this,t),I(this,"autoplay",!1),I(this,"src",void 0),I(this,"poster",void 0),I(this,"autoHideControls",!1),I(this,"isFastForward",!0),I(this,"hideFullScreen",!1),I(this,"controls",!0),I(this,"loop",!1),I(this,"preload","auto"),I(this,"debug",!1)},z=n(3379),x=n.n(z),L=n(8074);function m(t,e){var n=Object.keys(t);if(Object.getOwnPropertySymbols){var r=Object.getOwnPropertySymbols(t);e&&(r=r.filter((function(e){return Object.getOwnPropertyDescriptor(t,e).enumerable}))),n.push.apply(n,r)}return n}function E(t){for(var e=1;e<arguments.length;e++){var n=null!=arguments[e]?arguments[e]:{};e%2?m(Object(n),!0).forEach((function(e){A(t,e,n[e])})):Object.getOwnPropertyDescriptors?Object.defineProperties(t,Object.getOwnPropertyDescriptors(n)):m(Object(n)).forEach((function(e){Object.defineProperty(t,e,Object.getOwnPropertyDescriptor(n,e))}))}return t}function b(t,e){for(var n=0;n<e.length;n++){var r=e[n];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(t,r.key,r)}}function A(t,e,n){return e in t?Object.defineProperty(t,e,{value:n,enumerable:!0,configurable:!0,writable:!0}):t[e]=n,t}x()(L.Z,{insert:"head",singleton:!1}),L.Z.locals;var w=function(){function t(){var e=this;!function(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}(this,t),A(this,"containerElemelt",void 0),A(this,"video",void 0),A(this,"controls",void 0),A(this,"volume",void 0),A(this,"fullscreenBtn",void 0),A(this,"videoCover",void 0),A(this,"config",new D),A(this,"envents",{}),A(this,"setUrl",(function(t){return e.video.setUrl(t)})),A(this,"reload",(function(){var t;return null===(t=e.video)||void 0===t?void 0:t.el.load()})),A(this,"play",(function(){var t;return null===(t=e.video)||void 0===t?void 0:t.el.play()})),A(this,"pause",(function(){var t;return null===(t=e.video)||void 0===t?void 0:t.el.pause()})),A(this,"setVolum",(function(t){return e.video.el.volume=t})),A(this,"dispose",(function(){e.containerElemelt.innerHTML=""})),A(this,"getDuration",(function(){var t,n,r,i;return{currentSecond:(null===(t=e.video)||void 0===t?void 0:t.currentTime)||0,durationSecond:(null===(n=e.video)||void 0===n?void 0:n.duration)||0,currentText:a.formatSeconds((null===(r=e.video)||void 0===r?void 0:r.currentTime)||0),durationText:a.formatSeconds((null===(i=e.video)||void 0===i?void 0:i.duration)||0)}}))}var e,n;return e=t,(n=[{key:"init",value:function(t){var e=this,n=arguments.length>1&&void 0!==arguments[1]?arguments[1]:{};try{var r="string"==typeof t?document.getElementById(t):t;if(!r)throw new Error("无效的dom元素，请在页面加载完成后初始化播放器。");this.containerElemelt=document.createElement("div"),this.containerElemelt.className="video_player",this.containerElemelt.oncontextmenu=function(t){return!1},this.video=new o,this.videoCover=new N(this.containerElemelt),this.videoCover.play=function(){var t;return null===(t=e.video.el)||void 0===t?void 0:t.play()},this.handleStateChange(),this.containerElemelt.appendChild(this.video.el),this.containerElemelt.appendChild(this.video.posterEl),this.initConfig(n),n.src?this.setUrl({src:n.src,poster:n.poster}):this.videoCover.setState("loading"),r.appendChild(this.containerElemelt)}catch(t){console.error(t)}}},{key:"isPause",value:function(){var t;return null===(t=this.video)||void 0===t?void 0:t.el.paused}},{key:"on",value:function(t,e){this.envents[t]=e}},{key:"unOn",value:function(t){delete this.envents[t]}},{key:"initConfig",value:function(t){this.config=E(E({},this.config),t),this.video.el.autoplay=!!this.config.autoplay,this.video.el.loop=!!this.config.loop,this.video.el.preload=this.config.preload,this.initControls()}},{key:"handleStateChange",value:function(){var t=this;this.video.onEvent=function(e,n){switch("function"==typeof t.envents[e]&&t.envents[e]({type:"state"}),t.videoCover.setState(t.isPause()?"play":""),t.config.debug&&console.log(e),e){case"waiting":t.videoCover.setState("loading");break;case"error":t.videoCover.setState("error"),t.containerElemelt.contains(t.controls.controlsEl)&&t.containerElemelt.removeChild(t.controls.controlsEl);break;case"durationchange":if(t.containerElemelt.contains(t.controls.controlsEl)||t.containerElemelt.appendChild(t.controls.controlsEl),!isNaN(t.video.duration)){var r=100*t.video.currentTime/t.video.duration;t.controls.setCurrentPlayPer(r)}case"loadstart":t.videoCover.setState("loading");break;case"play":case"ended":case"pause":case"seeked":t.controls.changePlay(t.isPause());break;case"canplay":case"loadedmetadata":t.controls.changePlayTimeText(),t.video.currentTime<=0&&t.video.showPoster();break;case"timeupdate":t.controls.changePlayTimeText(),t.video.hidePoster();break;case"progress":var i=n.target.buffered;if(i.length){var o=100*i.end(0)/n.target.duration;t.controls.setBufferPer(o)}break;case"x5videoenterfullscreen":t.fullscreenBtn&&t.fullscreenBtn.changeIcon(!0);case"x5videoexitfullscreen":t.fullscreenBtn&&t.fullscreenBtn.changeIcon(!1)}}}},{key:"initControls",value:function(){var t=this;this.controls=new l(this.video,this.containerElemelt,this.config),this.volume=new v,this.controls.controls_right.appendChild(this.volume.el),this.volume.valueChange=function(e){return t.setVolum(e)};var e=new T;this.controls.controls_right.appendChild(e.el),e.valueChange=function(e){t.video.el.playbackRate=e},this.config.hideFullScreen||(this.fullscreenBtn=new h(this.video.el),this.controls.controls_right.appendChild(this.fullscreenBtn.el))}}])&&b(e.prototype,n),t}()},3099:function(t){t.exports=function(t){if("function"!=typeof t)throw TypeError(String(t)+" is not a function");return t}},6077:function(t,e,n){var r=n(111);t.exports=function(t){if(!r(t)&&null!==t)throw TypeError("Can't set "+String(t)+" as a prototype");return t}},1530:function(t,e,n){"use strict";var r=n(8710).charAt;t.exports=function(t,e,n){return e+(n?r(t,e).length:1)}},9670:function(t,e,n){var r=n(111);t.exports=function(t){if(!r(t))throw TypeError(String(t)+" is not an object");return t}},8533:function(t,e,n){"use strict";var r=n(2092).forEach,i=n(9341),o=n(9207),c=i("forEach"),a=o("forEach");t.exports=c&&a?[].forEach:function(t){return r(this,t,arguments.length>1?arguments[1]:void 0)}},1318:function(t,e,n){var r=n(5656),i=n(7466),o=n(1400),c=function(t){return function(e,n,c){var a,s=r(e),u=i(s.length),l=o(c,u);if(t&&n!=n){for(;u>l;)if((a=s[l++])!=a)return!0}else for(;u>l;l++)if((t||l in s)&&s[l]===n)return t||l||0;return!t&&-1}};t.exports={includes:c(!0),indexOf:c(!1)}},2092:function(t,e,n){var r=n(9974),i=n(8361),o=n(7908),c=n(7466),a=n(5417),s=[].push,u=function(t){var e=1==t,n=2==t,u=3==t,l=4==t,M=6==t,d=7==t,N=5==t||M;return function(y,f,v,g){for(var p,h,j=o(y),T=i(j),I=r(f,v,3),D=c(T.length),z=0,x=g||a,L=e?x(y,D):n||d?x(y,0):void 0;D>z;z++)if((N||z in T)&&(h=I(p=T[z],z,j),t))if(e)L[z]=h;else if(h)switch(t){case 3:return!0;case 5:return p;case 6:return z;case 2:s.call(L,p)}else switch(t){case 4:return!1;case 7:s.call(L,p)}return M?-1:u||l?l:L}};t.exports={forEach:u(0),map:u(1),filter:u(2),some:u(3),every:u(4),find:u(5),findIndex:u(6),filterOut:u(7)}},1194:function(t,e,n){var r=n(7293),i=n(5112),o=n(7392),c=i("species");t.exports=function(t){return o>=51||!r((function(){var e=[];return(e.constructor={})[c]=function(){return{foo:1}},1!==e[t](Boolean).foo}))}},9341:function(t,e,n){"use strict";var r=n(7293);t.exports=function(t,e){var n=[][t];return!!n&&r((function(){n.call(null,e||function(){throw 1},1)}))}},9207:function(t,e,n){var r=n(9781),i=n(7293),o=n(6656),c=Object.defineProperty,a={},s=function(t){throw t};t.exports=function(t,e){if(o(a,t))return a[t];e||(e={});var n=[][t],u=!!o(e,"ACCESSORS")&&e.ACCESSORS,l=o(e,0)?e[0]:s,M=o(e,1)?e[1]:void 0;return a[t]=!!n&&!i((function(){if(u&&!r)return!0;var t={length:-1};u?c(t,1,{enumerable:!0,get:s}):t[1]=1,n.call(t,l,M)}))}},5417:function(t,e,n){var r=n(111),i=n(3157),o=n(5112)("species");t.exports=function(t,e){var n;return i(t)&&("function"!=typeof(n=t.constructor)||n!==Array&&!i(n.prototype)?r(n)&&null===(n=n[o])&&(n=void 0):n=void 0),new(void 0===n?Array:n)(0===e?0:e)}},4326:function(t){var e={}.toString;t.exports=function(t){return e.call(t).slice(8,-1)}},9920:function(t,e,n){var r=n(6656),i=n(3887),o=n(1236),c=n(3070);t.exports=function(t,e){for(var n=i(e),a=c.f,s=o.f,u=0;u<n.length;u++){var l=n[u];r(t,l)||a(t,l,s(e,l))}}},8880:function(t,e,n){var r=n(9781),i=n(3070),o=n(9114);t.exports=r?function(t,e,n){return i.f(t,e,o(1,n))}:function(t,e,n){return t[e]=n,t}},9114:function(t){t.exports=function(t,e){return{enumerable:!(1&t),configurable:!(2&t),writable:!(4&t),value:e}}},6135:function(t,e,n){"use strict";var r=n(7593),i=n(3070),o=n(9114);t.exports=function(t,e,n){var c=r(e);c in t?i.f(t,c,o(0,n)):t[c]=n}},9781:function(t,e,n){var r=n(7293);t.exports=!r((function(){return 7!=Object.defineProperty({},1,{get:function(){return 7}})[1]}))},317:function(t,e,n){var r=n(7854),i=n(111),o=r.document,c=i(o)&&i(o.createElement);t.exports=function(t){return c?o.createElement(t):{}}},8324:function(t){t.exports={CSSRuleList:0,CSSStyleDeclaration:0,CSSValueList:0,ClientRectList:0,DOMRectList:0,DOMStringList:0,DOMTokenList:1,DataTransferItemList:0,FileList:0,HTMLAllCollection:0,HTMLCollection:0,HTMLFormElement:0,HTMLSelectElement:0,MediaList:0,MimeTypeArray:0,NamedNodeMap:0,NodeList:1,PaintRequestList:0,Plugin:0,PluginArray:0,SVGLengthList:0,SVGNumberList:0,SVGPathSegList:0,SVGPointList:0,SVGStringList:0,SVGTransformList:0,SourceBufferList:0,StyleSheetList:0,TextTrackCueList:0,TextTrackList:0,TouchList:0}},8113:function(t,e,n){var r=n(5005);t.exports=r("navigator","userAgent")||""},7392:function(t,e,n){var r,i,o=n(7854),c=n(8113),a=o.process,s=a&&a.versions,u=s&&s.v8;u?i=(r=u.split("."))[0]+r[1]:c&&(!(r=c.match(/Edge\/(\d+)/))||r[1]>=74)&&(r=c.match(/Chrome\/(\d+)/))&&(i=r[1]),t.exports=i&&+i},748:function(t){t.exports=["constructor","hasOwnProperty","isPrototypeOf","propertyIsEnumerable","toLocaleString","toString","valueOf"]},2109:function(t,e,n){var r=n(7854),i=n(1236).f,o=n(8880),c=n(1320),a=n(3505),s=n(9920),u=n(4705);t.exports=function(t,e){var n,l,M,d,N,y=t.target,f=t.global,v=t.stat;if(n=f?r:v?r[y]||a(y,{}):(r[y]||{}).prototype)for(l in e){if(d=e[l],M=t.noTargetGet?(N=i(n,l))&&N.value:n[l],!u(f?l:y+(v?".":"#")+l,t.forced)&&void 0!==M){if(typeof d==typeof M)continue;s(d,M)}(t.sham||M&&M.sham)&&o(d,"sham",!0),c(n,l,d,t)}}},7293:function(t){t.exports=function(t){try{return!!t()}catch(t){return!0}}},7007:function(t,e,n){"use strict";n(4916);var r=n(1320),i=n(7293),o=n(5112),c=n(2261),a=n(8880),s=o("species"),u=!i((function(){var t=/./;return t.exec=function(){var t=[];return t.groups={a:"7"},t},"7"!=="".replace(t,"$<a>")})),l="$0"==="a".replace(/./,"$0"),M=o("replace"),d=!!/./[M]&&""===/./[M]("a","$0"),N=!i((function(){var t=/(?:)/,e=t.exec;t.exec=function(){return e.apply(this,arguments)};var n="ab".split(t);return 2!==n.length||"a"!==n[0]||"b"!==n[1]}));t.exports=function(t,e,n,M){var y=o(t),f=!i((function(){var e={};return e[y]=function(){return 7},7!=""[t](e)})),v=f&&!i((function(){var e=!1,n=/a/;return"split"===t&&((n={}).constructor={},n.constructor[s]=function(){return n},n.flags="",n[y]=/./[y]),n.exec=function(){return e=!0,null},n[y](""),!e}));if(!f||!v||"replace"===t&&(!u||!l||d)||"split"===t&&!N){var g=/./[y],p=n(y,""[t],(function(t,e,n,r,i){return e.exec===c?f&&!i?{done:!0,value:g.call(e,n,r)}:{done:!0,value:t.call(n,e,r)}:{done:!1}}),{REPLACE_KEEPS_$0:l,REGEXP_REPLACE_SUBSTITUTES_UNDEFINED_CAPTURE:d}),h=p[0],j=p[1];r(String.prototype,t,h),r(RegExp.prototype,y,2==e?function(t,e){return j.call(t,this,e)}:function(t){return j.call(t,this)})}M&&a(RegExp.prototype[y],"sham",!0)}},9974:function(t,e,n){var r=n(3099);t.exports=function(t,e,n){if(r(t),void 0===e)return t;switch(n){case 0:return function(){return t.call(e)};case 1:return function(n){return t.call(e,n)};case 2:return function(n,r){return t.call(e,n,r)};case 3:return function(n,r,i){return t.call(e,n,r,i)}}return function(){return t.apply(e,arguments)}}},5005:function(t,e,n){var r=n(857),i=n(7854),o=function(t){return"function"==typeof t?t:void 0};t.exports=function(t,e){return arguments.length<2?o(r[t])||o(i[t]):r[t]&&r[t][e]||i[t]&&i[t][e]}},7854:function(t,e,n){var r=function(t){return t&&t.Math==Math&&t};t.exports=r("object"==typeof globalThis&&globalThis)||r("object"==typeof window&&window)||r("object"==typeof self&&self)||r("object"==typeof n.g&&n.g)||function(){return this}()||Function("return this")()},6656:function(t){var e={}.hasOwnProperty;t.exports=function(t,n){return e.call(t,n)}},3501:function(t){t.exports={}},4664:function(t,e,n){var r=n(9781),i=n(7293),o=n(317);t.exports=!r&&!i((function(){return 7!=Object.defineProperty(o("div"),"a",{get:function(){return 7}}).a}))},8361:function(t,e,n){var r=n(7293),i=n(4326),o="".split;t.exports=r((function(){return!Object("z").propertyIsEnumerable(0)}))?function(t){return"String"==i(t)?o.call(t,""):Object(t)}:Object},9587:function(t,e,n){var r=n(111),i=n(7674);t.exports=function(t,e,n){var o,c;return i&&"function"==typeof(o=e.constructor)&&o!==n&&r(c=o.prototype)&&c!==n.prototype&&i(t,c),t}},2788:function(t,e,n){var r=n(5465),i=Function.toString;"function"!=typeof r.inspectSource&&(r.inspectSource=function(t){return i.call(t)}),t.exports=r.inspectSource},9909:function(t,e,n){var r,i,o,c=n(8536),a=n(7854),s=n(111),u=n(8880),l=n(6656),M=n(5465),d=n(6200),N=n(3501),y=a.WeakMap;if(c){var f=M.state||(M.state=new y),v=f.get,g=f.has,p=f.set;r=function(t,e){return e.facade=t,p.call(f,t,e),e},i=function(t){return v.call(f,t)||{}},o=function(t){return g.call(f,t)}}else{var h=d("state");N[h]=!0,r=function(t,e){return e.facade=t,u(t,h,e),e},i=function(t){return l(t,h)?t[h]:{}},o=function(t){return l(t,h)}}t.exports={set:r,get:i,has:o,enforce:function(t){return o(t)?i(t):r(t,{})},getterFor:function(t){return function(e){var n;if(!s(e)||(n=i(e)).type!==t)throw TypeError("Incompatible receiver, "+t+" required");return n}}}},3157:function(t,e,n){var r=n(4326);t.exports=Array.isArray||function(t){return"Array"==r(t)}},4705:function(t,e,n){var r=n(7293),i=/#|\.prototype\./,o=function(t,e){var n=a[c(t)];return n==u||n!=s&&("function"==typeof e?r(e):!!e)},c=o.normalize=function(t){return String(t).replace(i,".").toLowerCase()},a=o.data={},s=o.NATIVE="N",u=o.POLYFILL="P";t.exports=o},111:function(t){t.exports=function(t){return"object"==typeof t?null!==t:"function"==typeof t}},1913:function(t){t.exports=!1},7850:function(t,e,n){var r=n(111),i=n(4326),o=n(5112)("match");t.exports=function(t){var e;return r(t)&&(void 0!==(e=t[o])?!!e:"RegExp"==i(t))}},133:function(t,e,n){var r=n(7293);t.exports=!!Object.getOwnPropertySymbols&&!r((function(){return!String(Symbol())}))},8536:function(t,e,n){var r=n(7854),i=n(2788),o=r.WeakMap;t.exports="function"==typeof o&&/native code/.test(i(o))},2814:function(t,e,n){var r=n(7854),i=n(3111).trim,o=n(1361),c=r.parseFloat,a=1/c(o+"-0")!=-1/0;t.exports=a?function(t){var e=i(String(t)),n=c(e);return 0===n&&"-"==e.charAt(0)?-0:n}:c},3009:function(t,e,n){var r=n(7854),i=n(3111).trim,o=n(1361),c=r.parseInt,a=/^[+-]?0[Xx]/,s=8!==c(o+"08")||22!==c(o+"0x16");t.exports=s?function(t,e){var n=i(String(t));return c(n,e>>>0||(a.test(n)?16:10))}:c},3070:function(t,e,n){var r=n(9781),i=n(4664),o=n(9670),c=n(7593),a=Object.defineProperty;e.f=r?a:function(t,e,n){if(o(t),e=c(e,!0),o(n),i)try{return a(t,e,n)}catch(t){}if("get"in n||"set"in n)throw TypeError("Accessors not supported");return"value"in n&&(t[e]=n.value),t}},1236:function(t,e,n){var r=n(9781),i=n(5296),o=n(9114),c=n(5656),a=n(7593),s=n(6656),u=n(4664),l=Object.getOwnPropertyDescriptor;e.f=r?l:function(t,e){if(t=c(t),e=a(e,!0),u)try{return l(t,e)}catch(t){}if(s(t,e))return o(!i.f.call(t,e),t[e])}},8006:function(t,e,n){var r=n(6324),i=n(748).concat("length","prototype");e.f=Object.getOwnPropertyNames||function(t){return r(t,i)}},5181:function(t,e){e.f=Object.getOwnPropertySymbols},6324:function(t,e,n){var r=n(6656),i=n(5656),o=n(1318).indexOf,c=n(3501);t.exports=function(t,e){var n,a=i(t),s=0,u=[];for(n in a)!r(c,n)&&r(a,n)&&u.push(n);for(;e.length>s;)r(a,n=e[s++])&&(~o(u,n)||u.push(n));return u}},5296:function(t,e){"use strict";var n={}.propertyIsEnumerable,r=Object.getOwnPropertyDescriptor,i=r&&!n.call({1:2},1);e.f=i?function(t){var e=r(this,t);return!!e&&e.enumerable}:n},7674:function(t,e,n){var r=n(9670),i=n(6077);t.exports=Object.setPrototypeOf||("__proto__"in{}?function(){var t,e=!1,n={};try{(t=Object.getOwnPropertyDescriptor(Object.prototype,"__proto__").set).call(n,[]),e=n instanceof Array}catch(t){}return function(n,o){return r(n),i(o),e?t.call(n,o):n.__proto__=o,n}}():void 0)},3887:function(t,e,n){var r=n(5005),i=n(8006),o=n(5181),c=n(9670);t.exports=r("Reflect","ownKeys")||function(t){var e=i.f(c(t)),n=o.f;return n?e.concat(n(t)):e}},857:function(t,e,n){var r=n(7854);t.exports=r},1320:function(t,e,n){var r=n(7854),i=n(8880),o=n(6656),c=n(3505),a=n(2788),s=n(9909),u=s.get,l=s.enforce,M=String(String).split("String");(t.exports=function(t,e,n,a){var s,u=!!a&&!!a.unsafe,d=!!a&&!!a.enumerable,N=!!a&&!!a.noTargetGet;"function"==typeof n&&("string"!=typeof e||o(n,"name")||i(n,"name",e),(s=l(n)).source||(s.source=M.join("string"==typeof e?e:""))),t!==r?(u?!N&&t[e]&&(d=!0):delete t[e],d?t[e]=n:i(t,e,n)):d?t[e]=n:c(e,n)})(Function.prototype,"toString",(function(){return"function"==typeof this&&u(this).source||a(this)}))},7651:function(t,e,n){var r=n(4326),i=n(2261);t.exports=function(t,e){var n=t.exec;if("function"==typeof n){var o=n.call(t,e);if("object"!=typeof o)throw TypeError("RegExp exec method returned something other than an Object or null");return o}if("RegExp"!==r(t))throw TypeError("RegExp#exec called on incompatible receiver");return i.call(t,e)}},2261:function(t,e,n){"use strict";var r,i,o=n(7066),c=n(2999),a=RegExp.prototype.exec,s=String.prototype.replace,u=a,l=(r=/a/,i=/b*/g,a.call(r,"a"),a.call(i,"a"),0!==r.lastIndex||0!==i.lastIndex),M=c.UNSUPPORTED_Y||c.BROKEN_CARET,d=void 0!==/()??/.exec("")[1];(l||d||M)&&(u=function(t){var e,n,r,i,c=this,u=M&&c.sticky,N=o.call(c),y=c.source,f=0,v=t;return u&&(-1===(N=N.replace("y","")).indexOf("g")&&(N+="g"),v=String(t).slice(c.lastIndex),c.lastIndex>0&&(!c.multiline||c.multiline&&"\n"!==t[c.lastIndex-1])&&(y="(?: "+y+")",v=" "+v,f++),n=new RegExp("^(?:"+y+")",N)),d&&(n=new RegExp("^"+y+"$(?!\\s)",N)),l&&(e=c.lastIndex),r=a.call(u?n:c,v),u?r?(r.input=r.input.slice(f),r[0]=r[0].slice(f),r.index=c.lastIndex,c.lastIndex+=r[0].length):c.lastIndex=0:l&&r&&(c.lastIndex=c.global?r.index+r[0].length:e),d&&r&&r.length>1&&s.call(r[0],n,(function(){for(i=1;i<arguments.length-2;i++)void 0===arguments[i]&&(r[i]=void 0)})),r}),t.exports=u},7066:function(t,e,n){"use strict";var r=n(9670);t.exports=function(){var t=r(this),e="";return t.global&&(e+="g"),t.ignoreCase&&(e+="i"),t.multiline&&(e+="m"),t.dotAll&&(e+="s"),t.unicode&&(e+="u"),t.sticky&&(e+="y"),e}},2999:function(t,e,n){"use strict";var r=n(7293);function i(t,e){return RegExp(t,e)}e.UNSUPPORTED_Y=r((function(){var t=i("a","y");return t.lastIndex=2,null!=t.exec("abcd")})),e.BROKEN_CARET=r((function(){var t=i("^r","gy");return t.lastIndex=2,null!=t.exec("str")}))},4488:function(t){t.exports=function(t){if(null==t)throw TypeError("Can't call method on "+t);return t}},3505:function(t,e,n){var r=n(7854),i=n(8880);t.exports=function(t,e){try{i(r,t,e)}catch(n){r[t]=e}return e}},6340:function(t,e,n){"use strict";var r=n(5005),i=n(3070),o=n(5112),c=n(9781),a=o("species");t.exports=function(t){var e=r(t),n=i.f;c&&e&&!e[a]&&n(e,a,{configurable:!0,get:function(){return this}})}},6200:function(t,e,n){var r=n(2309),i=n(9711),o=r("keys");t.exports=function(t){return o[t]||(o[t]=i(t))}},5465:function(t,e,n){var r=n(7854),i=n(3505),o="__core-js_shared__",c=r[o]||i(o,{});t.exports=c},2309:function(t,e,n){var r=n(1913),i=n(5465);(t.exports=function(t,e){return i[t]||(i[t]=void 0!==e?e:{})})("versions",[]).push({version:"3.8.1",mode:r?"pure":"global",copyright:"© 2020 Denis Pushkarev (zloirock.ru)"})},8710:function(t,e,n){var r=n(9958),i=n(4488),o=function(t){return function(e,n){var o,c,a=String(i(e)),s=r(n),u=a.length;return s<0||s>=u?t?"":void 0:(o=a.charCodeAt(s))<55296||o>56319||s+1===u||(c=a.charCodeAt(s+1))<56320||c>57343?t?a.charAt(s):o:t?a.slice(s,s+2):c-56320+(o-55296<<10)+65536}};t.exports={codeAt:o(!1),charAt:o(!0)}},3111:function(t,e,n){var r=n(4488),i="["+n(1361)+"]",o=RegExp("^"+i+i+"*"),c=RegExp(i+i+"*$"),a=function(t){return function(e){var n=String(r(e));return 1&t&&(n=n.replace(o,"")),2&t&&(n=n.replace(c,"")),n}};t.exports={start:a(1),end:a(2),trim:a(3)}},1400:function(t,e,n){var r=n(9958),i=Math.max,o=Math.min;t.exports=function(t,e){var n=r(t);return n<0?i(n+e,0):o(n,e)}},5656:function(t,e,n){var r=n(8361),i=n(4488);t.exports=function(t){return r(i(t))}},9958:function(t){var e=Math.ceil,n=Math.floor;t.exports=function(t){return isNaN(t=+t)?0:(t>0?n:e)(t)}},7466:function(t,e,n){var r=n(9958),i=Math.min;t.exports=function(t){return t>0?i(r(t),9007199254740991):0}},7908:function(t,e,n){var r=n(4488);t.exports=function(t){return Object(r(t))}},7593:function(t,e,n){var r=n(111);t.exports=function(t,e){if(!r(t))return t;var n,i;if(e&&"function"==typeof(n=t.toString)&&!r(i=n.call(t)))return i;if("function"==typeof(n=t.valueOf)&&!r(i=n.call(t)))return i;if(!e&&"function"==typeof(n=t.toString)&&!r(i=n.call(t)))return i;throw TypeError("Can't convert object to primitive value")}},9711:function(t){var e=0,n=Math.random();t.exports=function(t){return"Symbol("+String(void 0===t?"":t)+")_"+(++e+n).toString(36)}},3307:function(t,e,n){var r=n(133);t.exports=r&&!Symbol.sham&&"symbol"==typeof Symbol.iterator},5112:function(t,e,n){var r=n(7854),i=n(2309),o=n(6656),c=n(9711),a=n(133),s=n(3307),u=i("wks"),l=r.Symbol,M=s?l:l&&l.withoutSetter||c;t.exports=function(t){return o(u,t)||(a&&o(l,t)?u[t]=l[t]:u[t]=M("Symbol."+t)),u[t]}},1361:function(t){t.exports="\t\n\v\f\r                　\u2028\u2029\ufeff"},2222:function(t,e,n){"use strict";var r=n(2109),i=n(7293),o=n(3157),c=n(111),a=n(7908),s=n(7466),u=n(6135),l=n(5417),M=n(1194),d=n(5112),N=n(7392),y=d("isConcatSpreadable"),f=9007199254740991,v="Maximum allowed index exceeded",g=N>=51||!i((function(){var t=[];return t[y]=!1,t.concat()[0]!==t})),p=M("concat"),h=function(t){if(!c(t))return!1;var e=t[y];return void 0!==e?!!e:o(t)};r({target:"Array",proto:!0,forced:!g||!p},{concat:function(t){var e,n,r,i,o,c=a(this),M=l(c,0),d=0;for(e=-1,r=arguments.length;e<r;e++)if(h(o=-1===e?c:arguments[e])){if(d+(i=s(o.length))>f)throw TypeError(v);for(n=0;n<i;n++,d++)n in o&&u(M,d,o[n])}else{if(d>=f)throw TypeError(v);u(M,d++,o)}return M.length=d,M}})},9554:function(t,e,n){"use strict";var r=n(2109),i=n(8533);r({target:"Array",proto:!0,forced:[].forEach!=i},{forEach:i})},2772:function(t,e,n){"use strict";var r=n(2109),i=n(1318).indexOf,o=n(9341),c=n(9207),a=[].indexOf,s=!!a&&1/[1].indexOf(1,-0)<0,u=o("indexOf"),l=c("indexOf",{ACCESSORS:!0,1:0});r({target:"Array",proto:!0,forced:s||!u||!l},{indexOf:function(t){return s?a.apply(this,arguments)||0:i(this,t,arguments.length>1?arguments[1]:void 0)}})},9600:function(t,e,n){"use strict";var r=n(2109),i=n(8361),o=n(5656),c=n(9341),a=[].join,s=i!=Object,u=c("join",",");r({target:"Array",proto:!0,forced:s||!u},{join:function(t){return a.call(o(this),void 0===t?",":t)}})},7042:function(t,e,n){"use strict";var r=n(2109),i=n(111),o=n(3157),c=n(1400),a=n(7466),s=n(5656),u=n(6135),l=n(5112),M=n(1194),d=n(9207),N=M("slice"),y=d("slice",{ACCESSORS:!0,0:0,1:2}),f=l("species"),v=[].slice,g=Math.max;r({target:"Array",proto:!0,forced:!N||!y},{slice:function(t,e){var n,r,l,M=s(this),d=a(M.length),N=c(t,d),y=c(void 0===e?d:e,d);if(o(M)&&("function"!=typeof(n=M.constructor)||n!==Array&&!o(n.prototype)?i(n)&&null===(n=n[f])&&(n=void 0):n=void 0,n===Array||void 0===n))return v.call(M,N,y);for(r=new(void 0===n?Array:n)(g(y-N,0)),l=0;N<y;N++,l++)N in M&&u(r,l,M[N]);return r.length=l,r}})},3710:function(t,e,n){var r=n(1320),i=Date.prototype,o="Invalid Date",c=i.toString,a=i.getTime;new Date(NaN)+""!=o&&r(i,"toString",(function(){var t=a.call(this);return t==t?c.call(this):o}))},9070:function(t,e,n){var r=n(2109),i=n(9781);r({target:"Object",stat:!0,forced:!i,sham:!i},{defineProperty:n(3070).f})},4678:function(t,e,n){var r=n(2109),i=n(2814);r({global:!0,forced:parseFloat!=i},{parseFloat:i})},1058:function(t,e,n){var r=n(2109),i=n(3009);r({global:!0,forced:parseInt!=i},{parseInt:i})},4603:function(t,e,n){var r=n(9781),i=n(7854),o=n(4705),c=n(9587),a=n(3070).f,s=n(8006).f,u=n(7850),l=n(7066),M=n(2999),d=n(1320),N=n(7293),y=n(9909).set,f=n(6340),v=n(5112)("match"),g=i.RegExp,p=g.prototype,h=/a/g,j=/a/g,T=new g(h)!==h,I=M.UNSUPPORTED_Y;if(r&&o("RegExp",!T||I||N((function(){return j[v]=!1,g(h)!=h||g(j)==j||"/a/i"!=g(h,"i")})))){for(var D=function(t,e){var n,r=this instanceof D,i=u(t),o=void 0===e;if(!r&&i&&t.constructor===D&&o)return t;T?i&&!o&&(t=t.source):t instanceof D&&(o&&(e=l.call(t)),t=t.source),I&&(n=!!e&&e.indexOf("y")>-1)&&(e=e.replace(/y/g,""));var a=c(T?new g(t,e):g(t,e),r?this:p,D);return I&&n&&y(a,{sticky:n}),a},z=function(t){t in D||a(D,t,{configurable:!0,get:function(){return g[t]},set:function(e){g[t]=e}})},x=s(g),L=0;x.length>L;)z(x[L++]);p.constructor=D,D.prototype=p,d(i,"RegExp",D)}f("RegExp")},4916:function(t,e,n){"use strict";var r=n(2109),i=n(2261);r({target:"RegExp",proto:!0,forced:/./.exec!==i},{exec:i})},9714:function(t,e,n){"use strict";var r=n(1320),i=n(9670),o=n(7293),c=n(7066),a="toString",s=RegExp.prototype,u=s.toString,l=o((function(){return"/a/b"!=u.call({source:"a",flags:"b"})})),M=u.name!=a;(l||M)&&r(RegExp.prototype,a,(function(){var t=i(this),e=String(t.source),n=t.flags;return"/"+e+"/"+String(void 0===n&&t instanceof RegExp&&!("flags"in s)?c.call(t):n)}),{unsafe:!0})},4723:function(t,e,n){"use strict";var r=n(7007),i=n(9670),o=n(7466),c=n(4488),a=n(1530),s=n(7651);r("match",1,(function(t,e,n){return[function(e){var n=c(this),r=null==e?void 0:e[t];return void 0!==r?r.call(e,n):new RegExp(e)[t](String(n))},function(t){var r=n(e,t,this);if(r.done)return r.value;var c=i(t),u=String(this);if(!c.global)return s(c,u);var l=c.unicode;c.lastIndex=0;for(var M,d=[],N=0;null!==(M=s(c,u));){var y=String(M[0]);d[N]=y,""===y&&(c.lastIndex=a(u,o(c.lastIndex),l)),N++}return 0===N?null:d}]}))},4747:function(t,e,n){var r=n(7854),i=n(8324),o=n(8533),c=n(8880);for(var a in i){var s=r[a],u=s&&s.prototype;if(u&&u.forEach!==o)try{c(u,"forEach",o)}catch(t){u.forEach=o}}},2564:function(t,e,n){var r=n(2109),i=n(7854),o=n(8113),c=[].slice,a=function(t){return function(e,n){var r=arguments.length>2,i=r?c.call(arguments,2):void 0;return t(r?function(){("function"==typeof e?e:Function(e)).apply(this,i)}:e,n)}};r({global:!0,bind:!0,forced:/MSIE .\./.test(o)},{setTimeout:a(i.setTimeout),setInterval:a(i.setInterval)})},8074:function(t,e,n){"use strict";var r=n(3645),i=n.n(r),o=n(1667),c=n.n(o),a=n(8732),s=n(8969),u=n(9150),l=n(3964),M=n(731),d=n(2596),N=n(3129),y=i()((function(t){return t[1]})),f=c()(a.Z),v=c()(s.Z),g=c()(u.Z),p=c()(l.Z),h=c()(M.Z),j=c()(d.Z),T=c()(N.Z);y.push([t.id,"body {\n  margin: 0;\n}\n.video_player {\n  width: 100%;\n  height: 100%;\n  position: relative;\n  overflow: hidden;\n}\n.video_player .p_video {\n  position: relative;\n  width: 100%;\n  height: 100%;\n  display: block;\n  background: #000;\n  z-index: 1;\n}\n.video_player .p_controls {\n  display: flex;\n  position: absolute;\n  width: 100%;\n  height: 40px;\n  background-color: rgba(0, 16, 27, 0.6);\n  bottom: -40px;\n  transition: bottom 0.3s;\n  left: 0;\n  justify-content: space-between;\n  align-items: center;\n  z-index: 999;\n  /* 进度条 */\n}\n.video_player .p_controls .progress_bar {\n  position: absolute;\n  cursor: pointer;\n  -webkit-tap-highlight-color: transparent;\n  top: -2px;\n  left: 0;\n  width: 100%;\n  height: 2px;\n  background-color: hsla(0, 0%, 100%, 0.35);\n  transition: height 0.15s linear, top 0.15s linear;\n}\n.video_player .p_controls .progress_bar .current_dot {\n  position: absolute;\n  opacity: 0;\n  z-index: 101;\n  top: 50%;\n  left: 0px;\n  padding: 5px;\n  background-color: #fff;\n  transform: translateY(-50%) translateX(-50%);\n  border-radius: 50%;\n  transition: padding 0.15s linear, top 0.15s linear, width 0.15s linear;\n}\n.video_player .p_controls .progress_bar .current_progress {\n  width: 0px;\n  height: 100%;\n  position: relative;\n  z-index: 100;\n  background-color: #49a9ee;\n}\n.video_player .p_controls .progress_bar .current_buffer {\n  z-index: 99;\n  width: 0;\n  height: 100%;\n  position: absolute;\n  top: 0;\n  background-color: hsla(0, 0%, 100%, 0.35);\n}\n.video_player .p_controls .date_label {\n  position: absolute;\n  width: 48px;\n  height: 22px;\n  line-height: 20px;\n  top: -34px;\n  left: 0;\n  visibility: hidden;\n  font-size: 12px;\n  transform: translateX(-50%);\n  color: #fff;\n  text-align: center;\n  border-radius: 4px;\n  background-color: rgba(0, 16, 27, 0.7);\n}\n.video_player .p_controls .date_label::after {\n  content: '';\n  position: absolute;\n  bottom: -4px;\n  left: 50%;\n  transform: translateX(-50%);\n  width: 0;\n  height: 0;\n  border-top: 4px solid rgba(0, 16, 27, 0.7);\n  border-left: 4px solid transparent;\n  border-right: 4px solid transparent;\n}\n.video_player .p_controls .controls_left {\n  display: flex;\n  align-items: center;\n  margin-left: 16px;\n}\n.video_player .p_controls .controls_right {\n  display: flex;\n  z-index: 999;\n  align-items: center;\n  justify-content: flex-end;\n  /* 倍速 */\n  /* 音量 */\n}\n.video_player .p_controls .controls_right > * {\n  cursor: pointer;\n  -webkit-tap-highlight-color: transparent;\n  margin-right: 14px;\n}\n.video_player .p_controls .controls_right .speed_bth {\n  position: relative;\n}\n.video_player .p_controls .controls_right .speed_bth:active {\n  background-color: none;\n}\n.video_player .p_controls .controls_right .speed_bth .speed_li {\n  position: absolute;\n  display: none;\n  bottom: 0px;\n  width: 100%;\n  padding-bottom: 34px;\n  text-align: center;\n  color: #fff;\n  font-size: 14px;\n}\n.video_player .p_controls .controls_right .speed_bth .speed_li div {\n  cursor: pointer;\n  -webkit-tap-highlight-color: transparent;\n  background-color: rgba(0, 16, 27, 0.7);\n  line-height: 22px;\n  margin-bottom: 1px;\n  border-radius: 2px;\n}\n.video_player .p_controls .controls_right .speed_bth .speed_li div.on {\n  color: #49a9ee;\n}\n.video_player .p_controls .controls_right .speed_bth .speed_li div:hover {\n  color: #49a9ee;\n}\n.video_player .p_controls .controls_right .speed_bth span {\n  cursor: pointer;\n  -webkit-tap-highlight-color: transparent;\n  display: inline-block;\n  color: #fff;\n  text-align: center;\n  min-width: 40px;\n  padding: 0 10px;\n  line-height: 22px;\n  border-radius: 12px;\n  font-size: 15px;\n}\n.video_player .p_controls .controls_right .speed_bth:hover .speed_li {\n  display: block;\n}\n.video_player .p_controls .controls_right .volume_bth {\n  position: relative;\n  display: flex;\n  flex-direction: column;\n}\n.video_player .p_controls .controls_right .volume_bth .volume_con {\n  position: absolute;\n  display: none;\n  bottom: 0;\n  width: 28px;\n  height: 112px;\n  left: -8px;\n}\n.video_player .p_controls .controls_right .volume_bth .volume_con .volume_slider {\n  position: absolute;\n  text-align: center;\n  border-radius: 10px;\n  padding: 12px 12px;\n  background-color: rgba(0, 0, 0, 0.5);\n  left: -48px;\n  top: 4px;\n  transform: rotate(-90deg);\n}\n.video_player .p_controls .controls_right .volume_bth:hover .volume_con {\n  display: block;\n}\n.video_player .p_controls .button_img {\n  width: 14px;\n  height: 14px;\n  box-sizing: border-box;\n  z-index: 9;\n}\n.video_player .p_controls .button_img.suspend {\n  background: url("+f+");\n  background-size: cover;\n}\n.video_player .p_controls .button_img.sound {\n  background: url("+v+");\n  background-size: cover;\n}\n.video_player .p_controls .button_img.mute {\n  background: url("+g+");\n  background-size: cover;\n}\n.video_player .p_controls .button_img.full {\n  background: url("+p+");\n  background-size: cover;\n}\n.video_player .p_controls .button_img.scale {\n  background: url("+h+");\n  background-size: cover;\n}\n.video_player .p_controls .time {\n  color: #fff;\n  padding-left: 10px;\n  font-size: 14px;\n}\n.video_player .button_img.play,\n.video_player .cover_img.play {\n  background: url("+j+");\n  background-size: cover;\n}\n.video_player .video_cover {\n  position: absolute;\n  height: 100%;\n  width: 100%;\n  top: 0;\n  left: 0;\n  background-color: rgba(0, 0, 0, 0.7);\n  z-index: 999;\n}\n.video_player .video_cover .cover_content {\n  width: 100px;\n  height: 100px;\n  z-index: 999;\n  overflow: auto;\n  position: absolute;\n  margin: auto;\n  top: 0;\n  bottom: 0;\n  left: 0;\n  right: 0;\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  justify-content: center;\n}\n.video_player .video_cover .cover_content .cover_img {\n  width: 40px;\n  height: 40px;\n  box-sizing: border-box;\n}\n.video_player .video_cover .cover_content .cover_img.error {\n  background: url("+T+');\n  background-size: cover;\n}\n.video_player .video_cover .cover_content .tips_error {\n  margin-top: 8px;\n}\n.video_player .video_cover .cover_content .tips_text {\n  color: #fff;\n  font-size: 12px;\n  text-align: center;\n}\n.video_player .video_cover .cover_content .video_loading .spot {\n  width: 4px;\n  height: 4px;\n  border-radius: 2px;\n  background: #ffffff;\n  float: left;\n  margin: 8px 4px;\n  animation: spot linear 1s infinite;\n  -webkit-animation: spot linear 1s infinite;\n}\n.video_player .video_cover .cover_content .video_loading .spot:nth-child(1) {\n  animation-delay: 0s;\n}\n.video_player .video_cover .cover_content .video_loading .spot:nth-child(2) {\n  animation-delay: 0.15s;\n}\n.video_player .video_cover .cover_content .video_loading .spot:nth-child(3) {\n  animation-delay: 0.3s;\n}\n.video_player .video_cover .cover_content .video_loading .spot:nth-child(4) {\n  animation-delay: 0.45s;\n}\n.video_player .video_cover .cover_content .video_loading .spot:nth-child(5) {\n  animation-delay: 0.6s;\n}\n@keyframes spot {\n  0%,\n  60%,\n  100% {\n    transform: scale(1);\n  }\n  30% {\n    transform: scale(2.5);\n  }\n}\n@-webkit-keyframes spot {\n  0%,\n  60%,\n  100% {\n    transform: scale(1);\n  }\n  30% {\n    transform: scale(2.5);\n  }\n}\n.p_controls.showControls {\n  bottom: 0 !important;\n}\n.p_controls.showControls .progress_bar .current_dot {\n  opacity: 1 !important;\n}\n.p_controls.showControls .hover_cls.progress_bar {\n  height: 6px;\n}\n.p_controls.showControls .hover_cls.progress_bar .current_dot {\n  padding: 8px;\n}\ninput[type="range"] {\n  display: block;\n  -webkit-appearance: none;\n  background: -webkit-linear-gradient(#49a9ee, #49a9ee) no-repeat, #ddd;\n  /*设置左边颜色为#61bd12，右边颜色为#ddd*/\n  background-size: 75% 100%;\n  /*设置左右宽度比例*/\n  width: 100px;\n  height: 4px;\n  border-radius: 5px;\n  margin: 0 auto;\n  outline: 0;\n}\ninput[type="range"]::-webkit-slider-thumb {\n  -webkit-appearance: none;\n  background-color: #fff;\n  width: 10px;\n  height: 10px;\n  border-radius: 50%;\n  cursor: pointer;\n  -webkit-tap-highlight-color: transparent;\n  transition: 0.3s ease-in-out;\n}\ninput[type="range"]::-webkit-slider-thumb:hover {\n  background-color: white;\n  border: 2px solid #49a9ee;\n}\ninput[type="range"]::-webkit-slider-thumb:active {\n  transform: scale(1.6);\n}\n',""]),e.Z=y},3645:function(t){"use strict";t.exports=function(t){var e=[];return e.toString=function(){return this.map((function(e){var n=t(e);return e[2]?"@media ".concat(e[2]," {").concat(n,"}"):n})).join("")},e.i=function(t,n,r){"string"==typeof t&&(t=[[null,t,""]]);var i={};if(r)for(var o=0;o<this.length;o++){var c=this[o][0];null!=c&&(i[c]=!0)}for(var a=0;a<t.length;a++){var s=[].concat(t[a]);r&&i[s[0]]||(n&&(s[2]?s[2]="".concat(n," and ").concat(s[2]):s[2]=n),e.push(s))}},e}},1667:function(t){"use strict";t.exports=function(t,e){return e||(e={}),"string"!=typeof(t=t&&t.__esModule?t.default:t)?t:(/^['"].*['"]$/.test(t)&&(t=t.slice(1,-1)),e.hash&&(t+=e.hash),/["'() \t\n]/.test(t)||e.needQuotes?'"'.concat(t.replace(/"/g,'\\"').replace(/\n/g,"\\n"),'"'):t)}},3379:function(t,e,n){"use strict";var r,i=function(){var t={};return function(e){if(void 0===t[e]){var n=document.querySelector(e);if(window.HTMLIFrameElement&&n instanceof window.HTMLIFrameElement)try{n=n.contentDocument.head}catch(t){n=null}t[e]=n}return t[e]}}(),o=[];function c(t){for(var e=-1,n=0;n<o.length;n++)if(o[n].identifier===t){e=n;break}return e}function a(t,e){for(var n={},r=[],i=0;i<t.length;i++){var a=t[i],s=e.base?a[0]+e.base:a[0],u=n[s]||0,l="".concat(s," ").concat(u);n[s]=u+1;var M=c(l),d={css:a[1],media:a[2],sourceMap:a[3]};-1!==M?(o[M].references++,o[M].updater(d)):o.push({identifier:l,updater:f(d,e),references:1}),r.push(l)}return r}function s(t){var e=document.createElement("style"),r=t.attributes||{};if(void 0===r.nonce){var o=n.nc;o&&(r.nonce=o)}if(Object.keys(r).forEach((function(t){e.setAttribute(t,r[t])})),"function"==typeof t.insert)t.insert(e);else{var c=i(t.insert||"head");if(!c)throw new Error("Couldn't find a style target. This probably means that the value for the 'insert' parameter is invalid.");c.appendChild(e)}return e}var u,l=(u=[],function(t,e){return u[t]=e,u.filter(Boolean).join("\n")});function M(t,e,n,r){var i=n?"":r.media?"@media ".concat(r.media," {").concat(r.css,"}"):r.css;if(t.styleSheet)t.styleSheet.cssText=l(e,i);else{var o=document.createTextNode(i),c=t.childNodes;c[e]&&t.removeChild(c[e]),c.length?t.insertBefore(o,c[e]):t.appendChild(o)}}function d(t,e,n){var r=n.css,i=n.media,o=n.sourceMap;if(i?t.setAttribute("media",i):t.removeAttribute("media"),o&&"undefined"!=typeof btoa&&(r+="\n/*# sourceMappingURL=data:application/json;base64,".concat(btoa(unescape(encodeURIComponent(JSON.stringify(o))))," */")),t.styleSheet)t.styleSheet.cssText=r;else{for(;t.firstChild;)t.removeChild(t.firstChild);t.appendChild(document.createTextNode(r))}}var N=null,y=0;function f(t,e){var n,r,i;if(e.singleton){var o=y++;n=N||(N=s(e)),r=M.bind(null,n,o,!1),i=M.bind(null,n,o,!0)}else n=s(e),r=d.bind(null,n,e),i=function(){!function(t){if(null===t.parentNode)return!1;t.parentNode.removeChild(t)}(n)};return r(t),function(e){if(e){if(e.css===t.css&&e.media===t.media&&e.sourceMap===t.sourceMap)return;r(t=e)}else i()}}t.exports=function(t,e){(e=e||{}).singleton||"boolean"==typeof e.singleton||(e.singleton=(void 0===r&&(r=Boolean(window&&document&&document.all&&!window.atob)),r));var n=a(t=t||[],e);return function(t){if(t=t||[],"[object Array]"===Object.prototype.toString.call(t)){for(var r=0;r<n.length;r++){var i=c(n[r]);o[i].references--}for(var s=a(t,e),u=0;u<n.length;u++){var l=c(n[u]);0===o[l].references&&(o[l].updater(),o.splice(l,1))}n=s}}}},2596:function(t,e){"use strict";e.Z="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/PjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+PHN2ZyBjbGFzcz0iaWNvbiIgd2lkdGg9IjIwMHB4IiBoZWlnaHQ9IjIwMC4wMHB4IiB2aWV3Qm94PSIwIDAgMTAyNCAxMDI0IiB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZmlsbD0iI2ZmZmZmZiIgZD0iTTc5Mi43NTA4NjA2MyA0MTMuNDkxNDUxNjhDODc4LjY2Njg5NTg1IDQ2Ny44OTU2MzQzMSA4NzguNjIwNDA3MiA1NTYuMTMxNjgyMSA3OTIuNzUwODYwNjMgNjEwLjUwNjQyODIzTDMyMi4zOTQyODcyIDkwOC4zNDc5ODIzM0MyMzYuNDc4MjUyODEgOTYyLjc1MjE2NzQzIDE2Ni44Mjk1NDUzOCA5MjcuMzI3NzkxNjggMTY2LjgyOTU0NTM4IDgyOS4zNDM0MDkwNkwxNjYuODI5NTQ1MzggMTk0LjY1NDQ3MDg1QzE2Ni44Mjk1NDUzOCA5Ni42MTcyNjU2OSAyMzYuNTI0NzQxNDYgNjEuMjc1MTQ5ODEgMzIyLjM5NDI4NzIgMTE1LjY0OTg5NTEyTDc5Mi43NTA4NjA2MyA0MTMuNDkxNDUxNjggNzkyLjc1MDg2MDYzIDQxMy40OTE0NTE2OFoiICAvPjwvc3ZnPg=="},3129:function(t,e){"use strict";e.Z="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/PjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+PHN2ZyB0PSIxNTk0MTA4NjYxMTIwIiBjbGFzcz0iaWNvbiIgdmlld0JveD0iMCAwIDEwMjQgMTAyNCIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHAtaWQ9IjE1NzIiIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCI+PGRlZnM+PHN0eWxlIHR5cGU9InRleHQvY3NzIj48L3N0eWxlPjwvZGVmcz48cGF0aCBkPSJNMzIwIDQ0Ny45MzZjMzUuMzkyIDAgNjQtMjguNjA4IDY0LTY0cy0yOC42MDgtNjQtNjQtNjQtNjQgMjguNjA4LTY0IDY0UzI4NC42MDggNDQ3LjkzNiAzMjAgNDQ3LjkzNnpNNzUxLjc0NCA3MDYuNzUyYy0xNDYuNDk2LTkxLjAwOC0zMzMuNDQtOTEuMDA4LTQ3OS44NzIgMC0xNC4zMzYgOC44OTYtMTkuMzI4IDI4LjczNi0xMS4yNjQgNDQuNDggOCAxNS43NDQgMjYuMDQ4IDIxLjI0OCA0MC4zODQgMTIuMzUyIDEyOC43MDQtNzkuOTM2IDI5Mi44NjQtNzkuOTM2IDQyMS42MzIgMCA0LjU0NCAyLjg4IDkuNiA0LjIyNCAxNC41MjggNC4yMjQgMTAuMzY4IDAgMjAuNDE2LTYuMDE2IDI1Ljg1Ni0xNi42NEM3NzEuMDcyIDczNS40ODggNzY2LjAxNiA3MTUuNjQ4IDc1MS43NDQgNzA2Ljc1MnpNODMyIDEyNy45MzYgMTkyIDEyNy45MzZjLTcwLjY1NiAwLTEyOCA1Ny4zNDQtMTI4IDEyOGwwIDU3NmMwIDcwLjY1NiA1Ny4zNDQgMTI4IDEyOCAxMjhsNjQwIDBjNzAuNjU2IDAgMTI4LTU3LjM0NCAxMjgtMTI4bDAtNTc2Qzk2MCAxODUuMjggOTAyLjY1NiAxMjcuOTM2IDgzMiAxMjcuOTM2ek04OTYgODMxLjkzNmMwIDM1LjM5Mi0yOC42MDggNjQtNjQgNjRMMTkyIDg5NS45MzZjLTM1LjM5MiAwLTY0LTI4LjYwOC02NC02NGwwLTU3NmMwLTM1LjM5MiAyOC42MDgtNjQgNjQtNjRsNjQwIDBjMzUuMzkyIDAgNjQgMjguNjA4IDY0IDY0TDg5NiA4MzEuOTM2ek03MDQgMzE5LjkzNmMtMzUuMzkyIDAtNjQgMjguNjA4LTY0IDY0czI4LjYwOCA2NCA2NCA2NCA2NC0yOC42MDggNjQtNjRTNzM5LjM5MiAzMTkuOTM2IDcwNCAzMTkuOTM2eiIgcC1pZD0iMTU3MyIgZmlsbD0iI2ZmZmZmZiI+PC9wYXRoPjwvc3ZnPg=="},8969:function(t,e){"use strict";e.Z="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/PjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+PHN2ZyBjbGFzcz0iaWNvbiIgd2lkdGg9IjIwMHB4IiBoZWlnaHQ9IjIwMC4wMHB4IiB2aWV3Qm94PSIwIDAgMTAyNCAxMDI0IiB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZmlsbD0iI2ZmZmZmZiIgZD0iTTUyNi40MzIgOTI0LjA2NGMtMjAuOTYgMC00NC4xNi0xMi41NzYtNjguOTYtMzcuMzQ0TDI3NC43NTIgNzA0SDE5MmMtNTIuOTI4IDAtOTYtNDMuMDcyLTk2LTk2VjQxNmMwLTUyLjkyOCA0My4wNzItOTYgOTYtOTZoODIuNzUybDE4Mi42MjQtMTgyLjYyNGMyNC41NzYtMjQuNTc2IDQ3Ljc0NC0zNy4wMjQgNjguODY0LTM3LjAyNEM1NDkuMTg0IDEwMC4zNTIgNTc2IDExNiA1NzYgMTYwdjcwNGMwIDQ0LjM1Mi0yNi43MiA2MC4wNjQtNDkuNTY4IDYwLjA2NHpNNjg3LjU4NCA3MzAuMzY4YTMxLjg5OCAzMS44OTggMCAwIDEtMTguNjU2LTYuMDE2Yy0xNC4zMzYtMTAuMzA0LTE3LjYzMi0zMC4zMDQtNy4zMjgtNDQuNjcybDEyLjY3Mi0xNy4zNDRDNzA3LjM5MiA2MTcuNDQgNzM2IDU3OC42MjQgNzM2IDUxMmMwLTY5LjAyNC0yNS4zNDQtMTAyLjUyOC01Ny40NC0xNDQuOTI4LTUuNjY0LTcuNDU2LTExLjMyOC0xNS4wMDgtMTYuOTI4LTIyLjc4NC0xMC4zMDQtMTQuMzM2LTcuMDQtMzQuMzM2IDcuMzI4LTQ0LjY3MiAxNC4zNjgtMTAuMzY4IDM0LjMzNi03LjA0IDQ0LjY3MiA3LjMyOCA1LjI0OCA3LjMyOCAxMC42NTYgMTQuNDY0IDE1Ljk2OCAyMS41MDRDNzY0LjIyNCAzNzQuMjA4IDgwMCA0MjEuNTA0IDgwMCA1MTJjMCA4Ny42NDgtMzkuMzkyIDE0MS4xMi03NC4xNDQgMTg4LjMybC0xMi4yMjQgMTYuNzM2Yy02LjI3MiA4LjcwNC0xNi4wNjQgMTMuMzEyLTI2LjA0OCAxMy4zMTJ6IiAgLz48cGF0aCBmaWxsPSIjZmZmZmZmIiBkPSJNNzk2LjQ0OCA4MzkuMDA4YTMxLjkwNiAzMS45MDYgMCAwIDEtMjEuMDg4LTcuOTM2Yy0xMy4yOC0xMS42NDgtMTQuNjI0LTMxLjg3Mi0yLjk3Ni00NS4xNTJDODM2LjYwOCA3MTIuNjcyIDg5NiA2MjguODY0IDg5NiA1MTJzLTU5LjM5Mi0yMDAuNzA0LTEyMy42MTYtMjczLjg4OGMtMTEuNjQ4LTEzLjMxMi0xMC4zMDQtMzMuNTA0IDIuOTc2LTQ1LjE4NCAxMy4yMTYtMTEuNjQ4IDMzLjQ0LTEwLjMzNiA0NS4xNTIgMi45NDRDODg5LjQ3MiAyNzQuNTYgOTYwIDM3My42IDk2MCA1MTJzLTcwLjUyOCAyMzcuNDcyLTEzOS40ODggMzE2LjA5NmMtNi4zNjggNy4yMzItMTUuMiAxMC45MTItMjQuMDY0IDEwLjkxMnoiICAvPjwvc3ZnPg=="},9150:function(t,e){"use strict";e.Z="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/PjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+PHN2ZyBjbGFzcz0iaWNvbiIgd2lkdGg9IjIwMHB4IiBoZWlnaHQ9IjIwMC4wMHB4IiB2aWV3Qm94PSIwIDAgMTAyNCAxMDI0IiB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZmlsbD0iI2ZmZmZmZiIgZD0iTTE5MiAzMjBjLTU0LjQgMC05NiA0MS42LTk2IDkyLjhWNjA4YzAgNTQuNCA0MS42IDk2IDk2IDk2aDgzLjJsMTgyLjQgMTg4LjhjMjIuNCAyMi40IDQ0LjggMzUuMiA2Ny4yIDM1LjIgNi40IDAgMTIuOCAwIDE5LjItMy4yIDE5LjItOS42IDMyLTI4LjggMzItNTEuMnYtMjI0TDIzMy42IDMyMEgxOTJ6IG03NTguNCA0ODkuNmwtNTcuNi01NC40QzkzNC40IDY4MS42IDk2MCA1OTguNCA5NjAgNTEyYzAtMTE1LjItNDEuNi0yMjcuMi0xMTguNC0zMTYuOC0xMi44LTEyLjgtMzItMTYtNDQuOC0zLjItMTIuOCAxMi44LTE2IDMyLTMuMiA0NC44IDY0IDc2LjggMTAyLjQgMTc2IDEwMi40IDI3NS4yIDAgNzAuNC0xOS4yIDEzNy42LTUxLjIgMTk1LjJMNzUyIDYxNy42YzkuNi0zNS4yIDE2LTcwLjQgMTYtMTA1LjYgMC03My42LTIyLjQtMTQ0LTY3LjItMjA0LjgtOS42LTE2LTI4LjgtMTkuMi00NC44LTYuNHMtMTkuMiAyOC44LTYuNCA0NC44YzM1LjIgNDggNTQuNCAxMDguOCA1NC40IDE2Ni40IDAgMTkuMi0zLjIgMzguNC02LjQgNTQuNEw1NzYgNDUxLjJWMTUzLjZjMC0yNS42LTEyLjgtNDQuOC0zMi01MS4yLTI1LjYtOS42LTU3LjYgMC04Ni40IDMyTDM1MiAyNDAgMjE0LjQgMTA1LjZjLTEyLjgtMTIuOC0zMi0xMi44LTQ0LjggMC0xMi44IDEyLjgtMTIuOCAzMiAwIDQ0LjhsNzM2IDcwNGM2LjQgNi40IDEyLjggOS42IDIyLjQgOS42IDkuNiAwIDE2LTMuMiAyMi40LTkuNiAxMi44LTEyLjggMTIuOC0zMiAwLTQ0Ljh6IiAgLz48L3N2Zz4="},3964:function(t,e){"use strict";e.Z="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/PjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+PHN2ZyB0PSIxNTk0MTExMDg1MjI4IiBjbGFzcz0iaWNvbiIgdmlld0JveD0iMCAwIDEwMjQgMTAyNCIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHAtaWQ9IjYwOTYiIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCI+PGRlZnM+PHN0eWxlIHR5cGU9InRleHQvY3NzIj48L3N0eWxlPjwvZGVmcz48cGF0aCBkPSJNODg0LjM5MiA5NzAuMzMzSDY3MS44ODdjLTIzLjAxIDAtNDEuNjY2LTE4LjY1Ni00MS42NjYtNDEuNjY2IDAtMjMuMDExIDE4LjY1Ni00MS42NjcgNDEuNjY2LTQxLjY2N2gyMTIuNTA1VjY5MS4xNThjMC0yMy4wMSAxOC42NTYtNDEuNjY2IDQxLjY2Ni00MS42NjYgMjMuMDExIDAgNDEuNjY3IDE4LjY1NiA0MS42NjcgNDEuNjY2Vjg4N2MwIDQ1Ljk1OS0zNy4zOTUgODMuMzMzLTgzLjMzMyA4My4zMzN6IG0tNTQxLjY2NyAwSDEzNC4zOTFjLTQ1Ljk0OSAwLTgzLjMzMy0zNy4zNzQtODMuMzMzLTgzLjMzM1Y2NzguNjY3YzAtMjMuMDExIDE4LjY1Ni00MS42NjcgNDEuNjY3LTQxLjY2N3M0MS42NjcgMTguNjU2IDQxLjY2NyA0MS42NjdWODg3aDIwOC4zMzNjMjMuMDEgMCA0MS42NjYgMTguNjU2IDQxLjY2NiA0MS42NjcgMCAyMy4wMS0xOC42NTcgNDEuNjY2LTQxLjY2NiA0MS42NjZ6IG0tMjUwLTU4Ny41MDRjLTIzLjAxIDAtNDEuNjY3LTE4LjY1Ni00MS42NjctNDEuNjY3VjEzN2MwLTQ1Ljk1OSAzNy4zODQtODMuMzMzIDgzLjMzMy04My4zMzNoMjA0LjE2M2MyMy4wMSAwIDQxLjY2NyAxOC42NTcgNDEuNjY3IDQxLjY2N1MzNjEuNTY0IDEzNyAzMzguNTU0IDEzN0gxMzQuMzkxdjIwNC4xNjJjMCAyMy4wMTEtMTguNjU2IDQxLjY2Ny00MS42NjYgNDEuNjY3eiBtODMzLjMzMy04LjMyMWMtMjMuMDEgMC00MS42NjYtMTguNjU2LTQxLjY2Ni00MS42NjZWMTM3SDY3MS44ODdjLTIzLjAxIDAtNDEuNjY2LTE4LjY1Ni00MS42NjYtNDEuNjY3czE4LjY1Ni00MS42NjcgNDEuNjY2LTQxLjY2N2gyMTIuNTA1YzQ1LjkzOCAwIDgzLjMzMyAzNy4zNzQgODMuMzMzIDgzLjMzM3YxOTUuODQyYzAgMjMuMDExLTE4LjY1NyA0MS42NjctNDEuNjY3IDQxLjY2N3oiIHAtaWQ9IjYwOTciIGZpbGw9IiNmZmZmZmYiPjwvcGF0aD48L3N2Zz4="},731:function(t,e){"use strict";e.Z="data:image/svg+xml;base64,PHN2ZyB0PSIxNTgyMjczNDA4NzQ0IiBjbGFzcz0iaWNvbiIgdmlld0JveD0iMCAwIDEwMjQgMTAyNCIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHAtaWQ9Ijg4NiIgd2lkdGg9IjIwMCIgaGVpZ2h0PSIyMDAiPjxwYXRoIGQ9Ik03ODAuNDA4MTI0NzMgNjY1LjM2aDExNS4wMzY4NzVjMTAuNTk3NSAwIDE5LjYzMTI1MDI3IDMuNzUxODc1MjcgMjcuMTEyNTAwNTQgMTEuMjQ5OTk5NzMgNy41MjA2MjQ3NCA3LjUwMzc0OTczIDExLjI2MTI1MDI3IDE2LjUyNjI1MDI3IDExLjI2MTI0OTQ2IDI3LjA3ODc1MDU0IDAgMTAuNjY1LTMuNzQwNjI0NzMgMTkuNjg3NDk5NzMtMTEuMjY2ODc0NzMgMjcuMTkxMjQ5NDYtNy40NzU2MjUgNy40OTgxMjUyNy0xNi41MDkzNzUyNyAxMS4yNDk5OTk3My0yNy4xMDY4NzUyNyAxMS4yNTAwMDA1NGgtMTE1LjAzMTI0OTc0Yy0xMC41ODYyNTAyNyAwLTE5LjYzMTI1MDI3IDMuNzUxODc1MjctMjcuMTEyNDk5NzIgMTEuMjQ5OTk5NzQtNy41MjA2MjQ3NCA3LjUwMzc0OTczLTExLjI0OTk5OTczIDE2LjUyNjI1MDI3LTExLjI1MDAwMDU0IDI3LjA3MzEyNTI2djExNS4wOTg3NDk3M2MwIDEwLjU0Njg3NS0zLjc1MTg3NTI3IDE5LjU3NS0xMS4yNjEyNDk0NiAyNy4wNzMxMjUyNy03LjQ4Njg3NDczIDcuNDk4MTI1MjctMTYuNTI2MjUwMjcgMTEuMjQ5OTk5NzMtMjcuMTEyNTAwNTQgMTEuMjQ5OTk5NzMtMTAuNTc0OTk5NzMgMC0xOS42MzY4NzQ3My0zLjc1MTg3NTI3LTI3LjA4OTk5OTQ2LTExLjI0OTk5OTczLTcuNTM3NDk5NzItNy41MDM3NDk3My0xMS4yNjEyNTAyNy0xNi41MjYyNTAyNy0xMS4yNjEyNTAyOC0yNy4wNzMxMjUyN3YtMTE1LjA5ODc0OTczYzAtMzEuNzU4NzQ5OTkgMTEuMjE2MjQ5NzMtNTguODM3NDk5NzMgMzMuNjkzNzQ5NzQtODEuMzM3NSAyMi40NjYyNTAyNy0yMi41MDAwMDAyNyA0OS41NTYyNDk3My0zMy42Mzc1MDAyNyA4MS4zMzE4NzU1NC0zMy42Mzc1MDAyN2wwLjA1NjI0OTQ2LTAuMTEyNDk5NzN6TTMyMC4yNDkzNzUgOTAuMTI1YzEwLjU5MTg3NDczIDAgMTkuNjM2ODc0NzMgMy43NTE4NzUyNyAyNy4xMDY4NzUyNyAxMS4yNDk5OTk3MyA3LjUyMDYyNDc0IDcuNTAzNzQ5NzMgMTEuMjYxMjUwMjcgMTYuNTI2MjUwMjcgMTEuMjYxMjQ5NDUgMjcuMDczMTI1Mjd2MTE1LjA5ODc0OTczYzAgMzEuNzU4NzQ5OTktMTEuMjM4NzQ5OTkgNTguODM3NDk5NzMtMzMuNzA0OTk5NDUgODEuMzM3NS0yMi40NjYyNTAyNyAyMi41MDAwMDAyNy00OS41ODQzNzUyNyAzMy43NS04MS4zNDMxMjUyNyAzMy43NUgxMjguNTI2ODc0NzNjLTEwLjU3NDk5OTczIDAtMTkuNjMxMjUwMjctMy43NDYyNDk5OS0yNy4xMDY4NzQ0Ni0xMS4zNjI0OTk0Ni03LjUyMDYyNDc0LTcuMzg1NjI0NzMtMTEuMjQ5OTk5NzMtMTYuNDA4MTI1MjctMTEuMjUwMDAwNTQtMjcuMDczMTI1MjggMC0xMC41NTI1MDAyNyAzLjcyOTM3NS0xOS41NzUgMTEuMjUwMDAwNTQtMjcuMDc4NzQ5NzIgNy40ODEyNTAyNy03LjQ5ODEyNTI3IDE2LjUyNjI1MDI3LTExLjI0OTk5OTczIDI3LjExMjQ5OTczLTExLjI1MDAwMDU0aDExNS4wMzEyNDk3M2MxMC41OTc1IDAgMTkuNjMxMjUwMjctMy43NTE4NzUyNyAyNy4xMTI1MDA1NC0xMS4yNDk5OTk3NCA3LjUyMDYyNDc0LTcuNTAzNzQ5NzMgMTEuMjYxMjUwMjctMTYuNTI2MjUwMjcgMTEuMjYxMjQ5NDctMjcuMDczMTI1MjZWMTI4LjQ0ODEyNWMwLTEwLjU0Njg3NSAzLjcyMzc0OTczLTE5LjY4NzQ5OTczIDExLjI2MTI1MDI3LTI3LjA3MzEyNTI3IDcuNDgxMjUwMjctNy42MTYyNTAyNyAxNi41MTQ5OTk3My0xMS4yNDk5OTk3MyAyNy4wOTU2MjQ3Mi0xMS4yNDk5OTk3M2gtMC4wNDQ5OTk3M3pNMTI4LjUyNjg3NDczIDY2NS4zNkgyNDMuNTc1MDAwMjdjMzEuNzU4NzQ5OTkgMCA1OC44NzY4NzUgMTEuMjQ5OTk5NzMgODEuMzM3NSAzMy43NTU2MjUyNyAyMi40NzE4NzQ3MyAyMi4zODc0OTk3MyAzMy43MTA2MjQ3MyA0OS41Nzg3NDk5OSAzMy43MTA2MjQ3MyA4MS4zMzc1djExNC45NzQ5OTk0NmMwIDEwLjY3MDYyNTI3LTMuNzQwNjI0NzMgMTkuNjkzMTI1LTExLjI2MTI1MDI3IDI3LjE5Njg3NTU0LTcuNDY5OTk5NzMgNy40OTgxMjUyNy0xNi41MTQ5OTk3MyAxMS4yNDk5OTk3My0yNy4xMTI0OTk3MyAxMS4yNDk5OTk3My0xMC41NzQ5OTk3MyAwLTE5LjYzMTI1MDI3LTMuNzUxODc1MjctMjcuMDkwMDAwMjctMTEuMjQ5OTk5NzMtNy41Mzc0OTk3Mi03LjUwMzc0OTczLTExLjI2Njg3NDczLTE2LjUyNjI1MDI3LTExLjI2Njg3NDczLTI3LjE5MTI1MDI2di0xMTQuOTc1MDAwMjhjMC0xMC42NzA2MjUyNy0zLjczNTAwMDI3LTE5LjY5MzEyNS0xMS4yNzI1MDAwMS0yNy4wNzg3NDk3Mi03LjQ2NDM3NTI3LTcuNjE2MjUwMjctMTYuNDk4MTI0NzMtMTEuMzYyNTAwMjctMjcuMTA2ODc1MjYtMTEuMzYyNTAwMjdIMTI4LjQ3NjI0OTczYy0xMC41ODYyNTAyNyAwLTE5LjYzMTI1MDI3LTMuNjM5Mzc0NzMtMjcuMTAxMjUtMTEuMjU1NjI1MDEtNy41MjA2MjQ3NC03LjM4NTYyNDczLTExLjI0OTk5OTczLTE2LjUyNjI1MDI3LTExLjI0OTk5OTczLTI3LjA3MzEyNDQ2IDAtMTAuNTUyNTAwMjcgMy43MjkzNzUtMTkuNjg3NDk5NzMgMTEuMjQ5OTk5NzMtMjcuMDc4NzUwNTQgNy40NjQzNzUyNy03LjYxNjI1MDI3IDE2LjUxNDk5OTczLTExLjI0OTk5OTczIDI3LjA5NTYyNTU0LTExLjI0OTk5OTczaDAuMDU2MjQ5NDZ6TTcwMy43MjgxMjQ3MyA5MC4xMjVjMTAuNTk3NSAwIDE5LjY0MjUgMy43NTE4NzUyNyAyNy4xMTI1MDA1NCAxMS4yNDk5OTk3MyA3LjUyMDYyNDc0IDcuNTAzNzQ5NzMgMTEuMjU1NjI1IDE2LjUyNjI1MDI3IDExLjI1NTYyNSAyNy4wNzMxMjUyN3YxMTUuMDk4NzQ5NzNjMCAxMC41NDY4NzUgMy43NDA2MjQ3MyAxOS42ODc0OTk3MyAxMS4yNjY4NzQ3MyAyNy4wNzMxMjUyNiA3LjQ2NDM3NTI3IDcuNjE2MjUwMjcgMTYuNTIwNjI1IDExLjI0OTk5OTczIDI3LjEwNjg3NTI3IDExLjI0OTk5OTc0aDExNS4wMjU2MjQ0NmMxMC41OTE4NzQ3MyAwIDE5LjY0MjUgMy43NTE4NzUyNyAyNy4xMTI1MDA1NCAxMS4yNTAwMDA1NCA3LjUxNTAwMDI3IDcuNTAzNzQ5NzMgMTEuMjY2ODc0NzMgMTYuNTI2MjUwMjcgMTEuMjY2ODc0NzMgMjcuMTkxMjQ5NDYgMCAxMC41NTI1MDAyNy0zLjc1MTg3NTI3IDE5LjU3NS0xMS4yNjEyNTAyNyAyNy4wNzg3NTA1NC03LjQ4MTI1MDI3IDcuNDk4MTI1MjctMTYuNTI2MjUwMjcgMTEuMjQ5OTk5NzMtMjcuMTE4MTI1IDExLjI0OTk5OTczaC0xMTUuMDMxMjQ5NzNjLTMxLjc2OTk5OTczIDAtNTguODQ4NzUwMjctMTEuMjQ5OTk5NzMtODEuMzM3NS0zMy42Mzc1MDAyNy0yMi40ODMxMjUyNy0yMi41MDAwMDAyNy0zMy42OTM3NDk3My00OS41Nzg3NDk5OS0zMy42OTM3NDk3My04MS4zMzc1VjEyOC41NjA2MjQ3MWMwLTEwLjY2NSAzLjczNTAwMDI3LTE5LjY4NzQ5OTczIDExLjI0OTk5OTczLTI3LjA3MzEyNDQ0IDcuNDc1NjI1LTcuNjE2MjUwMjcgMTYuNTM3NS0xMS4yNDk5OTk3MyAyNy4xMTI0OTk3My0xMS4yNTAwMDA1NEw3MDMuNzMzNzQ5OTkgOTAuMTI1eiIgZmlsbD0iI2ZmZmZmZiIgcC1pZD0iODg3Ij48L3BhdGg+PC9zdmc+"},8732:function(t,e){"use strict";e.Z="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/PjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+PHN2ZyBjbGFzcz0iaWNvbiIgd2lkdGg9IjIwMHB4IiBoZWlnaHQ9IjIwMC4wMHB4IiB2aWV3Qm94PSIwIDAgMTAyNCAxMDI0IiB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZmlsbD0iI2ZmZmZmZiIgZD0iTTI1Mi43NzAxNDk5NSA4Ny44MDU2OTkxN2M3OC4wOTI5OTI5MiAwIDE0MS4zOTgxMDAyOSA2My4zMDUxMDczNSAxNDEuMzk4MTAwMjggMTQxLjM5ODEwMDI2djU2NS41OTI0MDExNGMwIDc4LjA5Mjk5MjkyLTYzLjMwNTEwNzM1IDE0MS4zOTgxMDAyOS0xNDEuMzk4MTAwMjggMTQxLjM5ODEwMDI2cy0xNDEuMzk4MTAwMjktNjMuMzA1MTA3MzUtMTQxLjM5ODEwMDI4LTE0MS4zOTgxMDAyNlYyMjkuMjAzNzk5NDNjMC03OC4wOTI5OTI5MiA2My4zMDUxMDczNS0xNDEuMzk4MTAwMjkgMTQxLjM5ODEwMDI4LTE0MS4zOTgxMDAyNnogbTUxOC40NTk3MDAxIDBjNzguMDkyOTkyOTIgMCAxNDEuMzk4MTAwMjkgNjMuMzA1MTA3MzUgMTQxLjM5ODEwMDI4IDE0MS4zOTgxMDAyNnY1NjUuNTkyNDAxMTRjMCA3OC4wOTI5OTI5Mi02My4zMDUxMDczNSAxNDEuMzk4MTAwMjktMTQxLjM5ODEwMDI4IDE0MS4zOTgxMDAyNnMtMTQxLjM5ODEwMDI5LTYzLjMwNTEwNzM1LTE0MS4zOTgxMDAyOC0xNDEuMzk4MTAwMjZWMjI5LjIwMzc5OTQzYzAtNzguMDkyOTkyOTIgNjMuMzA1MTA3MzUtMTQxLjM5ODEwMDI5IDE0MS4zOTgxMDAyOC0xNDEuMzk4MTAwMjZ6IiAgLz48L3N2Zz4="}},e={};function n(r){if(e[r])return e[r].exports;var i=e[r]={id:r,exports:{}};return t[r](i,i.exports,n),i.exports}return n.n=function(t){var e=t&&t.__esModule?function(){return t.default}:function(){return t};return n.d(e,{a:e}),e},n.d=function(t,e){for(var r in e)n.o(e,r)&&!n.o(t,r)&&Object.defineProperty(t,r,{enumerable:!0,get:e[r]})},n.g=function(){if("object"==typeof globalThis)return globalThis;try{return this||new Function("return this")()}catch(t){if("object"==typeof window)return window}}(),n.o=function(t,e){return Object.prototype.hasOwnProperty.call(t,e)},n(8762)}().default}));
+(function webpackUniversalModuleDefinition(root, factory) {
+	if(typeof exports === 'object' && typeof module === 'object')
+		module.exports = factory();
+	else if(typeof define === 'function' && define.amd)
+		define([], factory);
+	else if(typeof exports === 'object')
+		exports["PrettyVideo"] = factory();
+	else
+		root["PrettyVideo"] = factory();
+})(self, function() {
+return /******/ (function() { // webpackBootstrap
+/******/ 	var __webpack_modules__ = ({
+
+/***/ 3099:
+/***/ (function(module) {
+
+module.exports = function (it) {
+  if (typeof it != 'function') {
+    throw TypeError(String(it) + ' is not a function');
+  } return it;
+};
+
+
+/***/ }),
+
+/***/ 6077:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+var isObject = __webpack_require__(111);
+
+module.exports = function (it) {
+  if (!isObject(it) && it !== null) {
+    throw TypeError("Can't set " + String(it) + ' as a prototype');
+  } return it;
+};
+
+
+/***/ }),
+
+/***/ 1530:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var charAt = __webpack_require__(8710).charAt;
+
+// `AdvanceStringIndex` abstract operation
+// https://tc39.es/ecma262/#sec-advancestringindex
+module.exports = function (S, index, unicode) {
+  return index + (unicode ? charAt(S, index).length : 1);
+};
+
+
+/***/ }),
+
+/***/ 9670:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+var isObject = __webpack_require__(111);
+
+module.exports = function (it) {
+  if (!isObject(it)) {
+    throw TypeError(String(it) + ' is not an object');
+  } return it;
+};
+
+
+/***/ }),
+
+/***/ 8533:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var $forEach = __webpack_require__(2092).forEach;
+var arrayMethodIsStrict = __webpack_require__(9341);
+
+var STRICT_METHOD = arrayMethodIsStrict('forEach');
+
+// `Array.prototype.forEach` method implementation
+// https://tc39.es/ecma262/#sec-array.prototype.foreach
+module.exports = !STRICT_METHOD ? function forEach(callbackfn /* , thisArg */) {
+  return $forEach(this, callbackfn, arguments.length > 1 ? arguments[1] : undefined);
+// eslint-disable-next-line es/no-array-prototype-foreach -- safe
+} : [].forEach;
+
+
+/***/ }),
+
+/***/ 1318:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+var toIndexedObject = __webpack_require__(5656);
+var toLength = __webpack_require__(7466);
+var toAbsoluteIndex = __webpack_require__(1400);
+
+// `Array.prototype.{ indexOf, includes }` methods implementation
+var createMethod = function (IS_INCLUDES) {
+  return function ($this, el, fromIndex) {
+    var O = toIndexedObject($this);
+    var length = toLength(O.length);
+    var index = toAbsoluteIndex(fromIndex, length);
+    var value;
+    // Array#includes uses SameValueZero equality algorithm
+    // eslint-disable-next-line no-self-compare -- NaN check
+    if (IS_INCLUDES && el != el) while (length > index) {
+      value = O[index++];
+      // eslint-disable-next-line no-self-compare -- NaN check
+      if (value != value) return true;
+    // Array#indexOf ignores holes, Array#includes - not
+    } else for (;length > index; index++) {
+      if ((IS_INCLUDES || index in O) && O[index] === el) return IS_INCLUDES || index || 0;
+    } return !IS_INCLUDES && -1;
+  };
+};
+
+module.exports = {
+  // `Array.prototype.includes` method
+  // https://tc39.es/ecma262/#sec-array.prototype.includes
+  includes: createMethod(true),
+  // `Array.prototype.indexOf` method
+  // https://tc39.es/ecma262/#sec-array.prototype.indexof
+  indexOf: createMethod(false)
+};
+
+
+/***/ }),
+
+/***/ 2092:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+var bind = __webpack_require__(9974);
+var IndexedObject = __webpack_require__(8361);
+var toObject = __webpack_require__(7908);
+var toLength = __webpack_require__(7466);
+var arraySpeciesCreate = __webpack_require__(5417);
+
+var push = [].push;
+
+// `Array.prototype.{ forEach, map, filter, some, every, find, findIndex, filterOut }` methods implementation
+var createMethod = function (TYPE) {
+  var IS_MAP = TYPE == 1;
+  var IS_FILTER = TYPE == 2;
+  var IS_SOME = TYPE == 3;
+  var IS_EVERY = TYPE == 4;
+  var IS_FIND_INDEX = TYPE == 6;
+  var IS_FILTER_OUT = TYPE == 7;
+  var NO_HOLES = TYPE == 5 || IS_FIND_INDEX;
+  return function ($this, callbackfn, that, specificCreate) {
+    var O = toObject($this);
+    var self = IndexedObject(O);
+    var boundFunction = bind(callbackfn, that, 3);
+    var length = toLength(self.length);
+    var index = 0;
+    var create = specificCreate || arraySpeciesCreate;
+    var target = IS_MAP ? create($this, length) : IS_FILTER || IS_FILTER_OUT ? create($this, 0) : undefined;
+    var value, result;
+    for (;length > index; index++) if (NO_HOLES || index in self) {
+      value = self[index];
+      result = boundFunction(value, index, O);
+      if (TYPE) {
+        if (IS_MAP) target[index] = result; // map
+        else if (result) switch (TYPE) {
+          case 3: return true;              // some
+          case 5: return value;             // find
+          case 6: return index;             // findIndex
+          case 2: push.call(target, value); // filter
+        } else switch (TYPE) {
+          case 4: return false;             // every
+          case 7: push.call(target, value); // filterOut
+        }
+      }
+    }
+    return IS_FIND_INDEX ? -1 : IS_SOME || IS_EVERY ? IS_EVERY : target;
+  };
+};
+
+module.exports = {
+  // `Array.prototype.forEach` method
+  // https://tc39.es/ecma262/#sec-array.prototype.foreach
+  forEach: createMethod(0),
+  // `Array.prototype.map` method
+  // https://tc39.es/ecma262/#sec-array.prototype.map
+  map: createMethod(1),
+  // `Array.prototype.filter` method
+  // https://tc39.es/ecma262/#sec-array.prototype.filter
+  filter: createMethod(2),
+  // `Array.prototype.some` method
+  // https://tc39.es/ecma262/#sec-array.prototype.some
+  some: createMethod(3),
+  // `Array.prototype.every` method
+  // https://tc39.es/ecma262/#sec-array.prototype.every
+  every: createMethod(4),
+  // `Array.prototype.find` method
+  // https://tc39.es/ecma262/#sec-array.prototype.find
+  find: createMethod(5),
+  // `Array.prototype.findIndex` method
+  // https://tc39.es/ecma262/#sec-array.prototype.findIndex
+  findIndex: createMethod(6),
+  // `Array.prototype.filterOut` method
+  // https://github.com/tc39/proposal-array-filtering
+  filterOut: createMethod(7)
+};
+
+
+/***/ }),
+
+/***/ 1194:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+var fails = __webpack_require__(7293);
+var wellKnownSymbol = __webpack_require__(5112);
+var V8_VERSION = __webpack_require__(7392);
+
+var SPECIES = wellKnownSymbol('species');
+
+module.exports = function (METHOD_NAME) {
+  // We can't use this feature detection in V8 since it causes
+  // deoptimization and serious performance degradation
+  // https://github.com/zloirock/core-js/issues/677
+  return V8_VERSION >= 51 || !fails(function () {
+    var array = [];
+    var constructor = array.constructor = {};
+    constructor[SPECIES] = function () {
+      return { foo: 1 };
+    };
+    return array[METHOD_NAME](Boolean).foo !== 1;
+  });
+};
+
+
+/***/ }),
+
+/***/ 9341:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var fails = __webpack_require__(7293);
+
+module.exports = function (METHOD_NAME, argument) {
+  var method = [][METHOD_NAME];
+  return !!method && fails(function () {
+    // eslint-disable-next-line no-useless-call,no-throw-literal -- required for testing
+    method.call(null, argument || function () { throw 1; }, 1);
+  });
+};
+
+
+/***/ }),
+
+/***/ 5417:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+var isObject = __webpack_require__(111);
+var isArray = __webpack_require__(3157);
+var wellKnownSymbol = __webpack_require__(5112);
+
+var SPECIES = wellKnownSymbol('species');
+
+// `ArraySpeciesCreate` abstract operation
+// https://tc39.es/ecma262/#sec-arrayspeciescreate
+module.exports = function (originalArray, length) {
+  var C;
+  if (isArray(originalArray)) {
+    C = originalArray.constructor;
+    // cross-realm fallback
+    if (typeof C == 'function' && (C === Array || isArray(C.prototype))) C = undefined;
+    else if (isObject(C)) {
+      C = C[SPECIES];
+      if (C === null) C = undefined;
+    }
+  } return new (C === undefined ? Array : C)(length === 0 ? 0 : length);
+};
+
+
+/***/ }),
+
+/***/ 4326:
+/***/ (function(module) {
+
+var toString = {}.toString;
+
+module.exports = function (it) {
+  return toString.call(it).slice(8, -1);
+};
+
+
+/***/ }),
+
+/***/ 9920:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+var has = __webpack_require__(6656);
+var ownKeys = __webpack_require__(3887);
+var getOwnPropertyDescriptorModule = __webpack_require__(1236);
+var definePropertyModule = __webpack_require__(3070);
+
+module.exports = function (target, source) {
+  var keys = ownKeys(source);
+  var defineProperty = definePropertyModule.f;
+  var getOwnPropertyDescriptor = getOwnPropertyDescriptorModule.f;
+  for (var i = 0; i < keys.length; i++) {
+    var key = keys[i];
+    if (!has(target, key)) defineProperty(target, key, getOwnPropertyDescriptor(source, key));
+  }
+};
+
+
+/***/ }),
+
+/***/ 8880:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+var DESCRIPTORS = __webpack_require__(9781);
+var definePropertyModule = __webpack_require__(3070);
+var createPropertyDescriptor = __webpack_require__(9114);
+
+module.exports = DESCRIPTORS ? function (object, key, value) {
+  return definePropertyModule.f(object, key, createPropertyDescriptor(1, value));
+} : function (object, key, value) {
+  object[key] = value;
+  return object;
+};
+
+
+/***/ }),
+
+/***/ 9114:
+/***/ (function(module) {
+
+module.exports = function (bitmap, value) {
+  return {
+    enumerable: !(bitmap & 1),
+    configurable: !(bitmap & 2),
+    writable: !(bitmap & 4),
+    value: value
+  };
+};
+
+
+/***/ }),
+
+/***/ 6135:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var toPrimitive = __webpack_require__(7593);
+var definePropertyModule = __webpack_require__(3070);
+var createPropertyDescriptor = __webpack_require__(9114);
+
+module.exports = function (object, key, value) {
+  var propertyKey = toPrimitive(key);
+  if (propertyKey in object) definePropertyModule.f(object, propertyKey, createPropertyDescriptor(0, value));
+  else object[propertyKey] = value;
+};
+
+
+/***/ }),
+
+/***/ 7235:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+var path = __webpack_require__(857);
+var has = __webpack_require__(6656);
+var wrappedWellKnownSymbolModule = __webpack_require__(6061);
+var defineProperty = __webpack_require__(3070).f;
+
+module.exports = function (NAME) {
+  var Symbol = path.Symbol || (path.Symbol = {});
+  if (!has(Symbol, NAME)) defineProperty(Symbol, NAME, {
+    value: wrappedWellKnownSymbolModule.f(NAME)
+  });
+};
+
+
+/***/ }),
+
+/***/ 9781:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+var fails = __webpack_require__(7293);
+
+// Detect IE8's incomplete defineProperty implementation
+module.exports = !fails(function () {
+  // eslint-disable-next-line es/no-object-defineproperty -- required for testing
+  return Object.defineProperty({}, 1, { get: function () { return 7; } })[1] != 7;
+});
+
+
+/***/ }),
+
+/***/ 317:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+var global = __webpack_require__(7854);
+var isObject = __webpack_require__(111);
+
+var document = global.document;
+// typeof document.createElement is 'object' in old IE
+var EXISTS = isObject(document) && isObject(document.createElement);
+
+module.exports = function (it) {
+  return EXISTS ? document.createElement(it) : {};
+};
+
+
+/***/ }),
+
+/***/ 8324:
+/***/ (function(module) {
+
+// iterable DOM collections
+// flag - `iterable` interface - 'entries', 'keys', 'values', 'forEach' methods
+module.exports = {
+  CSSRuleList: 0,
+  CSSStyleDeclaration: 0,
+  CSSValueList: 0,
+  ClientRectList: 0,
+  DOMRectList: 0,
+  DOMStringList: 0,
+  DOMTokenList: 1,
+  DataTransferItemList: 0,
+  FileList: 0,
+  HTMLAllCollection: 0,
+  HTMLCollection: 0,
+  HTMLFormElement: 0,
+  HTMLSelectElement: 0,
+  MediaList: 0,
+  MimeTypeArray: 0,
+  NamedNodeMap: 0,
+  NodeList: 1,
+  PaintRequestList: 0,
+  Plugin: 0,
+  PluginArray: 0,
+  SVGLengthList: 0,
+  SVGNumberList: 0,
+  SVGPathSegList: 0,
+  SVGPointList: 0,
+  SVGStringList: 0,
+  SVGTransformList: 0,
+  SourceBufferList: 0,
+  StyleSheetList: 0,
+  TextTrackCueList: 0,
+  TextTrackList: 0,
+  TouchList: 0
+};
+
+
+/***/ }),
+
+/***/ 8113:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+var getBuiltIn = __webpack_require__(5005);
+
+module.exports = getBuiltIn('navigator', 'userAgent') || '';
+
+
+/***/ }),
+
+/***/ 7392:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+var global = __webpack_require__(7854);
+var userAgent = __webpack_require__(8113);
+
+var process = global.process;
+var versions = process && process.versions;
+var v8 = versions && versions.v8;
+var match, version;
+
+if (v8) {
+  match = v8.split('.');
+  version = match[0] < 4 ? 1 : match[0] + match[1];
+} else if (userAgent) {
+  match = userAgent.match(/Edge\/(\d+)/);
+  if (!match || match[1] >= 74) {
+    match = userAgent.match(/Chrome\/(\d+)/);
+    if (match) version = match[1];
+  }
+}
+
+module.exports = version && +version;
+
+
+/***/ }),
+
+/***/ 748:
+/***/ (function(module) {
+
+// IE8- don't enum bug keys
+module.exports = [
+  'constructor',
+  'hasOwnProperty',
+  'isPrototypeOf',
+  'propertyIsEnumerable',
+  'toLocaleString',
+  'toString',
+  'valueOf'
+];
+
+
+/***/ }),
+
+/***/ 2109:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+var global = __webpack_require__(7854);
+var getOwnPropertyDescriptor = __webpack_require__(1236).f;
+var createNonEnumerableProperty = __webpack_require__(8880);
+var redefine = __webpack_require__(1320);
+var setGlobal = __webpack_require__(3505);
+var copyConstructorProperties = __webpack_require__(9920);
+var isForced = __webpack_require__(4705);
+
+/*
+  options.target      - name of the target object
+  options.global      - target is the global object
+  options.stat        - export as static methods of target
+  options.proto       - export as prototype methods of target
+  options.real        - real prototype method for the `pure` version
+  options.forced      - export even if the native feature is available
+  options.bind        - bind methods to the target, required for the `pure` version
+  options.wrap        - wrap constructors to preventing global pollution, required for the `pure` version
+  options.unsafe      - use the simple assignment of property instead of delete + defineProperty
+  options.sham        - add a flag to not completely full polyfills
+  options.enumerable  - export as enumerable property
+  options.noTargetGet - prevent calling a getter on target
+*/
+module.exports = function (options, source) {
+  var TARGET = options.target;
+  var GLOBAL = options.global;
+  var STATIC = options.stat;
+  var FORCED, target, key, targetProperty, sourceProperty, descriptor;
+  if (GLOBAL) {
+    target = global;
+  } else if (STATIC) {
+    target = global[TARGET] || setGlobal(TARGET, {});
+  } else {
+    target = (global[TARGET] || {}).prototype;
+  }
+  if (target) for (key in source) {
+    sourceProperty = source[key];
+    if (options.noTargetGet) {
+      descriptor = getOwnPropertyDescriptor(target, key);
+      targetProperty = descriptor && descriptor.value;
+    } else targetProperty = target[key];
+    FORCED = isForced(GLOBAL ? key : TARGET + (STATIC ? '.' : '#') + key, options.forced);
+    // contained in target
+    if (!FORCED && targetProperty !== undefined) {
+      if (typeof sourceProperty === typeof targetProperty) continue;
+      copyConstructorProperties(sourceProperty, targetProperty);
+    }
+    // add a flag to not completely full polyfills
+    if (options.sham || (targetProperty && targetProperty.sham)) {
+      createNonEnumerableProperty(sourceProperty, 'sham', true);
+    }
+    // extend global
+    redefine(target, key, sourceProperty, options);
+  }
+};
+
+
+/***/ }),
+
+/***/ 7293:
+/***/ (function(module) {
+
+module.exports = function (exec) {
+  try {
+    return !!exec();
+  } catch (error) {
+    return true;
+  }
+};
+
+
+/***/ }),
+
+/***/ 7007:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+// TODO: Remove from `core-js@4` since it's moved to entry points
+__webpack_require__(4916);
+var redefine = __webpack_require__(1320);
+var regexpExec = __webpack_require__(2261);
+var fails = __webpack_require__(7293);
+var wellKnownSymbol = __webpack_require__(5112);
+var createNonEnumerableProperty = __webpack_require__(8880);
+
+var SPECIES = wellKnownSymbol('species');
+var RegExpPrototype = RegExp.prototype;
+
+var REPLACE_SUPPORTS_NAMED_GROUPS = !fails(function () {
+  // #replace needs built-in support for named groups.
+  // #match works fine because it just return the exec results, even if it has
+  // a "grops" property.
+  var re = /./;
+  re.exec = function () {
+    var result = [];
+    result.groups = { a: '7' };
+    return result;
+  };
+  return ''.replace(re, '$<a>') !== '7';
+});
+
+// IE <= 11 replaces $0 with the whole match, as if it was $&
+// https://stackoverflow.com/questions/6024666/getting-ie-to-replace-a-regex-with-the-literal-string-0
+var REPLACE_KEEPS_$0 = (function () {
+  // eslint-disable-next-line regexp/prefer-escape-replacement-dollar-char -- required for testing
+  return 'a'.replace(/./, '$0') === '$0';
+})();
+
+var REPLACE = wellKnownSymbol('replace');
+// Safari <= 13.0.3(?) substitutes nth capture where n>m with an empty string
+var REGEXP_REPLACE_SUBSTITUTES_UNDEFINED_CAPTURE = (function () {
+  if (/./[REPLACE]) {
+    return /./[REPLACE]('a', '$0') === '';
+  }
+  return false;
+})();
+
+// Chrome 51 has a buggy "split" implementation when RegExp#exec !== nativeExec
+// Weex JS has frozen built-in prototypes, so use try / catch wrapper
+var SPLIT_WORKS_WITH_OVERWRITTEN_EXEC = !fails(function () {
+  // eslint-disable-next-line regexp/no-empty-group -- required for testing
+  var re = /(?:)/;
+  var originalExec = re.exec;
+  re.exec = function () { return originalExec.apply(this, arguments); };
+  var result = 'ab'.split(re);
+  return result.length !== 2 || result[0] !== 'a' || result[1] !== 'b';
+});
+
+module.exports = function (KEY, length, exec, sham) {
+  var SYMBOL = wellKnownSymbol(KEY);
+
+  var DELEGATES_TO_SYMBOL = !fails(function () {
+    // String methods call symbol-named RegEp methods
+    var O = {};
+    O[SYMBOL] = function () { return 7; };
+    return ''[KEY](O) != 7;
+  });
+
+  var DELEGATES_TO_EXEC = DELEGATES_TO_SYMBOL && !fails(function () {
+    // Symbol-named RegExp methods call .exec
+    var execCalled = false;
+    var re = /a/;
+
+    if (KEY === 'split') {
+      // We can't use real regex here since it causes deoptimization
+      // and serious performance degradation in V8
+      // https://github.com/zloirock/core-js/issues/306
+      re = {};
+      // RegExp[@@split] doesn't call the regex's exec method, but first creates
+      // a new one. We need to return the patched regex when creating the new one.
+      re.constructor = {};
+      re.constructor[SPECIES] = function () { return re; };
+      re.flags = '';
+      re[SYMBOL] = /./[SYMBOL];
+    }
+
+    re.exec = function () { execCalled = true; return null; };
+
+    re[SYMBOL]('');
+    return !execCalled;
+  });
+
+  if (
+    !DELEGATES_TO_SYMBOL ||
+    !DELEGATES_TO_EXEC ||
+    (KEY === 'replace' && !(
+      REPLACE_SUPPORTS_NAMED_GROUPS &&
+      REPLACE_KEEPS_$0 &&
+      !REGEXP_REPLACE_SUBSTITUTES_UNDEFINED_CAPTURE
+    )) ||
+    (KEY === 'split' && !SPLIT_WORKS_WITH_OVERWRITTEN_EXEC)
+  ) {
+    var nativeRegExpMethod = /./[SYMBOL];
+    var methods = exec(SYMBOL, ''[KEY], function (nativeMethod, regexp, str, arg2, forceStringMethod) {
+      var $exec = regexp.exec;
+      if ($exec === regexpExec || $exec === RegExpPrototype.exec) {
+        if (DELEGATES_TO_SYMBOL && !forceStringMethod) {
+          // The native String method already delegates to @@method (this
+          // polyfilled function), leasing to infinite recursion.
+          // We avoid it by directly calling the native @@method method.
+          return { done: true, value: nativeRegExpMethod.call(regexp, str, arg2) };
+        }
+        return { done: true, value: nativeMethod.call(str, regexp, arg2) };
+      }
+      return { done: false };
+    }, {
+      REPLACE_KEEPS_$0: REPLACE_KEEPS_$0,
+      REGEXP_REPLACE_SUBSTITUTES_UNDEFINED_CAPTURE: REGEXP_REPLACE_SUBSTITUTES_UNDEFINED_CAPTURE
+    });
+    var stringMethod = methods[0];
+    var regexMethod = methods[1];
+
+    redefine(String.prototype, KEY, stringMethod);
+    redefine(RegExpPrototype, SYMBOL, length == 2
+      // 21.2.5.8 RegExp.prototype[@@replace](string, replaceValue)
+      // 21.2.5.11 RegExp.prototype[@@split](string, limit)
+      ? function (string, arg) { return regexMethod.call(string, this, arg); }
+      // 21.2.5.6 RegExp.prototype[@@match](string)
+      // 21.2.5.9 RegExp.prototype[@@search](string)
+      : function (string) { return regexMethod.call(string, this); }
+    );
+  }
+
+  if (sham) createNonEnumerableProperty(RegExpPrototype[SYMBOL], 'sham', true);
+};
+
+
+/***/ }),
+
+/***/ 9974:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+var aFunction = __webpack_require__(3099);
+
+// optional / simple context binding
+module.exports = function (fn, that, length) {
+  aFunction(fn);
+  if (that === undefined) return fn;
+  switch (length) {
+    case 0: return function () {
+      return fn.call(that);
+    };
+    case 1: return function (a) {
+      return fn.call(that, a);
+    };
+    case 2: return function (a, b) {
+      return fn.call(that, a, b);
+    };
+    case 3: return function (a, b, c) {
+      return fn.call(that, a, b, c);
+    };
+  }
+  return function (/* ...args */) {
+    return fn.apply(that, arguments);
+  };
+};
+
+
+/***/ }),
+
+/***/ 5005:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+var path = __webpack_require__(857);
+var global = __webpack_require__(7854);
+
+var aFunction = function (variable) {
+  return typeof variable == 'function' ? variable : undefined;
+};
+
+module.exports = function (namespace, method) {
+  return arguments.length < 2 ? aFunction(path[namespace]) || aFunction(global[namespace])
+    : path[namespace] && path[namespace][method] || global[namespace] && global[namespace][method];
+};
+
+
+/***/ }),
+
+/***/ 7854:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+var check = function (it) {
+  return it && it.Math == Math && it;
+};
+
+// https://github.com/zloirock/core-js/issues/86#issuecomment-115759028
+module.exports =
+  // eslint-disable-next-line es/no-global-this -- safe
+  check(typeof globalThis == 'object' && globalThis) ||
+  check(typeof window == 'object' && window) ||
+  // eslint-disable-next-line no-restricted-globals -- safe
+  check(typeof self == 'object' && self) ||
+  check(typeof __webpack_require__.g == 'object' && __webpack_require__.g) ||
+  // eslint-disable-next-line no-new-func -- fallback
+  (function () { return this; })() || Function('return this')();
+
+
+/***/ }),
+
+/***/ 6656:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+var toObject = __webpack_require__(7908);
+
+var hasOwnProperty = {}.hasOwnProperty;
+
+module.exports = function hasOwn(it, key) {
+  return hasOwnProperty.call(toObject(it), key);
+};
+
+
+/***/ }),
+
+/***/ 3501:
+/***/ (function(module) {
+
+module.exports = {};
+
+
+/***/ }),
+
+/***/ 490:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+var getBuiltIn = __webpack_require__(5005);
+
+module.exports = getBuiltIn('document', 'documentElement');
+
+
+/***/ }),
+
+/***/ 4664:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+var DESCRIPTORS = __webpack_require__(9781);
+var fails = __webpack_require__(7293);
+var createElement = __webpack_require__(317);
+
+// Thank's IE8 for his funny defineProperty
+module.exports = !DESCRIPTORS && !fails(function () {
+  // eslint-disable-next-line es/no-object-defineproperty -- requied for testing
+  return Object.defineProperty(createElement('div'), 'a', {
+    get: function () { return 7; }
+  }).a != 7;
+});
+
+
+/***/ }),
+
+/***/ 8361:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+var fails = __webpack_require__(7293);
+var classof = __webpack_require__(4326);
+
+var split = ''.split;
+
+// fallback for non-array-like ES3 and non-enumerable old V8 strings
+module.exports = fails(function () {
+  // throws an error in rhino, see https://github.com/mozilla/rhino/issues/346
+  // eslint-disable-next-line no-prototype-builtins -- safe
+  return !Object('z').propertyIsEnumerable(0);
+}) ? function (it) {
+  return classof(it) == 'String' ? split.call(it, '') : Object(it);
+} : Object;
+
+
+/***/ }),
+
+/***/ 9587:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+var isObject = __webpack_require__(111);
+var setPrototypeOf = __webpack_require__(7674);
+
+// makes subclassing work correct for wrapped built-ins
+module.exports = function ($this, dummy, Wrapper) {
+  var NewTarget, NewTargetPrototype;
+  if (
+    // it can work only with native `setPrototypeOf`
+    setPrototypeOf &&
+    // we haven't completely correct pre-ES6 way for getting `new.target`, so use this
+    typeof (NewTarget = dummy.constructor) == 'function' &&
+    NewTarget !== Wrapper &&
+    isObject(NewTargetPrototype = NewTarget.prototype) &&
+    NewTargetPrototype !== Wrapper.prototype
+  ) setPrototypeOf($this, NewTargetPrototype);
+  return $this;
+};
+
+
+/***/ }),
+
+/***/ 2788:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+var store = __webpack_require__(5465);
+
+var functionToString = Function.toString;
+
+// this helper broken in `3.4.1-3.4.4`, so we can't use `shared` helper
+if (typeof store.inspectSource != 'function') {
+  store.inspectSource = function (it) {
+    return functionToString.call(it);
+  };
+}
+
+module.exports = store.inspectSource;
+
+
+/***/ }),
+
+/***/ 9909:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+var NATIVE_WEAK_MAP = __webpack_require__(8536);
+var global = __webpack_require__(7854);
+var isObject = __webpack_require__(111);
+var createNonEnumerableProperty = __webpack_require__(8880);
+var objectHas = __webpack_require__(6656);
+var shared = __webpack_require__(5465);
+var sharedKey = __webpack_require__(6200);
+var hiddenKeys = __webpack_require__(3501);
+
+var OBJECT_ALREADY_INITIALIZED = 'Object already initialized';
+var WeakMap = global.WeakMap;
+var set, get, has;
+
+var enforce = function (it) {
+  return has(it) ? get(it) : set(it, {});
+};
+
+var getterFor = function (TYPE) {
+  return function (it) {
+    var state;
+    if (!isObject(it) || (state = get(it)).type !== TYPE) {
+      throw TypeError('Incompatible receiver, ' + TYPE + ' required');
+    } return state;
+  };
+};
+
+if (NATIVE_WEAK_MAP || shared.state) {
+  var store = shared.state || (shared.state = new WeakMap());
+  var wmget = store.get;
+  var wmhas = store.has;
+  var wmset = store.set;
+  set = function (it, metadata) {
+    if (wmhas.call(store, it)) throw new TypeError(OBJECT_ALREADY_INITIALIZED);
+    metadata.facade = it;
+    wmset.call(store, it, metadata);
+    return metadata;
+  };
+  get = function (it) {
+    return wmget.call(store, it) || {};
+  };
+  has = function (it) {
+    return wmhas.call(store, it);
+  };
+} else {
+  var STATE = sharedKey('state');
+  hiddenKeys[STATE] = true;
+  set = function (it, metadata) {
+    if (objectHas(it, STATE)) throw new TypeError(OBJECT_ALREADY_INITIALIZED);
+    metadata.facade = it;
+    createNonEnumerableProperty(it, STATE, metadata);
+    return metadata;
+  };
+  get = function (it) {
+    return objectHas(it, STATE) ? it[STATE] : {};
+  };
+  has = function (it) {
+    return objectHas(it, STATE);
+  };
+}
+
+module.exports = {
+  set: set,
+  get: get,
+  has: has,
+  enforce: enforce,
+  getterFor: getterFor
+};
+
+
+/***/ }),
+
+/***/ 3157:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+var classof = __webpack_require__(4326);
+
+// `IsArray` abstract operation
+// https://tc39.es/ecma262/#sec-isarray
+// eslint-disable-next-line es/no-array-isarray -- safe
+module.exports = Array.isArray || function isArray(arg) {
+  return classof(arg) == 'Array';
+};
+
+
+/***/ }),
+
+/***/ 4705:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+var fails = __webpack_require__(7293);
+
+var replacement = /#|\.prototype\./;
+
+var isForced = function (feature, detection) {
+  var value = data[normalize(feature)];
+  return value == POLYFILL ? true
+    : value == NATIVE ? false
+    : typeof detection == 'function' ? fails(detection)
+    : !!detection;
+};
+
+var normalize = isForced.normalize = function (string) {
+  return String(string).replace(replacement, '.').toLowerCase();
+};
+
+var data = isForced.data = {};
+var NATIVE = isForced.NATIVE = 'N';
+var POLYFILL = isForced.POLYFILL = 'P';
+
+module.exports = isForced;
+
+
+/***/ }),
+
+/***/ 111:
+/***/ (function(module) {
+
+module.exports = function (it) {
+  return typeof it === 'object' ? it !== null : typeof it === 'function';
+};
+
+
+/***/ }),
+
+/***/ 1913:
+/***/ (function(module) {
+
+module.exports = false;
+
+
+/***/ }),
+
+/***/ 7850:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+var isObject = __webpack_require__(111);
+var classof = __webpack_require__(4326);
+var wellKnownSymbol = __webpack_require__(5112);
+
+var MATCH = wellKnownSymbol('match');
+
+// `IsRegExp` abstract operation
+// https://tc39.es/ecma262/#sec-isregexp
+module.exports = function (it) {
+  var isRegExp;
+  return isObject(it) && ((isRegExp = it[MATCH]) !== undefined ? !!isRegExp : classof(it) == 'RegExp');
+};
+
+
+/***/ }),
+
+/***/ 133:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+/* eslint-disable es/no-symbol -- required for testing */
+var V8_VERSION = __webpack_require__(7392);
+var fails = __webpack_require__(7293);
+
+// eslint-disable-next-line es/no-object-getownpropertysymbols -- required for testing
+module.exports = !!Object.getOwnPropertySymbols && !fails(function () {
+  return !String(Symbol()) ||
+    // Chrome 38 Symbol has incorrect toString conversion
+    // Chrome 38-40 symbols are not inherited from DOM collections prototypes to instances
+    !Symbol.sham && V8_VERSION && V8_VERSION < 41;
+});
+
+
+/***/ }),
+
+/***/ 8536:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+var global = __webpack_require__(7854);
+var inspectSource = __webpack_require__(2788);
+
+var WeakMap = global.WeakMap;
+
+module.exports = typeof WeakMap === 'function' && /native code/.test(inspectSource(WeakMap));
+
+
+/***/ }),
+
+/***/ 2814:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+var global = __webpack_require__(7854);
+var trim = __webpack_require__(3111).trim;
+var whitespaces = __webpack_require__(1361);
+
+var $parseFloat = global.parseFloat;
+var FORCED = 1 / $parseFloat(whitespaces + '-0') !== -Infinity;
+
+// `parseFloat` method
+// https://tc39.es/ecma262/#sec-parsefloat-string
+module.exports = FORCED ? function parseFloat(string) {
+  var trimmedString = trim(String(string));
+  var result = $parseFloat(trimmedString);
+  return result === 0 && trimmedString.charAt(0) == '-' ? -0 : result;
+} : $parseFloat;
+
+
+/***/ }),
+
+/***/ 3009:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+var global = __webpack_require__(7854);
+var trim = __webpack_require__(3111).trim;
+var whitespaces = __webpack_require__(1361);
+
+var $parseInt = global.parseInt;
+var hex = /^[+-]?0[Xx]/;
+var FORCED = $parseInt(whitespaces + '08') !== 8 || $parseInt(whitespaces + '0x16') !== 22;
+
+// `parseInt` method
+// https://tc39.es/ecma262/#sec-parseint-string-radix
+module.exports = FORCED ? function parseInt(string, radix) {
+  var S = trim(String(string));
+  return $parseInt(S, (radix >>> 0) || (hex.test(S) ? 16 : 10));
+} : $parseInt;
+
+
+/***/ }),
+
+/***/ 30:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+var anObject = __webpack_require__(9670);
+var defineProperties = __webpack_require__(6048);
+var enumBugKeys = __webpack_require__(748);
+var hiddenKeys = __webpack_require__(3501);
+var html = __webpack_require__(490);
+var documentCreateElement = __webpack_require__(317);
+var sharedKey = __webpack_require__(6200);
+
+var GT = '>';
+var LT = '<';
+var PROTOTYPE = 'prototype';
+var SCRIPT = 'script';
+var IE_PROTO = sharedKey('IE_PROTO');
+
+var EmptyConstructor = function () { /* empty */ };
+
+var scriptTag = function (content) {
+  return LT + SCRIPT + GT + content + LT + '/' + SCRIPT + GT;
+};
+
+// Create object with fake `null` prototype: use ActiveX Object with cleared prototype
+var NullProtoObjectViaActiveX = function (activeXDocument) {
+  activeXDocument.write(scriptTag(''));
+  activeXDocument.close();
+  var temp = activeXDocument.parentWindow.Object;
+  activeXDocument = null; // avoid memory leak
+  return temp;
+};
+
+// Create object with fake `null` prototype: use iframe Object with cleared prototype
+var NullProtoObjectViaIFrame = function () {
+  // Thrash, waste and sodomy: IE GC bug
+  var iframe = documentCreateElement('iframe');
+  var JS = 'java' + SCRIPT + ':';
+  var iframeDocument;
+  iframe.style.display = 'none';
+  html.appendChild(iframe);
+  // https://github.com/zloirock/core-js/issues/475
+  iframe.src = String(JS);
+  iframeDocument = iframe.contentWindow.document;
+  iframeDocument.open();
+  iframeDocument.write(scriptTag('document.F=Object'));
+  iframeDocument.close();
+  return iframeDocument.F;
+};
+
+// Check for document.domain and active x support
+// No need to use active x approach when document.domain is not set
+// see https://github.com/es-shims/es5-shim/issues/150
+// variation of https://github.com/kitcambridge/es5-shim/commit/4f738ac066346
+// avoid IE GC bug
+var activeXDocument;
+var NullProtoObject = function () {
+  try {
+    /* global ActiveXObject -- old IE */
+    activeXDocument = document.domain && new ActiveXObject('htmlfile');
+  } catch (error) { /* ignore */ }
+  NullProtoObject = activeXDocument ? NullProtoObjectViaActiveX(activeXDocument) : NullProtoObjectViaIFrame();
+  var length = enumBugKeys.length;
+  while (length--) delete NullProtoObject[PROTOTYPE][enumBugKeys[length]];
+  return NullProtoObject();
+};
+
+hiddenKeys[IE_PROTO] = true;
+
+// `Object.create` method
+// https://tc39.es/ecma262/#sec-object.create
+module.exports = Object.create || function create(O, Properties) {
+  var result;
+  if (O !== null) {
+    EmptyConstructor[PROTOTYPE] = anObject(O);
+    result = new EmptyConstructor();
+    EmptyConstructor[PROTOTYPE] = null;
+    // add "__proto__" for Object.getPrototypeOf polyfill
+    result[IE_PROTO] = O;
+  } else result = NullProtoObject();
+  return Properties === undefined ? result : defineProperties(result, Properties);
+};
+
+
+/***/ }),
+
+/***/ 6048:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+var DESCRIPTORS = __webpack_require__(9781);
+var definePropertyModule = __webpack_require__(3070);
+var anObject = __webpack_require__(9670);
+var objectKeys = __webpack_require__(1956);
+
+// `Object.defineProperties` method
+// https://tc39.es/ecma262/#sec-object.defineproperties
+// eslint-disable-next-line es/no-object-defineproperties -- safe
+module.exports = DESCRIPTORS ? Object.defineProperties : function defineProperties(O, Properties) {
+  anObject(O);
+  var keys = objectKeys(Properties);
+  var length = keys.length;
+  var index = 0;
+  var key;
+  while (length > index) definePropertyModule.f(O, key = keys[index++], Properties[key]);
+  return O;
+};
+
+
+/***/ }),
+
+/***/ 3070:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+var DESCRIPTORS = __webpack_require__(9781);
+var IE8_DOM_DEFINE = __webpack_require__(4664);
+var anObject = __webpack_require__(9670);
+var toPrimitive = __webpack_require__(7593);
+
+// eslint-disable-next-line es/no-object-defineproperty -- safe
+var $defineProperty = Object.defineProperty;
+
+// `Object.defineProperty` method
+// https://tc39.es/ecma262/#sec-object.defineproperty
+exports.f = DESCRIPTORS ? $defineProperty : function defineProperty(O, P, Attributes) {
+  anObject(O);
+  P = toPrimitive(P, true);
+  anObject(Attributes);
+  if (IE8_DOM_DEFINE) try {
+    return $defineProperty(O, P, Attributes);
+  } catch (error) { /* empty */ }
+  if ('get' in Attributes || 'set' in Attributes) throw TypeError('Accessors not supported');
+  if ('value' in Attributes) O[P] = Attributes.value;
+  return O;
+};
+
+
+/***/ }),
+
+/***/ 1236:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+var DESCRIPTORS = __webpack_require__(9781);
+var propertyIsEnumerableModule = __webpack_require__(5296);
+var createPropertyDescriptor = __webpack_require__(9114);
+var toIndexedObject = __webpack_require__(5656);
+var toPrimitive = __webpack_require__(7593);
+var has = __webpack_require__(6656);
+var IE8_DOM_DEFINE = __webpack_require__(4664);
+
+// eslint-disable-next-line es/no-object-getownpropertydescriptor -- safe
+var $getOwnPropertyDescriptor = Object.getOwnPropertyDescriptor;
+
+// `Object.getOwnPropertyDescriptor` method
+// https://tc39.es/ecma262/#sec-object.getownpropertydescriptor
+exports.f = DESCRIPTORS ? $getOwnPropertyDescriptor : function getOwnPropertyDescriptor(O, P) {
+  O = toIndexedObject(O);
+  P = toPrimitive(P, true);
+  if (IE8_DOM_DEFINE) try {
+    return $getOwnPropertyDescriptor(O, P);
+  } catch (error) { /* empty */ }
+  if (has(O, P)) return createPropertyDescriptor(!propertyIsEnumerableModule.f.call(O, P), O[P]);
+};
+
+
+/***/ }),
+
+/***/ 1156:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+/* eslint-disable es/no-object-getownpropertynames -- safe */
+var toIndexedObject = __webpack_require__(5656);
+var $getOwnPropertyNames = __webpack_require__(8006).f;
+
+var toString = {}.toString;
+
+var windowNames = typeof window == 'object' && window && Object.getOwnPropertyNames
+  ? Object.getOwnPropertyNames(window) : [];
+
+var getWindowNames = function (it) {
+  try {
+    return $getOwnPropertyNames(it);
+  } catch (error) {
+    return windowNames.slice();
+  }
+};
+
+// fallback for IE11 buggy Object.getOwnPropertyNames with iframe and window
+module.exports.f = function getOwnPropertyNames(it) {
+  return windowNames && toString.call(it) == '[object Window]'
+    ? getWindowNames(it)
+    : $getOwnPropertyNames(toIndexedObject(it));
+};
+
+
+/***/ }),
+
+/***/ 8006:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+var internalObjectKeys = __webpack_require__(6324);
+var enumBugKeys = __webpack_require__(748);
+
+var hiddenKeys = enumBugKeys.concat('length', 'prototype');
+
+// `Object.getOwnPropertyNames` method
+// https://tc39.es/ecma262/#sec-object.getownpropertynames
+// eslint-disable-next-line es/no-object-getownpropertynames -- safe
+exports.f = Object.getOwnPropertyNames || function getOwnPropertyNames(O) {
+  return internalObjectKeys(O, hiddenKeys);
+};
+
+
+/***/ }),
+
+/***/ 5181:
+/***/ (function(__unused_webpack_module, exports) {
+
+// eslint-disable-next-line es/no-object-getownpropertysymbols -- safe
+exports.f = Object.getOwnPropertySymbols;
+
+
+/***/ }),
+
+/***/ 6324:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+var has = __webpack_require__(6656);
+var toIndexedObject = __webpack_require__(5656);
+var indexOf = __webpack_require__(1318).indexOf;
+var hiddenKeys = __webpack_require__(3501);
+
+module.exports = function (object, names) {
+  var O = toIndexedObject(object);
+  var i = 0;
+  var result = [];
+  var key;
+  for (key in O) !has(hiddenKeys, key) && has(O, key) && result.push(key);
+  // Don't enum bug & hidden keys
+  while (names.length > i) if (has(O, key = names[i++])) {
+    ~indexOf(result, key) || result.push(key);
+  }
+  return result;
+};
+
+
+/***/ }),
+
+/***/ 1956:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+var internalObjectKeys = __webpack_require__(6324);
+var enumBugKeys = __webpack_require__(748);
+
+// `Object.keys` method
+// https://tc39.es/ecma262/#sec-object.keys
+// eslint-disable-next-line es/no-object-keys -- safe
+module.exports = Object.keys || function keys(O) {
+  return internalObjectKeys(O, enumBugKeys);
+};
+
+
+/***/ }),
+
+/***/ 5296:
+/***/ (function(__unused_webpack_module, exports) {
+
+"use strict";
+
+var $propertyIsEnumerable = {}.propertyIsEnumerable;
+// eslint-disable-next-line es/no-object-getownpropertydescriptor -- safe
+var getOwnPropertyDescriptor = Object.getOwnPropertyDescriptor;
+
+// Nashorn ~ JDK8 bug
+var NASHORN_BUG = getOwnPropertyDescriptor && !$propertyIsEnumerable.call({ 1: 2 }, 1);
+
+// `Object.prototype.propertyIsEnumerable` method implementation
+// https://tc39.es/ecma262/#sec-object.prototype.propertyisenumerable
+exports.f = NASHORN_BUG ? function propertyIsEnumerable(V) {
+  var descriptor = getOwnPropertyDescriptor(this, V);
+  return !!descriptor && descriptor.enumerable;
+} : $propertyIsEnumerable;
+
+
+/***/ }),
+
+/***/ 7674:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+/* eslint-disable no-proto -- safe */
+var anObject = __webpack_require__(9670);
+var aPossiblePrototype = __webpack_require__(6077);
+
+// `Object.setPrototypeOf` method
+// https://tc39.es/ecma262/#sec-object.setprototypeof
+// Works with __proto__ only. Old v8 can't work with null proto objects.
+// eslint-disable-next-line es/no-object-setprototypeof -- safe
+module.exports = Object.setPrototypeOf || ('__proto__' in {} ? function () {
+  var CORRECT_SETTER = false;
+  var test = {};
+  var setter;
+  try {
+    // eslint-disable-next-line es/no-object-getownpropertydescriptor -- safe
+    setter = Object.getOwnPropertyDescriptor(Object.prototype, '__proto__').set;
+    setter.call(test, []);
+    CORRECT_SETTER = test instanceof Array;
+  } catch (error) { /* empty */ }
+  return function setPrototypeOf(O, proto) {
+    anObject(O);
+    aPossiblePrototype(proto);
+    if (CORRECT_SETTER) setter.call(O, proto);
+    else O.__proto__ = proto;
+    return O;
+  };
+}() : undefined);
+
+
+/***/ }),
+
+/***/ 3887:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+var getBuiltIn = __webpack_require__(5005);
+var getOwnPropertyNamesModule = __webpack_require__(8006);
+var getOwnPropertySymbolsModule = __webpack_require__(5181);
+var anObject = __webpack_require__(9670);
+
+// all object keys, includes non-enumerable and symbols
+module.exports = getBuiltIn('Reflect', 'ownKeys') || function ownKeys(it) {
+  var keys = getOwnPropertyNamesModule.f(anObject(it));
+  var getOwnPropertySymbols = getOwnPropertySymbolsModule.f;
+  return getOwnPropertySymbols ? keys.concat(getOwnPropertySymbols(it)) : keys;
+};
+
+
+/***/ }),
+
+/***/ 857:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+var global = __webpack_require__(7854);
+
+module.exports = global;
+
+
+/***/ }),
+
+/***/ 1320:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+var global = __webpack_require__(7854);
+var createNonEnumerableProperty = __webpack_require__(8880);
+var has = __webpack_require__(6656);
+var setGlobal = __webpack_require__(3505);
+var inspectSource = __webpack_require__(2788);
+var InternalStateModule = __webpack_require__(9909);
+
+var getInternalState = InternalStateModule.get;
+var enforceInternalState = InternalStateModule.enforce;
+var TEMPLATE = String(String).split('String');
+
+(module.exports = function (O, key, value, options) {
+  var unsafe = options ? !!options.unsafe : false;
+  var simple = options ? !!options.enumerable : false;
+  var noTargetGet = options ? !!options.noTargetGet : false;
+  var state;
+  if (typeof value == 'function') {
+    if (typeof key == 'string' && !has(value, 'name')) {
+      createNonEnumerableProperty(value, 'name', key);
+    }
+    state = enforceInternalState(value);
+    if (!state.source) {
+      state.source = TEMPLATE.join(typeof key == 'string' ? key : '');
+    }
+  }
+  if (O === global) {
+    if (simple) O[key] = value;
+    else setGlobal(key, value);
+    return;
+  } else if (!unsafe) {
+    delete O[key];
+  } else if (!noTargetGet && O[key]) {
+    simple = true;
+  }
+  if (simple) O[key] = value;
+  else createNonEnumerableProperty(O, key, value);
+// add fake Function#toString for correct work wrapped methods / constructors with methods like LoDash isNative
+})(Function.prototype, 'toString', function toString() {
+  return typeof this == 'function' && getInternalState(this).source || inspectSource(this);
+});
+
+
+/***/ }),
+
+/***/ 7651:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+var classof = __webpack_require__(4326);
+var regexpExec = __webpack_require__(2261);
+
+// `RegExpExec` abstract operation
+// https://tc39.es/ecma262/#sec-regexpexec
+module.exports = function (R, S) {
+  var exec = R.exec;
+  if (typeof exec === 'function') {
+    var result = exec.call(R, S);
+    if (typeof result !== 'object') {
+      throw TypeError('RegExp exec method returned something other than an Object or null');
+    }
+    return result;
+  }
+
+  if (classof(R) !== 'RegExp') {
+    throw TypeError('RegExp#exec called on incompatible receiver');
+  }
+
+  return regexpExec.call(R, S);
+};
+
+
+
+/***/ }),
+
+/***/ 2261:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+/* eslint-disable regexp/no-assertion-capturing-group, regexp/no-empty-group, regexp/no-lazy-ends -- testing */
+/* eslint-disable regexp/no-useless-quantifier -- testing */
+var regexpFlags = __webpack_require__(7066);
+var stickyHelpers = __webpack_require__(2999);
+var shared = __webpack_require__(2309);
+
+var nativeExec = RegExp.prototype.exec;
+var nativeReplace = shared('native-string-replace', String.prototype.replace);
+
+var patchedExec = nativeExec;
+
+var UPDATES_LAST_INDEX_WRONG = (function () {
+  var re1 = /a/;
+  var re2 = /b*/g;
+  nativeExec.call(re1, 'a');
+  nativeExec.call(re2, 'a');
+  return re1.lastIndex !== 0 || re2.lastIndex !== 0;
+})();
+
+var UNSUPPORTED_Y = stickyHelpers.UNSUPPORTED_Y || stickyHelpers.BROKEN_CARET;
+
+// nonparticipating capturing group, copied from es5-shim's String#split patch.
+var NPCG_INCLUDED = /()??/.exec('')[1] !== undefined;
+
+var PATCH = UPDATES_LAST_INDEX_WRONG || NPCG_INCLUDED || UNSUPPORTED_Y;
+
+if (PATCH) {
+  patchedExec = function exec(str) {
+    var re = this;
+    var lastIndex, reCopy, match, i;
+    var sticky = UNSUPPORTED_Y && re.sticky;
+    var flags = regexpFlags.call(re);
+    var source = re.source;
+    var charsAdded = 0;
+    var strCopy = str;
+
+    if (sticky) {
+      flags = flags.replace('y', '');
+      if (flags.indexOf('g') === -1) {
+        flags += 'g';
+      }
+
+      strCopy = String(str).slice(re.lastIndex);
+      // Support anchored sticky behavior.
+      if (re.lastIndex > 0 && (!re.multiline || re.multiline && str[re.lastIndex - 1] !== '\n')) {
+        source = '(?: ' + source + ')';
+        strCopy = ' ' + strCopy;
+        charsAdded++;
+      }
+      // ^(? + rx + ) is needed, in combination with some str slicing, to
+      // simulate the 'y' flag.
+      reCopy = new RegExp('^(?:' + source + ')', flags);
+    }
+
+    if (NPCG_INCLUDED) {
+      reCopy = new RegExp('^' + source + '$(?!\\s)', flags);
+    }
+    if (UPDATES_LAST_INDEX_WRONG) lastIndex = re.lastIndex;
+
+    match = nativeExec.call(sticky ? reCopy : re, strCopy);
+
+    if (sticky) {
+      if (match) {
+        match.input = match.input.slice(charsAdded);
+        match[0] = match[0].slice(charsAdded);
+        match.index = re.lastIndex;
+        re.lastIndex += match[0].length;
+      } else re.lastIndex = 0;
+    } else if (UPDATES_LAST_INDEX_WRONG && match) {
+      re.lastIndex = re.global ? match.index + match[0].length : lastIndex;
+    }
+    if (NPCG_INCLUDED && match && match.length > 1) {
+      // Fix browsers whose `exec` methods don't consistently return `undefined`
+      // for NPCG, like IE8. NOTE: This doesn' work for /(.?)?/
+      nativeReplace.call(match[0], reCopy, function () {
+        for (i = 1; i < arguments.length - 2; i++) {
+          if (arguments[i] === undefined) match[i] = undefined;
+        }
+      });
+    }
+
+    return match;
+  };
+}
+
+module.exports = patchedExec;
+
+
+/***/ }),
+
+/***/ 7066:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var anObject = __webpack_require__(9670);
+
+// `RegExp.prototype.flags` getter implementation
+// https://tc39.es/ecma262/#sec-get-regexp.prototype.flags
+module.exports = function () {
+  var that = anObject(this);
+  var result = '';
+  if (that.global) result += 'g';
+  if (that.ignoreCase) result += 'i';
+  if (that.multiline) result += 'm';
+  if (that.dotAll) result += 's';
+  if (that.unicode) result += 'u';
+  if (that.sticky) result += 'y';
+  return result;
+};
+
+
+/***/ }),
+
+/***/ 2999:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var fails = __webpack_require__(7293);
+
+// babel-minify transpiles RegExp('a', 'y') -> /a/y and it causes SyntaxError,
+// so we use an intermediate function.
+function RE(s, f) {
+  return RegExp(s, f);
+}
+
+exports.UNSUPPORTED_Y = fails(function () {
+  // babel-minify transpiles RegExp('a', 'y') -> /a/y and it causes SyntaxError
+  var re = RE('a', 'y');
+  re.lastIndex = 2;
+  return re.exec('abcd') != null;
+});
+
+exports.BROKEN_CARET = fails(function () {
+  // https://bugzilla.mozilla.org/show_bug.cgi?id=773687
+  var re = RE('^r', 'gy');
+  re.lastIndex = 2;
+  return re.exec('str') != null;
+});
+
+
+/***/ }),
+
+/***/ 4488:
+/***/ (function(module) {
+
+// `RequireObjectCoercible` abstract operation
+// https://tc39.es/ecma262/#sec-requireobjectcoercible
+module.exports = function (it) {
+  if (it == undefined) throw TypeError("Can't call method on " + it);
+  return it;
+};
+
+
+/***/ }),
+
+/***/ 3505:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+var global = __webpack_require__(7854);
+var createNonEnumerableProperty = __webpack_require__(8880);
+
+module.exports = function (key, value) {
+  try {
+    createNonEnumerableProperty(global, key, value);
+  } catch (error) {
+    global[key] = value;
+  } return value;
+};
+
+
+/***/ }),
+
+/***/ 6340:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var getBuiltIn = __webpack_require__(5005);
+var definePropertyModule = __webpack_require__(3070);
+var wellKnownSymbol = __webpack_require__(5112);
+var DESCRIPTORS = __webpack_require__(9781);
+
+var SPECIES = wellKnownSymbol('species');
+
+module.exports = function (CONSTRUCTOR_NAME) {
+  var Constructor = getBuiltIn(CONSTRUCTOR_NAME);
+  var defineProperty = definePropertyModule.f;
+
+  if (DESCRIPTORS && Constructor && !Constructor[SPECIES]) {
+    defineProperty(Constructor, SPECIES, {
+      configurable: true,
+      get: function () { return this; }
+    });
+  }
+};
+
+
+/***/ }),
+
+/***/ 8003:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+var defineProperty = __webpack_require__(3070).f;
+var has = __webpack_require__(6656);
+var wellKnownSymbol = __webpack_require__(5112);
+
+var TO_STRING_TAG = wellKnownSymbol('toStringTag');
+
+module.exports = function (it, TAG, STATIC) {
+  if (it && !has(it = STATIC ? it : it.prototype, TO_STRING_TAG)) {
+    defineProperty(it, TO_STRING_TAG, { configurable: true, value: TAG });
+  }
+};
+
+
+/***/ }),
+
+/***/ 6200:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+var shared = __webpack_require__(2309);
+var uid = __webpack_require__(9711);
+
+var keys = shared('keys');
+
+module.exports = function (key) {
+  return keys[key] || (keys[key] = uid(key));
+};
+
+
+/***/ }),
+
+/***/ 5465:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+var global = __webpack_require__(7854);
+var setGlobal = __webpack_require__(3505);
+
+var SHARED = '__core-js_shared__';
+var store = global[SHARED] || setGlobal(SHARED, {});
+
+module.exports = store;
+
+
+/***/ }),
+
+/***/ 2309:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+var IS_PURE = __webpack_require__(1913);
+var store = __webpack_require__(5465);
+
+(module.exports = function (key, value) {
+  return store[key] || (store[key] = value !== undefined ? value : {});
+})('versions', []).push({
+  version: '3.12.1',
+  mode: IS_PURE ? 'pure' : 'global',
+  copyright: '© 2021 Denis Pushkarev (zloirock.ru)'
+});
+
+
+/***/ }),
+
+/***/ 8710:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+var toInteger = __webpack_require__(9958);
+var requireObjectCoercible = __webpack_require__(4488);
+
+// `String.prototype.{ codePointAt, at }` methods implementation
+var createMethod = function (CONVERT_TO_STRING) {
+  return function ($this, pos) {
+    var S = String(requireObjectCoercible($this));
+    var position = toInteger(pos);
+    var size = S.length;
+    var first, second;
+    if (position < 0 || position >= size) return CONVERT_TO_STRING ? '' : undefined;
+    first = S.charCodeAt(position);
+    return first < 0xD800 || first > 0xDBFF || position + 1 === size
+      || (second = S.charCodeAt(position + 1)) < 0xDC00 || second > 0xDFFF
+        ? CONVERT_TO_STRING ? S.charAt(position) : first
+        : CONVERT_TO_STRING ? S.slice(position, position + 2) : (first - 0xD800 << 10) + (second - 0xDC00) + 0x10000;
+  };
+};
+
+module.exports = {
+  // `String.prototype.codePointAt` method
+  // https://tc39.es/ecma262/#sec-string.prototype.codepointat
+  codeAt: createMethod(false),
+  // `String.prototype.at` method
+  // https://github.com/mathiasbynens/String.prototype.at
+  charAt: createMethod(true)
+};
+
+
+/***/ }),
+
+/***/ 3111:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+var requireObjectCoercible = __webpack_require__(4488);
+var whitespaces = __webpack_require__(1361);
+
+var whitespace = '[' + whitespaces + ']';
+var ltrim = RegExp('^' + whitespace + whitespace + '*');
+var rtrim = RegExp(whitespace + whitespace + '*$');
+
+// `String.prototype.{ trim, trimStart, trimEnd, trimLeft, trimRight }` methods implementation
+var createMethod = function (TYPE) {
+  return function ($this) {
+    var string = String(requireObjectCoercible($this));
+    if (TYPE & 1) string = string.replace(ltrim, '');
+    if (TYPE & 2) string = string.replace(rtrim, '');
+    return string;
+  };
+};
+
+module.exports = {
+  // `String.prototype.{ trimLeft, trimStart }` methods
+  // https://tc39.es/ecma262/#sec-string.prototype.trimstart
+  start: createMethod(1),
+  // `String.prototype.{ trimRight, trimEnd }` methods
+  // https://tc39.es/ecma262/#sec-string.prototype.trimend
+  end: createMethod(2),
+  // `String.prototype.trim` method
+  // https://tc39.es/ecma262/#sec-string.prototype.trim
+  trim: createMethod(3)
+};
+
+
+/***/ }),
+
+/***/ 1400:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+var toInteger = __webpack_require__(9958);
+
+var max = Math.max;
+var min = Math.min;
+
+// Helper for a popular repeating case of the spec:
+// Let integer be ? ToInteger(index).
+// If integer < 0, let result be max((length + integer), 0); else let result be min(integer, length).
+module.exports = function (index, length) {
+  var integer = toInteger(index);
+  return integer < 0 ? max(integer + length, 0) : min(integer, length);
+};
+
+
+/***/ }),
+
+/***/ 5656:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+// toObject with fallback for non-array-like ES3 strings
+var IndexedObject = __webpack_require__(8361);
+var requireObjectCoercible = __webpack_require__(4488);
+
+module.exports = function (it) {
+  return IndexedObject(requireObjectCoercible(it));
+};
+
+
+/***/ }),
+
+/***/ 9958:
+/***/ (function(module) {
+
+var ceil = Math.ceil;
+var floor = Math.floor;
+
+// `ToInteger` abstract operation
+// https://tc39.es/ecma262/#sec-tointeger
+module.exports = function (argument) {
+  return isNaN(argument = +argument) ? 0 : (argument > 0 ? floor : ceil)(argument);
+};
+
+
+/***/ }),
+
+/***/ 7466:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+var toInteger = __webpack_require__(9958);
+
+var min = Math.min;
+
+// `ToLength` abstract operation
+// https://tc39.es/ecma262/#sec-tolength
+module.exports = function (argument) {
+  return argument > 0 ? min(toInteger(argument), 0x1FFFFFFFFFFFFF) : 0; // 2 ** 53 - 1 == 9007199254740991
+};
+
+
+/***/ }),
+
+/***/ 7908:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+var requireObjectCoercible = __webpack_require__(4488);
+
+// `ToObject` abstract operation
+// https://tc39.es/ecma262/#sec-toobject
+module.exports = function (argument) {
+  return Object(requireObjectCoercible(argument));
+};
+
+
+/***/ }),
+
+/***/ 7593:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+var isObject = __webpack_require__(111);
+
+// `ToPrimitive` abstract operation
+// https://tc39.es/ecma262/#sec-toprimitive
+// instead of the ES6 spec version, we didn't implement @@toPrimitive case
+// and the second argument - flag - preferred type is a string
+module.exports = function (input, PREFERRED_STRING) {
+  if (!isObject(input)) return input;
+  var fn, val;
+  if (PREFERRED_STRING && typeof (fn = input.toString) == 'function' && !isObject(val = fn.call(input))) return val;
+  if (typeof (fn = input.valueOf) == 'function' && !isObject(val = fn.call(input))) return val;
+  if (!PREFERRED_STRING && typeof (fn = input.toString) == 'function' && !isObject(val = fn.call(input))) return val;
+  throw TypeError("Can't convert object to primitive value");
+};
+
+
+/***/ }),
+
+/***/ 9711:
+/***/ (function(module) {
+
+var id = 0;
+var postfix = Math.random();
+
+module.exports = function (key) {
+  return 'Symbol(' + String(key === undefined ? '' : key) + ')_' + (++id + postfix).toString(36);
+};
+
+
+/***/ }),
+
+/***/ 3307:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+/* eslint-disable es/no-symbol -- required for testing */
+var NATIVE_SYMBOL = __webpack_require__(133);
+
+module.exports = NATIVE_SYMBOL
+  && !Symbol.sham
+  && typeof Symbol.iterator == 'symbol';
+
+
+/***/ }),
+
+/***/ 6061:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+var wellKnownSymbol = __webpack_require__(5112);
+
+exports.f = wellKnownSymbol;
+
+
+/***/ }),
+
+/***/ 5112:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+var global = __webpack_require__(7854);
+var shared = __webpack_require__(2309);
+var has = __webpack_require__(6656);
+var uid = __webpack_require__(9711);
+var NATIVE_SYMBOL = __webpack_require__(133);
+var USE_SYMBOL_AS_UID = __webpack_require__(3307);
+
+var WellKnownSymbolsStore = shared('wks');
+var Symbol = global.Symbol;
+var createWellKnownSymbol = USE_SYMBOL_AS_UID ? Symbol : Symbol && Symbol.withoutSetter || uid;
+
+module.exports = function (name) {
+  if (!has(WellKnownSymbolsStore, name) || !(NATIVE_SYMBOL || typeof WellKnownSymbolsStore[name] == 'string')) {
+    if (NATIVE_SYMBOL && has(Symbol, name)) {
+      WellKnownSymbolsStore[name] = Symbol[name];
+    } else {
+      WellKnownSymbolsStore[name] = createWellKnownSymbol('Symbol.' + name);
+    }
+  } return WellKnownSymbolsStore[name];
+};
+
+
+/***/ }),
+
+/***/ 1361:
+/***/ (function(module) {
+
+// a string of all valid unicode whitespaces
+module.exports = '\u0009\u000A\u000B\u000C\u000D\u0020\u00A0\u1680\u2000\u2001\u2002' +
+  '\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200A\u202F\u205F\u3000\u2028\u2029\uFEFF';
+
+
+/***/ }),
+
+/***/ 2222:
+/***/ (function(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var $ = __webpack_require__(2109);
+var fails = __webpack_require__(7293);
+var isArray = __webpack_require__(3157);
+var isObject = __webpack_require__(111);
+var toObject = __webpack_require__(7908);
+var toLength = __webpack_require__(7466);
+var createProperty = __webpack_require__(6135);
+var arraySpeciesCreate = __webpack_require__(5417);
+var arrayMethodHasSpeciesSupport = __webpack_require__(1194);
+var wellKnownSymbol = __webpack_require__(5112);
+var V8_VERSION = __webpack_require__(7392);
+
+var IS_CONCAT_SPREADABLE = wellKnownSymbol('isConcatSpreadable');
+var MAX_SAFE_INTEGER = 0x1FFFFFFFFFFFFF;
+var MAXIMUM_ALLOWED_INDEX_EXCEEDED = 'Maximum allowed index exceeded';
+
+// We can't use this feature detection in V8 since it causes
+// deoptimization and serious performance degradation
+// https://github.com/zloirock/core-js/issues/679
+var IS_CONCAT_SPREADABLE_SUPPORT = V8_VERSION >= 51 || !fails(function () {
+  var array = [];
+  array[IS_CONCAT_SPREADABLE] = false;
+  return array.concat()[0] !== array;
+});
+
+var SPECIES_SUPPORT = arrayMethodHasSpeciesSupport('concat');
+
+var isConcatSpreadable = function (O) {
+  if (!isObject(O)) return false;
+  var spreadable = O[IS_CONCAT_SPREADABLE];
+  return spreadable !== undefined ? !!spreadable : isArray(O);
+};
+
+var FORCED = !IS_CONCAT_SPREADABLE_SUPPORT || !SPECIES_SUPPORT;
+
+// `Array.prototype.concat` method
+// https://tc39.es/ecma262/#sec-array.prototype.concat
+// with adding support of @@isConcatSpreadable and @@species
+$({ target: 'Array', proto: true, forced: FORCED }, {
+  // eslint-disable-next-line no-unused-vars -- required for `.length`
+  concat: function concat(arg) {
+    var O = toObject(this);
+    var A = arraySpeciesCreate(O, 0);
+    var n = 0;
+    var i, k, length, len, E;
+    for (i = -1, length = arguments.length; i < length; i++) {
+      E = i === -1 ? O : arguments[i];
+      if (isConcatSpreadable(E)) {
+        len = toLength(E.length);
+        if (n + len > MAX_SAFE_INTEGER) throw TypeError(MAXIMUM_ALLOWED_INDEX_EXCEEDED);
+        for (k = 0; k < len; k++, n++) if (k in E) createProperty(A, n, E[k]);
+      } else {
+        if (n >= MAX_SAFE_INTEGER) throw TypeError(MAXIMUM_ALLOWED_INDEX_EXCEEDED);
+        createProperty(A, n++, E);
+      }
+    }
+    A.length = n;
+    return A;
+  }
+});
+
+
+/***/ }),
+
+/***/ 7327:
+/***/ (function(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var $ = __webpack_require__(2109);
+var $filter = __webpack_require__(2092).filter;
+var arrayMethodHasSpeciesSupport = __webpack_require__(1194);
+
+var HAS_SPECIES_SUPPORT = arrayMethodHasSpeciesSupport('filter');
+
+// `Array.prototype.filter` method
+// https://tc39.es/ecma262/#sec-array.prototype.filter
+// with adding support of @@species
+$({ target: 'Array', proto: true, forced: !HAS_SPECIES_SUPPORT }, {
+  filter: function filter(callbackfn /* , thisArg */) {
+    return $filter(this, callbackfn, arguments.length > 1 ? arguments[1] : undefined);
+  }
+});
+
+
+/***/ }),
+
+/***/ 9554:
+/***/ (function(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var $ = __webpack_require__(2109);
+var forEach = __webpack_require__(8533);
+
+// `Array.prototype.forEach` method
+// https://tc39.es/ecma262/#sec-array.prototype.foreach
+// eslint-disable-next-line es/no-array-prototype-foreach -- safe
+$({ target: 'Array', proto: true, forced: [].forEach != forEach }, {
+  forEach: forEach
+});
+
+
+/***/ }),
+
+/***/ 2772:
+/***/ (function(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+/* eslint-disable es/no-array-prototype-indexof -- required for testing */
+var $ = __webpack_require__(2109);
+var $indexOf = __webpack_require__(1318).indexOf;
+var arrayMethodIsStrict = __webpack_require__(9341);
+
+var nativeIndexOf = [].indexOf;
+
+var NEGATIVE_ZERO = !!nativeIndexOf && 1 / [1].indexOf(1, -0) < 0;
+var STRICT_METHOD = arrayMethodIsStrict('indexOf');
+
+// `Array.prototype.indexOf` method
+// https://tc39.es/ecma262/#sec-array.prototype.indexof
+$({ target: 'Array', proto: true, forced: NEGATIVE_ZERO || !STRICT_METHOD }, {
+  indexOf: function indexOf(searchElement /* , fromIndex = 0 */) {
+    return NEGATIVE_ZERO
+      // convert -0 to +0
+      ? nativeIndexOf.apply(this, arguments) || 0
+      : $indexOf(this, searchElement, arguments.length > 1 ? arguments[1] : undefined);
+  }
+});
+
+
+/***/ }),
+
+/***/ 9600:
+/***/ (function(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var $ = __webpack_require__(2109);
+var IndexedObject = __webpack_require__(8361);
+var toIndexedObject = __webpack_require__(5656);
+var arrayMethodIsStrict = __webpack_require__(9341);
+
+var nativeJoin = [].join;
+
+var ES3_STRINGS = IndexedObject != Object;
+var STRICT_METHOD = arrayMethodIsStrict('join', ',');
+
+// `Array.prototype.join` method
+// https://tc39.es/ecma262/#sec-array.prototype.join
+$({ target: 'Array', proto: true, forced: ES3_STRINGS || !STRICT_METHOD }, {
+  join: function join(separator) {
+    return nativeJoin.call(toIndexedObject(this), separator === undefined ? ',' : separator);
+  }
+});
+
+
+/***/ }),
+
+/***/ 7042:
+/***/ (function(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var $ = __webpack_require__(2109);
+var isObject = __webpack_require__(111);
+var isArray = __webpack_require__(3157);
+var toAbsoluteIndex = __webpack_require__(1400);
+var toLength = __webpack_require__(7466);
+var toIndexedObject = __webpack_require__(5656);
+var createProperty = __webpack_require__(6135);
+var wellKnownSymbol = __webpack_require__(5112);
+var arrayMethodHasSpeciesSupport = __webpack_require__(1194);
+
+var HAS_SPECIES_SUPPORT = arrayMethodHasSpeciesSupport('slice');
+
+var SPECIES = wellKnownSymbol('species');
+var nativeSlice = [].slice;
+var max = Math.max;
+
+// `Array.prototype.slice` method
+// https://tc39.es/ecma262/#sec-array.prototype.slice
+// fallback for not array-like ES3 strings and DOM objects
+$({ target: 'Array', proto: true, forced: !HAS_SPECIES_SUPPORT }, {
+  slice: function slice(start, end) {
+    var O = toIndexedObject(this);
+    var length = toLength(O.length);
+    var k = toAbsoluteIndex(start, length);
+    var fin = toAbsoluteIndex(end === undefined ? length : end, length);
+    // inline `ArraySpeciesCreate` for usage native `Array#slice` where it's possible
+    var Constructor, result, n;
+    if (isArray(O)) {
+      Constructor = O.constructor;
+      // cross-realm fallback
+      if (typeof Constructor == 'function' && (Constructor === Array || isArray(Constructor.prototype))) {
+        Constructor = undefined;
+      } else if (isObject(Constructor)) {
+        Constructor = Constructor[SPECIES];
+        if (Constructor === null) Constructor = undefined;
+      }
+      if (Constructor === Array || Constructor === undefined) {
+        return nativeSlice.call(O, k, fin);
+      }
+    }
+    result = new (Constructor === undefined ? Array : Constructor)(max(fin - k, 0));
+    for (n = 0; k < fin; k++, n++) if (k in O) createProperty(result, n, O[k]);
+    result.length = n;
+    return result;
+  }
+});
+
+
+/***/ }),
+
+/***/ 3710:
+/***/ (function(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
+
+var redefine = __webpack_require__(1320);
+
+var DatePrototype = Date.prototype;
+var INVALID_DATE = 'Invalid Date';
+var TO_STRING = 'toString';
+var nativeDateToString = DatePrototype[TO_STRING];
+var getTime = DatePrototype.getTime;
+
+// `Date.prototype.toString` method
+// https://tc39.es/ecma262/#sec-date.prototype.tostring
+if (new Date(NaN) + '' != INVALID_DATE) {
+  redefine(DatePrototype, TO_STRING, function toString() {
+    var value = getTime.call(this);
+    // eslint-disable-next-line no-self-compare -- NaN check
+    return value === value ? nativeDateToString.call(this) : INVALID_DATE;
+  });
+}
+
+
+/***/ }),
+
+/***/ 3321:
+/***/ (function(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
+
+var $ = __webpack_require__(2109);
+var DESCRIPTORS = __webpack_require__(9781);
+var defineProperties = __webpack_require__(6048);
+
+// `Object.defineProperties` method
+// https://tc39.es/ecma262/#sec-object.defineproperties
+$({ target: 'Object', stat: true, forced: !DESCRIPTORS, sham: !DESCRIPTORS }, {
+  defineProperties: defineProperties
+});
+
+
+/***/ }),
+
+/***/ 9070:
+/***/ (function(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
+
+var $ = __webpack_require__(2109);
+var DESCRIPTORS = __webpack_require__(9781);
+var objectDefinePropertyModile = __webpack_require__(3070);
+
+// `Object.defineProperty` method
+// https://tc39.es/ecma262/#sec-object.defineproperty
+$({ target: 'Object', stat: true, forced: !DESCRIPTORS, sham: !DESCRIPTORS }, {
+  defineProperty: objectDefinePropertyModile.f
+});
+
+
+/***/ }),
+
+/***/ 5003:
+/***/ (function(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
+
+var $ = __webpack_require__(2109);
+var fails = __webpack_require__(7293);
+var toIndexedObject = __webpack_require__(5656);
+var nativeGetOwnPropertyDescriptor = __webpack_require__(1236).f;
+var DESCRIPTORS = __webpack_require__(9781);
+
+var FAILS_ON_PRIMITIVES = fails(function () { nativeGetOwnPropertyDescriptor(1); });
+var FORCED = !DESCRIPTORS || FAILS_ON_PRIMITIVES;
+
+// `Object.getOwnPropertyDescriptor` method
+// https://tc39.es/ecma262/#sec-object.getownpropertydescriptor
+$({ target: 'Object', stat: true, forced: FORCED, sham: !DESCRIPTORS }, {
+  getOwnPropertyDescriptor: function getOwnPropertyDescriptor(it, key) {
+    return nativeGetOwnPropertyDescriptor(toIndexedObject(it), key);
+  }
+});
+
+
+/***/ }),
+
+/***/ 9337:
+/***/ (function(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
+
+var $ = __webpack_require__(2109);
+var DESCRIPTORS = __webpack_require__(9781);
+var ownKeys = __webpack_require__(3887);
+var toIndexedObject = __webpack_require__(5656);
+var getOwnPropertyDescriptorModule = __webpack_require__(1236);
+var createProperty = __webpack_require__(6135);
+
+// `Object.getOwnPropertyDescriptors` method
+// https://tc39.es/ecma262/#sec-object.getownpropertydescriptors
+$({ target: 'Object', stat: true, sham: !DESCRIPTORS }, {
+  getOwnPropertyDescriptors: function getOwnPropertyDescriptors(object) {
+    var O = toIndexedObject(object);
+    var getOwnPropertyDescriptor = getOwnPropertyDescriptorModule.f;
+    var keys = ownKeys(O);
+    var result = {};
+    var index = 0;
+    var key, descriptor;
+    while (keys.length > index) {
+      descriptor = getOwnPropertyDescriptor(O, key = keys[index++]);
+      if (descriptor !== undefined) createProperty(result, key, descriptor);
+    }
+    return result;
+  }
+});
+
+
+/***/ }),
+
+/***/ 7941:
+/***/ (function(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
+
+var $ = __webpack_require__(2109);
+var toObject = __webpack_require__(7908);
+var nativeKeys = __webpack_require__(1956);
+var fails = __webpack_require__(7293);
+
+var FAILS_ON_PRIMITIVES = fails(function () { nativeKeys(1); });
+
+// `Object.keys` method
+// https://tc39.es/ecma262/#sec-object.keys
+$({ target: 'Object', stat: true, forced: FAILS_ON_PRIMITIVES }, {
+  keys: function keys(it) {
+    return nativeKeys(toObject(it));
+  }
+});
+
+
+/***/ }),
+
+/***/ 4678:
+/***/ (function(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
+
+var $ = __webpack_require__(2109);
+var parseFloatImplementation = __webpack_require__(2814);
+
+// `parseFloat` method
+// https://tc39.es/ecma262/#sec-parsefloat-string
+$({ global: true, forced: parseFloat != parseFloatImplementation }, {
+  parseFloat: parseFloatImplementation
+});
+
+
+/***/ }),
+
+/***/ 1058:
+/***/ (function(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
+
+var $ = __webpack_require__(2109);
+var parseIntImplementation = __webpack_require__(3009);
+
+// `parseInt` method
+// https://tc39.es/ecma262/#sec-parseint-string-radix
+$({ global: true, forced: parseInt != parseIntImplementation }, {
+  parseInt: parseIntImplementation
+});
+
+
+/***/ }),
+
+/***/ 4603:
+/***/ (function(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
+
+var DESCRIPTORS = __webpack_require__(9781);
+var global = __webpack_require__(7854);
+var isForced = __webpack_require__(4705);
+var inheritIfRequired = __webpack_require__(9587);
+var defineProperty = __webpack_require__(3070).f;
+var getOwnPropertyNames = __webpack_require__(8006).f;
+var isRegExp = __webpack_require__(7850);
+var getFlags = __webpack_require__(7066);
+var stickyHelpers = __webpack_require__(2999);
+var redefine = __webpack_require__(1320);
+var fails = __webpack_require__(7293);
+var enforceInternalState = __webpack_require__(9909).enforce;
+var setSpecies = __webpack_require__(6340);
+var wellKnownSymbol = __webpack_require__(5112);
+
+var MATCH = wellKnownSymbol('match');
+var NativeRegExp = global.RegExp;
+var RegExpPrototype = NativeRegExp.prototype;
+var re1 = /a/g;
+var re2 = /a/g;
+
+// "new" should create a new object, old webkit bug
+var CORRECT_NEW = new NativeRegExp(re1) !== re1;
+
+var UNSUPPORTED_Y = stickyHelpers.UNSUPPORTED_Y;
+
+var FORCED = DESCRIPTORS && isForced('RegExp', (!CORRECT_NEW || UNSUPPORTED_Y || fails(function () {
+  re2[MATCH] = false;
+  // RegExp constructor can alter flags and IsRegExp works correct with @@match
+  return NativeRegExp(re1) != re1 || NativeRegExp(re2) == re2 || NativeRegExp(re1, 'i') != '/a/i';
+})));
+
+// `RegExp` constructor
+// https://tc39.es/ecma262/#sec-regexp-constructor
+if (FORCED) {
+  var RegExpWrapper = function RegExp(pattern, flags) {
+    var thisIsRegExp = this instanceof RegExpWrapper;
+    var patternIsRegExp = isRegExp(pattern);
+    var flagsAreUndefined = flags === undefined;
+    var sticky;
+
+    if (!thisIsRegExp && patternIsRegExp && pattern.constructor === RegExpWrapper && flagsAreUndefined) {
+      return pattern;
+    }
+
+    if (CORRECT_NEW) {
+      if (patternIsRegExp && !flagsAreUndefined) pattern = pattern.source;
+    } else if (pattern instanceof RegExpWrapper) {
+      if (flagsAreUndefined) flags = getFlags.call(pattern);
+      pattern = pattern.source;
+    }
+
+    if (UNSUPPORTED_Y) {
+      sticky = !!flags && flags.indexOf('y') > -1;
+      if (sticky) flags = flags.replace(/y/g, '');
+    }
+
+    var result = inheritIfRequired(
+      CORRECT_NEW ? new NativeRegExp(pattern, flags) : NativeRegExp(pattern, flags),
+      thisIsRegExp ? this : RegExpPrototype,
+      RegExpWrapper
+    );
+
+    if (UNSUPPORTED_Y && sticky) {
+      var state = enforceInternalState(result);
+      state.sticky = true;
+    }
+
+    return result;
+  };
+  var proxy = function (key) {
+    key in RegExpWrapper || defineProperty(RegExpWrapper, key, {
+      configurable: true,
+      get: function () { return NativeRegExp[key]; },
+      set: function (it) { NativeRegExp[key] = it; }
+    });
+  };
+  var keys = getOwnPropertyNames(NativeRegExp);
+  var index = 0;
+  while (keys.length > index) proxy(keys[index++]);
+  RegExpPrototype.constructor = RegExpWrapper;
+  RegExpWrapper.prototype = RegExpPrototype;
+  redefine(global, 'RegExp', RegExpWrapper);
+}
+
+// https://tc39.es/ecma262/#sec-get-regexp-@@species
+setSpecies('RegExp');
+
+
+/***/ }),
+
+/***/ 4916:
+/***/ (function(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var $ = __webpack_require__(2109);
+var exec = __webpack_require__(2261);
+
+// `RegExp.prototype.exec` method
+// https://tc39.es/ecma262/#sec-regexp.prototype.exec
+$({ target: 'RegExp', proto: true, forced: /./.exec !== exec }, {
+  exec: exec
+});
+
+
+/***/ }),
+
+/***/ 9714:
+/***/ (function(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var redefine = __webpack_require__(1320);
+var anObject = __webpack_require__(9670);
+var fails = __webpack_require__(7293);
+var flags = __webpack_require__(7066);
+
+var TO_STRING = 'toString';
+var RegExpPrototype = RegExp.prototype;
+var nativeToString = RegExpPrototype[TO_STRING];
+
+var NOT_GENERIC = fails(function () { return nativeToString.call({ source: 'a', flags: 'b' }) != '/a/b'; });
+// FF44- RegExp#toString has a wrong name
+var INCORRECT_NAME = nativeToString.name != TO_STRING;
+
+// `RegExp.prototype.toString` method
+// https://tc39.es/ecma262/#sec-regexp.prototype.tostring
+if (NOT_GENERIC || INCORRECT_NAME) {
+  redefine(RegExp.prototype, TO_STRING, function toString() {
+    var R = anObject(this);
+    var p = String(R.source);
+    var rf = R.flags;
+    var f = String(rf === undefined && R instanceof RegExp && !('flags' in RegExpPrototype) ? flags.call(R) : rf);
+    return '/' + p + '/' + f;
+  }, { unsafe: true });
+}
+
+
+/***/ }),
+
+/***/ 4723:
+/***/ (function(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var fixRegExpWellKnownSymbolLogic = __webpack_require__(7007);
+var anObject = __webpack_require__(9670);
+var toLength = __webpack_require__(7466);
+var requireObjectCoercible = __webpack_require__(4488);
+var advanceStringIndex = __webpack_require__(1530);
+var regExpExec = __webpack_require__(7651);
+
+// @@match logic
+fixRegExpWellKnownSymbolLogic('match', 1, function (MATCH, nativeMatch, maybeCallNative) {
+  return [
+    // `String.prototype.match` method
+    // https://tc39.es/ecma262/#sec-string.prototype.match
+    function match(regexp) {
+      var O = requireObjectCoercible(this);
+      var matcher = regexp == undefined ? undefined : regexp[MATCH];
+      return matcher !== undefined ? matcher.call(regexp, O) : new RegExp(regexp)[MATCH](String(O));
+    },
+    // `RegExp.prototype[@@match]` method
+    // https://tc39.es/ecma262/#sec-regexp.prototype-@@match
+    function (regexp) {
+      var res = maybeCallNative(nativeMatch, regexp, this);
+      if (res.done) return res.value;
+
+      var rx = anObject(regexp);
+      var S = String(this);
+
+      if (!rx.global) return regExpExec(rx, S);
+
+      var fullUnicode = rx.unicode;
+      rx.lastIndex = 0;
+      var A = [];
+      var n = 0;
+      var result;
+      while ((result = regExpExec(rx, S)) !== null) {
+        var matchStr = String(result[0]);
+        A[n] = matchStr;
+        if (matchStr === '') rx.lastIndex = advanceStringIndex(S, toLength(rx.lastIndex), fullUnicode);
+        n++;
+      }
+      return n === 0 ? null : A;
+    }
+  ];
+});
+
+
+/***/ }),
+
+/***/ 2526:
+/***/ (function(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var $ = __webpack_require__(2109);
+var global = __webpack_require__(7854);
+var getBuiltIn = __webpack_require__(5005);
+var IS_PURE = __webpack_require__(1913);
+var DESCRIPTORS = __webpack_require__(9781);
+var NATIVE_SYMBOL = __webpack_require__(133);
+var USE_SYMBOL_AS_UID = __webpack_require__(3307);
+var fails = __webpack_require__(7293);
+var has = __webpack_require__(6656);
+var isArray = __webpack_require__(3157);
+var isObject = __webpack_require__(111);
+var anObject = __webpack_require__(9670);
+var toObject = __webpack_require__(7908);
+var toIndexedObject = __webpack_require__(5656);
+var toPrimitive = __webpack_require__(7593);
+var createPropertyDescriptor = __webpack_require__(9114);
+var nativeObjectCreate = __webpack_require__(30);
+var objectKeys = __webpack_require__(1956);
+var getOwnPropertyNamesModule = __webpack_require__(8006);
+var getOwnPropertyNamesExternal = __webpack_require__(1156);
+var getOwnPropertySymbolsModule = __webpack_require__(5181);
+var getOwnPropertyDescriptorModule = __webpack_require__(1236);
+var definePropertyModule = __webpack_require__(3070);
+var propertyIsEnumerableModule = __webpack_require__(5296);
+var createNonEnumerableProperty = __webpack_require__(8880);
+var redefine = __webpack_require__(1320);
+var shared = __webpack_require__(2309);
+var sharedKey = __webpack_require__(6200);
+var hiddenKeys = __webpack_require__(3501);
+var uid = __webpack_require__(9711);
+var wellKnownSymbol = __webpack_require__(5112);
+var wrappedWellKnownSymbolModule = __webpack_require__(6061);
+var defineWellKnownSymbol = __webpack_require__(7235);
+var setToStringTag = __webpack_require__(8003);
+var InternalStateModule = __webpack_require__(9909);
+var $forEach = __webpack_require__(2092).forEach;
+
+var HIDDEN = sharedKey('hidden');
+var SYMBOL = 'Symbol';
+var PROTOTYPE = 'prototype';
+var TO_PRIMITIVE = wellKnownSymbol('toPrimitive');
+var setInternalState = InternalStateModule.set;
+var getInternalState = InternalStateModule.getterFor(SYMBOL);
+var ObjectPrototype = Object[PROTOTYPE];
+var $Symbol = global.Symbol;
+var $stringify = getBuiltIn('JSON', 'stringify');
+var nativeGetOwnPropertyDescriptor = getOwnPropertyDescriptorModule.f;
+var nativeDefineProperty = definePropertyModule.f;
+var nativeGetOwnPropertyNames = getOwnPropertyNamesExternal.f;
+var nativePropertyIsEnumerable = propertyIsEnumerableModule.f;
+var AllSymbols = shared('symbols');
+var ObjectPrototypeSymbols = shared('op-symbols');
+var StringToSymbolRegistry = shared('string-to-symbol-registry');
+var SymbolToStringRegistry = shared('symbol-to-string-registry');
+var WellKnownSymbolsStore = shared('wks');
+var QObject = global.QObject;
+// Don't use setters in Qt Script, https://github.com/zloirock/core-js/issues/173
+var USE_SETTER = !QObject || !QObject[PROTOTYPE] || !QObject[PROTOTYPE].findChild;
+
+// fallback for old Android, https://code.google.com/p/v8/issues/detail?id=687
+var setSymbolDescriptor = DESCRIPTORS && fails(function () {
+  return nativeObjectCreate(nativeDefineProperty({}, 'a', {
+    get: function () { return nativeDefineProperty(this, 'a', { value: 7 }).a; }
+  })).a != 7;
+}) ? function (O, P, Attributes) {
+  var ObjectPrototypeDescriptor = nativeGetOwnPropertyDescriptor(ObjectPrototype, P);
+  if (ObjectPrototypeDescriptor) delete ObjectPrototype[P];
+  nativeDefineProperty(O, P, Attributes);
+  if (ObjectPrototypeDescriptor && O !== ObjectPrototype) {
+    nativeDefineProperty(ObjectPrototype, P, ObjectPrototypeDescriptor);
+  }
+} : nativeDefineProperty;
+
+var wrap = function (tag, description) {
+  var symbol = AllSymbols[tag] = nativeObjectCreate($Symbol[PROTOTYPE]);
+  setInternalState(symbol, {
+    type: SYMBOL,
+    tag: tag,
+    description: description
+  });
+  if (!DESCRIPTORS) symbol.description = description;
+  return symbol;
+};
+
+var isSymbol = USE_SYMBOL_AS_UID ? function (it) {
+  return typeof it == 'symbol';
+} : function (it) {
+  return Object(it) instanceof $Symbol;
+};
+
+var $defineProperty = function defineProperty(O, P, Attributes) {
+  if (O === ObjectPrototype) $defineProperty(ObjectPrototypeSymbols, P, Attributes);
+  anObject(O);
+  var key = toPrimitive(P, true);
+  anObject(Attributes);
+  if (has(AllSymbols, key)) {
+    if (!Attributes.enumerable) {
+      if (!has(O, HIDDEN)) nativeDefineProperty(O, HIDDEN, createPropertyDescriptor(1, {}));
+      O[HIDDEN][key] = true;
+    } else {
+      if (has(O, HIDDEN) && O[HIDDEN][key]) O[HIDDEN][key] = false;
+      Attributes = nativeObjectCreate(Attributes, { enumerable: createPropertyDescriptor(0, false) });
+    } return setSymbolDescriptor(O, key, Attributes);
+  } return nativeDefineProperty(O, key, Attributes);
+};
+
+var $defineProperties = function defineProperties(O, Properties) {
+  anObject(O);
+  var properties = toIndexedObject(Properties);
+  var keys = objectKeys(properties).concat($getOwnPropertySymbols(properties));
+  $forEach(keys, function (key) {
+    if (!DESCRIPTORS || $propertyIsEnumerable.call(properties, key)) $defineProperty(O, key, properties[key]);
+  });
+  return O;
+};
+
+var $create = function create(O, Properties) {
+  return Properties === undefined ? nativeObjectCreate(O) : $defineProperties(nativeObjectCreate(O), Properties);
+};
+
+var $propertyIsEnumerable = function propertyIsEnumerable(V) {
+  var P = toPrimitive(V, true);
+  var enumerable = nativePropertyIsEnumerable.call(this, P);
+  if (this === ObjectPrototype && has(AllSymbols, P) && !has(ObjectPrototypeSymbols, P)) return false;
+  return enumerable || !has(this, P) || !has(AllSymbols, P) || has(this, HIDDEN) && this[HIDDEN][P] ? enumerable : true;
+};
+
+var $getOwnPropertyDescriptor = function getOwnPropertyDescriptor(O, P) {
+  var it = toIndexedObject(O);
+  var key = toPrimitive(P, true);
+  if (it === ObjectPrototype && has(AllSymbols, key) && !has(ObjectPrototypeSymbols, key)) return;
+  var descriptor = nativeGetOwnPropertyDescriptor(it, key);
+  if (descriptor && has(AllSymbols, key) && !(has(it, HIDDEN) && it[HIDDEN][key])) {
+    descriptor.enumerable = true;
+  }
+  return descriptor;
+};
+
+var $getOwnPropertyNames = function getOwnPropertyNames(O) {
+  var names = nativeGetOwnPropertyNames(toIndexedObject(O));
+  var result = [];
+  $forEach(names, function (key) {
+    if (!has(AllSymbols, key) && !has(hiddenKeys, key)) result.push(key);
+  });
+  return result;
+};
+
+var $getOwnPropertySymbols = function getOwnPropertySymbols(O) {
+  var IS_OBJECT_PROTOTYPE = O === ObjectPrototype;
+  var names = nativeGetOwnPropertyNames(IS_OBJECT_PROTOTYPE ? ObjectPrototypeSymbols : toIndexedObject(O));
+  var result = [];
+  $forEach(names, function (key) {
+    if (has(AllSymbols, key) && (!IS_OBJECT_PROTOTYPE || has(ObjectPrototype, key))) {
+      result.push(AllSymbols[key]);
+    }
+  });
+  return result;
+};
+
+// `Symbol` constructor
+// https://tc39.es/ecma262/#sec-symbol-constructor
+if (!NATIVE_SYMBOL) {
+  $Symbol = function Symbol() {
+    if (this instanceof $Symbol) throw TypeError('Symbol is not a constructor');
+    var description = !arguments.length || arguments[0] === undefined ? undefined : String(arguments[0]);
+    var tag = uid(description);
+    var setter = function (value) {
+      if (this === ObjectPrototype) setter.call(ObjectPrototypeSymbols, value);
+      if (has(this, HIDDEN) && has(this[HIDDEN], tag)) this[HIDDEN][tag] = false;
+      setSymbolDescriptor(this, tag, createPropertyDescriptor(1, value));
+    };
+    if (DESCRIPTORS && USE_SETTER) setSymbolDescriptor(ObjectPrototype, tag, { configurable: true, set: setter });
+    return wrap(tag, description);
+  };
+
+  redefine($Symbol[PROTOTYPE], 'toString', function toString() {
+    return getInternalState(this).tag;
+  });
+
+  redefine($Symbol, 'withoutSetter', function (description) {
+    return wrap(uid(description), description);
+  });
+
+  propertyIsEnumerableModule.f = $propertyIsEnumerable;
+  definePropertyModule.f = $defineProperty;
+  getOwnPropertyDescriptorModule.f = $getOwnPropertyDescriptor;
+  getOwnPropertyNamesModule.f = getOwnPropertyNamesExternal.f = $getOwnPropertyNames;
+  getOwnPropertySymbolsModule.f = $getOwnPropertySymbols;
+
+  wrappedWellKnownSymbolModule.f = function (name) {
+    return wrap(wellKnownSymbol(name), name);
+  };
+
+  if (DESCRIPTORS) {
+    // https://github.com/tc39/proposal-Symbol-description
+    nativeDefineProperty($Symbol[PROTOTYPE], 'description', {
+      configurable: true,
+      get: function description() {
+        return getInternalState(this).description;
+      }
+    });
+    if (!IS_PURE) {
+      redefine(ObjectPrototype, 'propertyIsEnumerable', $propertyIsEnumerable, { unsafe: true });
+    }
+  }
+}
+
+$({ global: true, wrap: true, forced: !NATIVE_SYMBOL, sham: !NATIVE_SYMBOL }, {
+  Symbol: $Symbol
+});
+
+$forEach(objectKeys(WellKnownSymbolsStore), function (name) {
+  defineWellKnownSymbol(name);
+});
+
+$({ target: SYMBOL, stat: true, forced: !NATIVE_SYMBOL }, {
+  // `Symbol.for` method
+  // https://tc39.es/ecma262/#sec-symbol.for
+  'for': function (key) {
+    var string = String(key);
+    if (has(StringToSymbolRegistry, string)) return StringToSymbolRegistry[string];
+    var symbol = $Symbol(string);
+    StringToSymbolRegistry[string] = symbol;
+    SymbolToStringRegistry[symbol] = string;
+    return symbol;
+  },
+  // `Symbol.keyFor` method
+  // https://tc39.es/ecma262/#sec-symbol.keyfor
+  keyFor: function keyFor(sym) {
+    if (!isSymbol(sym)) throw TypeError(sym + ' is not a symbol');
+    if (has(SymbolToStringRegistry, sym)) return SymbolToStringRegistry[sym];
+  },
+  useSetter: function () { USE_SETTER = true; },
+  useSimple: function () { USE_SETTER = false; }
+});
+
+$({ target: 'Object', stat: true, forced: !NATIVE_SYMBOL, sham: !DESCRIPTORS }, {
+  // `Object.create` method
+  // https://tc39.es/ecma262/#sec-object.create
+  create: $create,
+  // `Object.defineProperty` method
+  // https://tc39.es/ecma262/#sec-object.defineproperty
+  defineProperty: $defineProperty,
+  // `Object.defineProperties` method
+  // https://tc39.es/ecma262/#sec-object.defineproperties
+  defineProperties: $defineProperties,
+  // `Object.getOwnPropertyDescriptor` method
+  // https://tc39.es/ecma262/#sec-object.getownpropertydescriptors
+  getOwnPropertyDescriptor: $getOwnPropertyDescriptor
+});
+
+$({ target: 'Object', stat: true, forced: !NATIVE_SYMBOL }, {
+  // `Object.getOwnPropertyNames` method
+  // https://tc39.es/ecma262/#sec-object.getownpropertynames
+  getOwnPropertyNames: $getOwnPropertyNames,
+  // `Object.getOwnPropertySymbols` method
+  // https://tc39.es/ecma262/#sec-object.getownpropertysymbols
+  getOwnPropertySymbols: $getOwnPropertySymbols
+});
+
+// Chrome 38 and 39 `Object.getOwnPropertySymbols` fails on primitives
+// https://bugs.chromium.org/p/v8/issues/detail?id=3443
+$({ target: 'Object', stat: true, forced: fails(function () { getOwnPropertySymbolsModule.f(1); }) }, {
+  getOwnPropertySymbols: function getOwnPropertySymbols(it) {
+    return getOwnPropertySymbolsModule.f(toObject(it));
+  }
+});
+
+// `JSON.stringify` method behavior with symbols
+// https://tc39.es/ecma262/#sec-json.stringify
+if ($stringify) {
+  var FORCED_JSON_STRINGIFY = !NATIVE_SYMBOL || fails(function () {
+    var symbol = $Symbol();
+    // MS Edge converts symbol values to JSON as {}
+    return $stringify([symbol]) != '[null]'
+      // WebKit converts symbol values to JSON as null
+      || $stringify({ a: symbol }) != '{}'
+      // V8 throws on boxed symbols
+      || $stringify(Object(symbol)) != '{}';
+  });
+
+  $({ target: 'JSON', stat: true, forced: FORCED_JSON_STRINGIFY }, {
+    // eslint-disable-next-line no-unused-vars -- required for `.length`
+    stringify: function stringify(it, replacer, space) {
+      var args = [it];
+      var index = 1;
+      var $replacer;
+      while (arguments.length > index) args.push(arguments[index++]);
+      $replacer = replacer;
+      if (!isObject(replacer) && it === undefined || isSymbol(it)) return; // IE8 returns string on undefined
+      if (!isArray(replacer)) replacer = function (key, value) {
+        if (typeof $replacer == 'function') value = $replacer.call(this, key, value);
+        if (!isSymbol(value)) return value;
+      };
+      args[1] = replacer;
+      return $stringify.apply(null, args);
+    }
+  });
+}
+
+// `Symbol.prototype[@@toPrimitive]` method
+// https://tc39.es/ecma262/#sec-symbol.prototype-@@toprimitive
+if (!$Symbol[PROTOTYPE][TO_PRIMITIVE]) {
+  createNonEnumerableProperty($Symbol[PROTOTYPE], TO_PRIMITIVE, $Symbol[PROTOTYPE].valueOf);
+}
+// `Symbol.prototype[@@toStringTag]` property
+// https://tc39.es/ecma262/#sec-symbol.prototype-@@tostringtag
+setToStringTag($Symbol, SYMBOL);
+
+hiddenKeys[HIDDEN] = true;
+
+
+/***/ }),
+
+/***/ 4747:
+/***/ (function(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
+
+var global = __webpack_require__(7854);
+var DOMIterables = __webpack_require__(8324);
+var forEach = __webpack_require__(8533);
+var createNonEnumerableProperty = __webpack_require__(8880);
+
+for (var COLLECTION_NAME in DOMIterables) {
+  var Collection = global[COLLECTION_NAME];
+  var CollectionPrototype = Collection && Collection.prototype;
+  // some Chrome versions have non-configurable methods on DOMTokenList
+  if (CollectionPrototype && CollectionPrototype.forEach !== forEach) try {
+    createNonEnumerableProperty(CollectionPrototype, 'forEach', forEach);
+  } catch (error) {
+    CollectionPrototype.forEach = forEach;
+  }
+}
+
+
+/***/ }),
+
+/***/ 2564:
+/***/ (function(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
+
+var $ = __webpack_require__(2109);
+var global = __webpack_require__(7854);
+var userAgent = __webpack_require__(8113);
+
+var slice = [].slice;
+var MSIE = /MSIE .\./.test(userAgent); // <- dirty ie9- check
+
+var wrap = function (scheduler) {
+  return function (handler, timeout /* , ...arguments */) {
+    var boundArgs = arguments.length > 2;
+    var args = boundArgs ? slice.call(arguments, 2) : undefined;
+    return scheduler(boundArgs ? function () {
+      // eslint-disable-next-line no-new-func -- spec requirement
+      (typeof handler == 'function' ? handler : Function(handler)).apply(this, args);
+    } : handler, timeout);
+  };
+};
+
+// ie9- setTimeout & setInterval additional parameters fix
+// https://html.spec.whatwg.org/multipage/timers-and-user-prompts.html#timers
+$({ global: true, bind: true, forced: MSIE }, {
+  // `setTimeout` method
+  // https://html.spec.whatwg.org/multipage/timers-and-user-prompts.html#dom-settimeout
+  setTimeout: wrap(global.setTimeout),
+  // `setInterval` method
+  // https://html.spec.whatwg.org/multipage/timers-and-user-prompts.html#dom-setinterval
+  setInterval: wrap(global.setInterval)
+});
+
+
+/***/ }),
+
+/***/ 8074:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(3645);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1667);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _assets_zanting_svg__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(8732);
+/* harmony import */ var _assets_mn_shengyin_fill_svg__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(8969);
+/* harmony import */ var _assets_mn_shengyinwu_fill_svg__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(9150);
+/* harmony import */ var _assets_quanping_svg__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(3964);
+/* harmony import */ var _assets_suoxiao_svg__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(731);
+/* harmony import */ var _assets_bofang_svg__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(2596);
+/* harmony import */ var _assets_error_svg__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(3129);
+// Imports
+
+
+
+
+
+
+
+
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
+var ___CSS_LOADER_URL_REPLACEMENT_0___ = _node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_1___default()(_assets_zanting_svg__WEBPACK_IMPORTED_MODULE_2__/* .default */ .Z);
+var ___CSS_LOADER_URL_REPLACEMENT_1___ = _node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_1___default()(_assets_mn_shengyin_fill_svg__WEBPACK_IMPORTED_MODULE_3__/* .default */ .Z);
+var ___CSS_LOADER_URL_REPLACEMENT_2___ = _node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_1___default()(_assets_mn_shengyinwu_fill_svg__WEBPACK_IMPORTED_MODULE_4__/* .default */ .Z);
+var ___CSS_LOADER_URL_REPLACEMENT_3___ = _node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_1___default()(_assets_quanping_svg__WEBPACK_IMPORTED_MODULE_5__/* .default */ .Z);
+var ___CSS_LOADER_URL_REPLACEMENT_4___ = _node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_1___default()(_assets_suoxiao_svg__WEBPACK_IMPORTED_MODULE_6__/* .default */ .Z);
+var ___CSS_LOADER_URL_REPLACEMENT_5___ = _node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_1___default()(_assets_bofang_svg__WEBPACK_IMPORTED_MODULE_7__/* .default */ .Z);
+var ___CSS_LOADER_URL_REPLACEMENT_6___ = _node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_1___default()(_assets_error_svg__WEBPACK_IMPORTED_MODULE_8__/* .default */ .Z);
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, "body {\n  margin: 0;\n}\n.video_player {\n  width: 100%;\n  height: 100%;\n  position: relative;\n  overflow: hidden;\n}\n.video_player .p_video {\n  position: relative;\n  width: 100%;\n  height: 100%;\n  display: block;\n  background: #000;\n  z-index: 1;\n}\n.video_player .p_controls {\n  display: flex;\n  position: absolute;\n  width: 100%;\n  height: 40px;\n  background-color: rgba(0, 16, 27, 0.6);\n  bottom: -40px;\n  transition: bottom 0.3s;\n  left: 0;\n  justify-content: space-between;\n  align-items: center;\n  z-index: 999;\n  /* 进度条 */\n}\n.video_player .p_controls .progress_bar {\n  position: absolute;\n  cursor: pointer;\n  -webkit-tap-highlight-color: transparent;\n  top: -2px;\n  left: 0;\n  width: 100%;\n  height: 2px;\n  background-color: hsla(0, 0%, 100%, 0.35);\n  transition: height 0.15s linear, top 0.15s linear;\n}\n.video_player .p_controls .progress_bar .current_dot {\n  position: absolute;\n  opacity: 0;\n  z-index: 101;\n  top: 50%;\n  left: 0px;\n  padding: 5px;\n  background-color: #fff;\n  transform: translateY(-50%) translateX(-50%);\n  border-radius: 50%;\n  transition: padding 0.15s linear, top 0.15s linear, width 0.15s linear;\n}\n.video_player .p_controls .progress_bar .current_progress {\n  width: 0px;\n  height: 100%;\n  position: relative;\n  z-index: 100;\n  background-color: #49a9ee;\n}\n.video_player .p_controls .progress_bar .current_buffer {\n  z-index: 99;\n  width: 0;\n  height: 100%;\n  position: absolute;\n  top: 0;\n  background-color: hsla(0, 0%, 100%, 0.35);\n}\n.video_player .p_controls .date_label {\n  position: absolute;\n  width: 48px;\n  height: 22px;\n  line-height: 20px;\n  top: -34px;\n  left: 0;\n  visibility: hidden;\n  font-size: 12px;\n  transform: translateX(-50%);\n  color: #fff;\n  text-align: center;\n  border-radius: 4px;\n  background-color: rgba(0, 16, 27, 0.7);\n}\n.video_player .p_controls .date_label::after {\n  content: '';\n  position: absolute;\n  bottom: -4px;\n  left: 50%;\n  transform: translateX(-50%);\n  width: 0;\n  height: 0;\n  border-top: 4px solid rgba(0, 16, 27, 0.7);\n  border-left: 4px solid transparent;\n  border-right: 4px solid transparent;\n}\n.video_player .p_controls .controls_left {\n  display: flex;\n  align-items: center;\n  margin-left: 16px;\n}\n.video_player .p_controls .controls_right {\n  display: flex;\n  z-index: 999;\n  align-items: center;\n  justify-content: flex-end;\n  /* 倍速 */\n  /* 音量 */\n}\n.video_player .p_controls .controls_right > * {\n  cursor: pointer;\n  -webkit-tap-highlight-color: transparent;\n  margin-right: 14px;\n}\n.video_player .p_controls .controls_right .speed_bth {\n  position: relative;\n}\n.video_player .p_controls .controls_right .speed_bth:active {\n  background-color: none;\n}\n.video_player .p_controls .controls_right .speed_bth .speed_li {\n  position: absolute;\n  display: none;\n  bottom: 0px;\n  width: 100%;\n  padding-bottom: 34px;\n  text-align: center;\n  color: #fff;\n  font-size: 14px;\n}\n.video_player .p_controls .controls_right .speed_bth .speed_li div {\n  cursor: pointer;\n  -webkit-tap-highlight-color: transparent;\n  background-color: rgba(0, 16, 27, 0.7);\n  line-height: 22px;\n  margin-bottom: 1px;\n  border-radius: 2px;\n}\n.video_player .p_controls .controls_right .speed_bth .speed_li div.on {\n  color: #49a9ee;\n}\n.video_player .p_controls .controls_right .speed_bth .speed_li div:hover {\n  color: #49a9ee;\n}\n.video_player .p_controls .controls_right .speed_bth span {\n  cursor: pointer;\n  -webkit-tap-highlight-color: transparent;\n  display: inline-block;\n  color: #fff;\n  text-align: center;\n  min-width: 40px;\n  padding: 0 10px;\n  line-height: 22px;\n  border-radius: 12px;\n  font-size: 15px;\n}\n.video_player .p_controls .controls_right .speed_bth:hover .speed_li {\n  display: block;\n}\n.video_player .p_controls .controls_right .volume_bth {\n  position: relative;\n  display: flex;\n  flex-direction: column;\n}\n.video_player .p_controls .controls_right .volume_bth .volume_con {\n  position: absolute;\n  display: none;\n  bottom: 0;\n  width: 28px;\n  height: 112px;\n  left: -8px;\n}\n.video_player .p_controls .controls_right .volume_bth .volume_con .volume_slider {\n  position: absolute;\n  text-align: center;\n  border-radius: 10px;\n  padding: 12px 12px;\n  background-color: rgba(0, 0, 0, 0.5);\n  left: -48px;\n  top: 4px;\n  transform: rotate(-90deg);\n}\n.video_player .p_controls .controls_right .volume_bth:hover .volume_con {\n  display: block;\n}\n.video_player .p_controls .button_img {\n  width: 14px;\n  height: 14px;\n  box-sizing: border-box;\n  z-index: 9;\n}\n.video_player .p_controls .button_img.suspend {\n  background: url(" + ___CSS_LOADER_URL_REPLACEMENT_0___ + ");\n  background-size: cover;\n}\n.video_player .p_controls .button_img.sound {\n  background: url(" + ___CSS_LOADER_URL_REPLACEMENT_1___ + ");\n  background-size: cover;\n}\n.video_player .p_controls .button_img.mute {\n  background: url(" + ___CSS_LOADER_URL_REPLACEMENT_2___ + ");\n  background-size: cover;\n}\n.video_player .p_controls .button_img.full {\n  background: url(" + ___CSS_LOADER_URL_REPLACEMENT_3___ + ");\n  background-size: cover;\n}\n.video_player .p_controls .button_img.scale {\n  background: url(" + ___CSS_LOADER_URL_REPLACEMENT_4___ + ");\n  background-size: cover;\n}\n.video_player .p_controls .time {\n  color: #fff;\n  padding-left: 10px;\n  font-size: 14px;\n}\n.video_player .button_img.play,\n.video_player .cover_img.play {\n  background: url(" + ___CSS_LOADER_URL_REPLACEMENT_5___ + ");\n  background-size: cover;\n}\n.video_player .video_cover {\n  position: absolute;\n  height: 100%;\n  width: 100%;\n  top: 0;\n  left: 0;\n  background-color: rgba(0, 0, 0, 0.7);\n  z-index: 999;\n}\n.video_player .video_cover .cover_content {\n  width: 100px;\n  height: 100px;\n  z-index: 999;\n  overflow: auto;\n  position: absolute;\n  margin: auto;\n  top: 0;\n  bottom: 0;\n  left: 0;\n  right: 0;\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  justify-content: center;\n}\n.video_player .video_cover .cover_content .cover_img {\n  width: 40px;\n  height: 40px;\n  box-sizing: border-box;\n}\n.video_player .video_cover .cover_content .cover_img.error {\n  background: url(" + ___CSS_LOADER_URL_REPLACEMENT_6___ + ");\n  background-size: cover;\n}\n.video_player .video_cover .cover_content .tips_error {\n  margin-top: 8px;\n}\n.video_player .video_cover .cover_content .tips_text {\n  color: #fff;\n  font-size: 12px;\n  text-align: center;\n}\n.video_player .video_cover .cover_content .video_loading .spot {\n  width: 4px;\n  height: 4px;\n  border-radius: 2px;\n  background: #ffffff;\n  float: left;\n  margin: 8px 4px;\n  animation: spot linear 1s infinite;\n  -webkit-animation: spot linear 1s infinite;\n}\n.video_player .video_cover .cover_content .video_loading .spot:nth-child(1) {\n  animation-delay: 0s;\n}\n.video_player .video_cover .cover_content .video_loading .spot:nth-child(2) {\n  animation-delay: 0.15s;\n}\n.video_player .video_cover .cover_content .video_loading .spot:nth-child(3) {\n  animation-delay: 0.3s;\n}\n.video_player .video_cover .cover_content .video_loading .spot:nth-child(4) {\n  animation-delay: 0.45s;\n}\n.video_player .video_cover .cover_content .video_loading .spot:nth-child(5) {\n  animation-delay: 0.6s;\n}\n@keyframes spot {\n  0%,\n  60%,\n  100% {\n    transform: scale(1);\n  }\n  30% {\n    transform: scale(2.5);\n  }\n}\n@-webkit-keyframes spot {\n  0%,\n  60%,\n  100% {\n    transform: scale(1);\n  }\n  30% {\n    transform: scale(2.5);\n  }\n}\n.p_controls.showControls {\n  bottom: 0 !important;\n}\n.p_controls.showControls .progress_bar .current_dot {\n  opacity: 1 !important;\n}\n.p_controls.showControls .hover_cls.progress_bar {\n  height: 6px;\n}\n.p_controls.showControls .hover_cls.progress_bar .current_dot {\n  padding: 8px;\n}\ninput[type='range'] {\n  display: block;\n  -webkit-appearance: none;\n  background: -webkit-linear-gradient(#49a9ee, #49a9ee) no-repeat, #ddd;\n  /*设置左边颜色为#61bd12，右边颜色为#ddd*/\n  background-size: 75% 100%;\n  /*设置左右宽度比例*/\n  width: 100px;\n  height: 4px;\n  border-radius: 5px;\n  margin: 0 auto;\n  outline: 0;\n}\ninput[type='range']::-webkit-slider-thumb {\n  -webkit-appearance: none;\n  background-color: #fff;\n  width: 10px;\n  height: 10px;\n  border-radius: 50%;\n  cursor: pointer;\n  -webkit-tap-highlight-color: transparent;\n  transition: 0.3s ease-in-out;\n}\ninput[type='range']::-webkit-slider-thumb:hover {\n  background-color: white;\n  border: 2px solid #49a9ee;\n}\ninput[type='range']::-webkit-slider-thumb:active {\n  transform: scale(1.6);\n}\n", ""]);
+// Exports
+/* harmony default export */ __webpack_exports__["Z"] = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
+/***/ 3645:
+/***/ (function(module) {
+
+"use strict";
+
+
+/*
+  MIT License http://www.opensource.org/licenses/mit-license.php
+  Author Tobias Koppers @sokra
+*/
+// css base code, injected by the css-loader
+// eslint-disable-next-line func-names
+module.exports = function (cssWithMappingToString) {
+  var list = []; // return the list of modules as css string
+
+  list.toString = function toString() {
+    return this.map(function (item) {
+      var content = cssWithMappingToString(item);
+
+      if (item[2]) {
+        return "@media ".concat(item[2], " {").concat(content, "}");
+      }
+
+      return content;
+    }).join("");
+  }; // import a list of modules into the list
+  // eslint-disable-next-line func-names
+
+
+  list.i = function (modules, mediaQuery, dedupe) {
+    if (typeof modules === "string") {
+      // eslint-disable-next-line no-param-reassign
+      modules = [[null, modules, ""]];
+    }
+
+    var alreadyImportedModules = {};
+
+    if (dedupe) {
+      for (var i = 0; i < this.length; i++) {
+        // eslint-disable-next-line prefer-destructuring
+        var id = this[i][0];
+
+        if (id != null) {
+          alreadyImportedModules[id] = true;
+        }
+      }
+    }
+
+    for (var _i = 0; _i < modules.length; _i++) {
+      var item = [].concat(modules[_i]);
+
+      if (dedupe && alreadyImportedModules[item[0]]) {
+        // eslint-disable-next-line no-continue
+        continue;
+      }
+
+      if (mediaQuery) {
+        if (!item[2]) {
+          item[2] = mediaQuery;
+        } else {
+          item[2] = "".concat(mediaQuery, " and ").concat(item[2]);
+        }
+      }
+
+      list.push(item);
+    }
+  };
+
+  return list;
+};
+
+/***/ }),
+
+/***/ 1667:
+/***/ (function(module) {
+
+"use strict";
+
+
+module.exports = function (url, options) {
+  if (!options) {
+    // eslint-disable-next-line no-param-reassign
+    options = {};
+  } // eslint-disable-next-line no-underscore-dangle, no-param-reassign
+
+
+  url = url && url.__esModule ? url.default : url;
+
+  if (typeof url !== "string") {
+    return url;
+  } // If url is already wrapped in quotes, remove them
+
+
+  if (/^['"].*['"]$/.test(url)) {
+    // eslint-disable-next-line no-param-reassign
+    url = url.slice(1, -1);
+  }
+
+  if (options.hash) {
+    // eslint-disable-next-line no-param-reassign
+    url += options.hash;
+  } // Should url be wrapped?
+  // See https://drafts.csswg.org/css-values-3/#urls
+
+
+  if (/["'() \t\n]/.test(url) || options.needQuotes) {
+    return "\"".concat(url.replace(/"/g, '\\"').replace(/\n/g, "\\n"), "\"");
+  }
+
+  return url;
+};
+
+/***/ }),
+
+/***/ 3379:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+
+var isOldIE = function isOldIE() {
+  var memo;
+  return function memorize() {
+    if (typeof memo === 'undefined') {
+      // Test for IE <= 9 as proposed by Browserhacks
+      // @see http://browserhacks.com/#hack-e71d8692f65334173fee715c222cb805
+      // Tests for existence of standard globals is to allow style-loader
+      // to operate correctly into non-standard environments
+      // @see https://github.com/webpack-contrib/style-loader/issues/177
+      memo = Boolean(window && document && document.all && !window.atob);
+    }
+
+    return memo;
+  };
+}();
+
+var getTarget = function getTarget() {
+  var memo = {};
+  return function memorize(target) {
+    if (typeof memo[target] === 'undefined') {
+      var styleTarget = document.querySelector(target); // Special case to return head of iframe instead of iframe itself
+
+      if (window.HTMLIFrameElement && styleTarget instanceof window.HTMLIFrameElement) {
+        try {
+          // This will throw an exception if access to iframe is blocked
+          // due to cross-origin restrictions
+          styleTarget = styleTarget.contentDocument.head;
+        } catch (e) {
+          // istanbul ignore next
+          styleTarget = null;
+        }
+      }
+
+      memo[target] = styleTarget;
+    }
+
+    return memo[target];
+  };
+}();
+
+var stylesInDom = [];
+
+function getIndexByIdentifier(identifier) {
+  var result = -1;
+
+  for (var i = 0; i < stylesInDom.length; i++) {
+    if (stylesInDom[i].identifier === identifier) {
+      result = i;
+      break;
+    }
+  }
+
+  return result;
+}
+
+function modulesToDom(list, options) {
+  var idCountMap = {};
+  var identifiers = [];
+
+  for (var i = 0; i < list.length; i++) {
+    var item = list[i];
+    var id = options.base ? item[0] + options.base : item[0];
+    var count = idCountMap[id] || 0;
+    var identifier = "".concat(id, " ").concat(count);
+    idCountMap[id] = count + 1;
+    var index = getIndexByIdentifier(identifier);
+    var obj = {
+      css: item[1],
+      media: item[2],
+      sourceMap: item[3]
+    };
+
+    if (index !== -1) {
+      stylesInDom[index].references++;
+      stylesInDom[index].updater(obj);
+    } else {
+      stylesInDom.push({
+        identifier: identifier,
+        updater: addStyle(obj, options),
+        references: 1
+      });
+    }
+
+    identifiers.push(identifier);
+  }
+
+  return identifiers;
+}
+
+function insertStyleElement(options) {
+  var style = document.createElement('style');
+  var attributes = options.attributes || {};
+
+  if (typeof attributes.nonce === 'undefined') {
+    var nonce =  true ? __webpack_require__.nc : 0;
+
+    if (nonce) {
+      attributes.nonce = nonce;
+    }
+  }
+
+  Object.keys(attributes).forEach(function (key) {
+    style.setAttribute(key, attributes[key]);
+  });
+
+  if (typeof options.insert === 'function') {
+    options.insert(style);
+  } else {
+    var target = getTarget(options.insert || 'head');
+
+    if (!target) {
+      throw new Error("Couldn't find a style target. This probably means that the value for the 'insert' parameter is invalid.");
+    }
+
+    target.appendChild(style);
+  }
+
+  return style;
+}
+
+function removeStyleElement(style) {
+  // istanbul ignore if
+  if (style.parentNode === null) {
+    return false;
+  }
+
+  style.parentNode.removeChild(style);
+}
+/* istanbul ignore next  */
+
+
+var replaceText = function replaceText() {
+  var textStore = [];
+  return function replace(index, replacement) {
+    textStore[index] = replacement;
+    return textStore.filter(Boolean).join('\n');
+  };
+}();
+
+function applyToSingletonTag(style, index, remove, obj) {
+  var css = remove ? '' : obj.media ? "@media ".concat(obj.media, " {").concat(obj.css, "}") : obj.css; // For old IE
+
+  /* istanbul ignore if  */
+
+  if (style.styleSheet) {
+    style.styleSheet.cssText = replaceText(index, css);
+  } else {
+    var cssNode = document.createTextNode(css);
+    var childNodes = style.childNodes;
+
+    if (childNodes[index]) {
+      style.removeChild(childNodes[index]);
+    }
+
+    if (childNodes.length) {
+      style.insertBefore(cssNode, childNodes[index]);
+    } else {
+      style.appendChild(cssNode);
+    }
+  }
+}
+
+function applyToTag(style, options, obj) {
+  var css = obj.css;
+  var media = obj.media;
+  var sourceMap = obj.sourceMap;
+
+  if (media) {
+    style.setAttribute('media', media);
+  } else {
+    style.removeAttribute('media');
+  }
+
+  if (sourceMap && typeof btoa !== 'undefined') {
+    css += "\n/*# sourceMappingURL=data:application/json;base64,".concat(btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))), " */");
+  } // For old IE
+
+  /* istanbul ignore if  */
+
+
+  if (style.styleSheet) {
+    style.styleSheet.cssText = css;
+  } else {
+    while (style.firstChild) {
+      style.removeChild(style.firstChild);
+    }
+
+    style.appendChild(document.createTextNode(css));
+  }
+}
+
+var singleton = null;
+var singletonCounter = 0;
+
+function addStyle(obj, options) {
+  var style;
+  var update;
+  var remove;
+
+  if (options.singleton) {
+    var styleIndex = singletonCounter++;
+    style = singleton || (singleton = insertStyleElement(options));
+    update = applyToSingletonTag.bind(null, style, styleIndex, false);
+    remove = applyToSingletonTag.bind(null, style, styleIndex, true);
+  } else {
+    style = insertStyleElement(options);
+    update = applyToTag.bind(null, style, options);
+
+    remove = function remove() {
+      removeStyleElement(style);
+    };
+  }
+
+  update(obj);
+  return function updateStyle(newObj) {
+    if (newObj) {
+      if (newObj.css === obj.css && newObj.media === obj.media && newObj.sourceMap === obj.sourceMap) {
+        return;
+      }
+
+      update(obj = newObj);
+    } else {
+      remove();
+    }
+  };
+}
+
+module.exports = function (list, options) {
+  options = options || {}; // Force single-tag solution on IE6-9, which has a hard limit on the # of <style>
+  // tags it will allow on a page
+
+  if (!options.singleton && typeof options.singleton !== 'boolean') {
+    options.singleton = isOldIE();
+  }
+
+  list = list || [];
+  var lastIdentifiers = modulesToDom(list, options);
+  return function update(newList) {
+    newList = newList || [];
+
+    if (Object.prototype.toString.call(newList) !== '[object Array]') {
+      return;
+    }
+
+    for (var i = 0; i < lastIdentifiers.length; i++) {
+      var identifier = lastIdentifiers[i];
+      var index = getIndexByIdentifier(identifier);
+      stylesInDom[index].references--;
+    }
+
+    var newLastIdentifiers = modulesToDom(newList, options);
+
+    for (var _i = 0; _i < lastIdentifiers.length; _i++) {
+      var _identifier = lastIdentifiers[_i];
+
+      var _index = getIndexByIdentifier(_identifier);
+
+      if (stylesInDom[_index].references === 0) {
+        stylesInDom[_index].updater();
+
+        stylesInDom.splice(_index, 1);
+      }
+    }
+
+    lastIdentifiers = newLastIdentifiers;
+  };
+};
+
+/***/ }),
+
+/***/ 2596:
+/***/ (function(__unused_webpack_module, __webpack_exports__) {
+
+"use strict";
+/* harmony default export */ __webpack_exports__["Z"] = ("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/PjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+PHN2ZyBjbGFzcz0iaWNvbiIgd2lkdGg9IjIwMHB4IiBoZWlnaHQ9IjIwMC4wMHB4IiB2aWV3Qm94PSIwIDAgMTAyNCAxMDI0IiB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZmlsbD0iI2ZmZmZmZiIgZD0iTTc5Mi43NTA4NjA2MyA0MTMuNDkxNDUxNjhDODc4LjY2Njg5NTg1IDQ2Ny44OTU2MzQzMSA4NzguNjIwNDA3MiA1NTYuMTMxNjgyMSA3OTIuNzUwODYwNjMgNjEwLjUwNjQyODIzTDMyMi4zOTQyODcyIDkwOC4zNDc5ODIzM0MyMzYuNDc4MjUyODEgOTYyLjc1MjE2NzQzIDE2Ni44Mjk1NDUzOCA5MjcuMzI3NzkxNjggMTY2LjgyOTU0NTM4IDgyOS4zNDM0MDkwNkwxNjYuODI5NTQ1MzggMTk0LjY1NDQ3MDg1QzE2Ni44Mjk1NDUzOCA5Ni42MTcyNjU2OSAyMzYuNTI0NzQxNDYgNjEuMjc1MTQ5ODEgMzIyLjM5NDI4NzIgMTE1LjY0OTg5NTEyTDc5Mi43NTA4NjA2MyA0MTMuNDkxNDUxNjggNzkyLjc1MDg2MDYzIDQxMy40OTE0NTE2OFoiICAvPjwvc3ZnPg==");
+
+/***/ }),
+
+/***/ 3129:
+/***/ (function(__unused_webpack_module, __webpack_exports__) {
+
+"use strict";
+/* harmony default export */ __webpack_exports__["Z"] = ("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/PjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+PHN2ZyB0PSIxNTk0MTA4NjYxMTIwIiBjbGFzcz0iaWNvbiIgdmlld0JveD0iMCAwIDEwMjQgMTAyNCIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHAtaWQ9IjE1NzIiIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCI+PGRlZnM+PHN0eWxlIHR5cGU9InRleHQvY3NzIj48L3N0eWxlPjwvZGVmcz48cGF0aCBkPSJNMzIwIDQ0Ny45MzZjMzUuMzkyIDAgNjQtMjguNjA4IDY0LTY0cy0yOC42MDgtNjQtNjQtNjQtNjQgMjguNjA4LTY0IDY0UzI4NC42MDggNDQ3LjkzNiAzMjAgNDQ3LjkzNnpNNzUxLjc0NCA3MDYuNzUyYy0xNDYuNDk2LTkxLjAwOC0zMzMuNDQtOTEuMDA4LTQ3OS44NzIgMC0xNC4zMzYgOC44OTYtMTkuMzI4IDI4LjczNi0xMS4yNjQgNDQuNDggOCAxNS43NDQgMjYuMDQ4IDIxLjI0OCA0MC4zODQgMTIuMzUyIDEyOC43MDQtNzkuOTM2IDI5Mi44NjQtNzkuOTM2IDQyMS42MzIgMCA0LjU0NCAyLjg4IDkuNiA0LjIyNCAxNC41MjggNC4yMjQgMTAuMzY4IDAgMjAuNDE2LTYuMDE2IDI1Ljg1Ni0xNi42NEM3NzEuMDcyIDczNS40ODggNzY2LjAxNiA3MTUuNjQ4IDc1MS43NDQgNzA2Ljc1MnpNODMyIDEyNy45MzYgMTkyIDEyNy45MzZjLTcwLjY1NiAwLTEyOCA1Ny4zNDQtMTI4IDEyOGwwIDU3NmMwIDcwLjY1NiA1Ny4zNDQgMTI4IDEyOCAxMjhsNjQwIDBjNzAuNjU2IDAgMTI4LTU3LjM0NCAxMjgtMTI4bDAtNTc2Qzk2MCAxODUuMjggOTAyLjY1NiAxMjcuOTM2IDgzMiAxMjcuOTM2ek04OTYgODMxLjkzNmMwIDM1LjM5Mi0yOC42MDggNjQtNjQgNjRMMTkyIDg5NS45MzZjLTM1LjM5MiAwLTY0LTI4LjYwOC02NC02NGwwLTU3NmMwLTM1LjM5MiAyOC42MDgtNjQgNjQtNjRsNjQwIDBjMzUuMzkyIDAgNjQgMjguNjA4IDY0IDY0TDg5NiA4MzEuOTM2ek03MDQgMzE5LjkzNmMtMzUuMzkyIDAtNjQgMjguNjA4LTY0IDY0czI4LjYwOCA2NCA2NCA2NCA2NC0yOC42MDggNjQtNjRTNzM5LjM5MiAzMTkuOTM2IDcwNCAzMTkuOTM2eiIgcC1pZD0iMTU3MyIgZmlsbD0iI2ZmZmZmZiI+PC9wYXRoPjwvc3ZnPg==");
+
+/***/ }),
+
+/***/ 8969:
+/***/ (function(__unused_webpack_module, __webpack_exports__) {
+
+"use strict";
+/* harmony default export */ __webpack_exports__["Z"] = ("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/PjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+PHN2ZyBjbGFzcz0iaWNvbiIgd2lkdGg9IjIwMHB4IiBoZWlnaHQ9IjIwMC4wMHB4IiB2aWV3Qm94PSIwIDAgMTAyNCAxMDI0IiB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZmlsbD0iI2ZmZmZmZiIgZD0iTTUyNi40MzIgOTI0LjA2NGMtMjAuOTYgMC00NC4xNi0xMi41NzYtNjguOTYtMzcuMzQ0TDI3NC43NTIgNzA0SDE5MmMtNTIuOTI4IDAtOTYtNDMuMDcyLTk2LTk2VjQxNmMwLTUyLjkyOCA0My4wNzItOTYgOTYtOTZoODIuNzUybDE4Mi42MjQtMTgyLjYyNGMyNC41NzYtMjQuNTc2IDQ3Ljc0NC0zNy4wMjQgNjguODY0LTM3LjAyNEM1NDkuMTg0IDEwMC4zNTIgNTc2IDExNiA1NzYgMTYwdjcwNGMwIDQ0LjM1Mi0yNi43MiA2MC4wNjQtNDkuNTY4IDYwLjA2NHpNNjg3LjU4NCA3MzAuMzY4YTMxLjg5OCAzMS44OTggMCAwIDEtMTguNjU2LTYuMDE2Yy0xNC4zMzYtMTAuMzA0LTE3LjYzMi0zMC4zMDQtNy4zMjgtNDQuNjcybDEyLjY3Mi0xNy4zNDRDNzA3LjM5MiA2MTcuNDQgNzM2IDU3OC42MjQgNzM2IDUxMmMwLTY5LjAyNC0yNS4zNDQtMTAyLjUyOC01Ny40NC0xNDQuOTI4LTUuNjY0LTcuNDU2LTExLjMyOC0xNS4wMDgtMTYuOTI4LTIyLjc4NC0xMC4zMDQtMTQuMzM2LTcuMDQtMzQuMzM2IDcuMzI4LTQ0LjY3MiAxNC4zNjgtMTAuMzY4IDM0LjMzNi03LjA0IDQ0LjY3MiA3LjMyOCA1LjI0OCA3LjMyOCAxMC42NTYgMTQuNDY0IDE1Ljk2OCAyMS41MDRDNzY0LjIyNCAzNzQuMjA4IDgwMCA0MjEuNTA0IDgwMCA1MTJjMCA4Ny42NDgtMzkuMzkyIDE0MS4xMi03NC4xNDQgMTg4LjMybC0xMi4yMjQgMTYuNzM2Yy02LjI3MiA4LjcwNC0xNi4wNjQgMTMuMzEyLTI2LjA0OCAxMy4zMTJ6IiAgLz48cGF0aCBmaWxsPSIjZmZmZmZmIiBkPSJNNzk2LjQ0OCA4MzkuMDA4YTMxLjkwNiAzMS45MDYgMCAwIDEtMjEuMDg4LTcuOTM2Yy0xMy4yOC0xMS42NDgtMTQuNjI0LTMxLjg3Mi0yLjk3Ni00NS4xNTJDODM2LjYwOCA3MTIuNjcyIDg5NiA2MjguODY0IDg5NiA1MTJzLTU5LjM5Mi0yMDAuNzA0LTEyMy42MTYtMjczLjg4OGMtMTEuNjQ4LTEzLjMxMi0xMC4zMDQtMzMuNTA0IDIuOTc2LTQ1LjE4NCAxMy4yMTYtMTEuNjQ4IDMzLjQ0LTEwLjMzNiA0NS4xNTIgMi45NDRDODg5LjQ3MiAyNzQuNTYgOTYwIDM3My42IDk2MCA1MTJzLTcwLjUyOCAyMzcuNDcyLTEzOS40ODggMzE2LjA5NmMtNi4zNjggNy4yMzItMTUuMiAxMC45MTItMjQuMDY0IDEwLjkxMnoiICAvPjwvc3ZnPg==");
+
+/***/ }),
+
+/***/ 9150:
+/***/ (function(__unused_webpack_module, __webpack_exports__) {
+
+"use strict";
+/* harmony default export */ __webpack_exports__["Z"] = ("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/PjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+PHN2ZyBjbGFzcz0iaWNvbiIgd2lkdGg9IjIwMHB4IiBoZWlnaHQ9IjIwMC4wMHB4IiB2aWV3Qm94PSIwIDAgMTAyNCAxMDI0IiB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZmlsbD0iI2ZmZmZmZiIgZD0iTTE5MiAzMjBjLTU0LjQgMC05NiA0MS42LTk2IDkyLjhWNjA4YzAgNTQuNCA0MS42IDk2IDk2IDk2aDgzLjJsMTgyLjQgMTg4LjhjMjIuNCAyMi40IDQ0LjggMzUuMiA2Ny4yIDM1LjIgNi40IDAgMTIuOCAwIDE5LjItMy4yIDE5LjItOS42IDMyLTI4LjggMzItNTEuMnYtMjI0TDIzMy42IDMyMEgxOTJ6IG03NTguNCA0ODkuNmwtNTcuNi01NC40QzkzNC40IDY4MS42IDk2MCA1OTguNCA5NjAgNTEyYzAtMTE1LjItNDEuNi0yMjcuMi0xMTguNC0zMTYuOC0xMi44LTEyLjgtMzItMTYtNDQuOC0zLjItMTIuOCAxMi44LTE2IDMyLTMuMiA0NC44IDY0IDc2LjggMTAyLjQgMTc2IDEwMi40IDI3NS4yIDAgNzAuNC0xOS4yIDEzNy42LTUxLjIgMTk1LjJMNzUyIDYxNy42YzkuNi0zNS4yIDE2LTcwLjQgMTYtMTA1LjYgMC03My42LTIyLjQtMTQ0LTY3LjItMjA0LjgtOS42LTE2LTI4LjgtMTkuMi00NC44LTYuNHMtMTkuMiAyOC44LTYuNCA0NC44YzM1LjIgNDggNTQuNCAxMDguOCA1NC40IDE2Ni40IDAgMTkuMi0zLjIgMzguNC02LjQgNTQuNEw1NzYgNDUxLjJWMTUzLjZjMC0yNS42LTEyLjgtNDQuOC0zMi01MS4yLTI1LjYtOS42LTU3LjYgMC04Ni40IDMyTDM1MiAyNDAgMjE0LjQgMTA1LjZjLTEyLjgtMTIuOC0zMi0xMi44LTQ0LjggMC0xMi44IDEyLjgtMTIuOCAzMiAwIDQ0LjhsNzM2IDcwNGM2LjQgNi40IDEyLjggOS42IDIyLjQgOS42IDkuNiAwIDE2LTMuMiAyMi40LTkuNiAxMi44LTEyLjggMTIuOC0zMiAwLTQ0Ljh6IiAgLz48L3N2Zz4=");
+
+/***/ }),
+
+/***/ 3964:
+/***/ (function(__unused_webpack_module, __webpack_exports__) {
+
+"use strict";
+/* harmony default export */ __webpack_exports__["Z"] = ("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/PjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+PHN2ZyB0PSIxNTk0MTExMDg1MjI4IiBjbGFzcz0iaWNvbiIgdmlld0JveD0iMCAwIDEwMjQgMTAyNCIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHAtaWQ9IjYwOTYiIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCI+PGRlZnM+PHN0eWxlIHR5cGU9InRleHQvY3NzIj48L3N0eWxlPjwvZGVmcz48cGF0aCBkPSJNODg0LjM5MiA5NzAuMzMzSDY3MS44ODdjLTIzLjAxIDAtNDEuNjY2LTE4LjY1Ni00MS42NjYtNDEuNjY2IDAtMjMuMDExIDE4LjY1Ni00MS42NjcgNDEuNjY2LTQxLjY2N2gyMTIuNTA1VjY5MS4xNThjMC0yMy4wMSAxOC42NTYtNDEuNjY2IDQxLjY2Ni00MS42NjYgMjMuMDExIDAgNDEuNjY3IDE4LjY1NiA0MS42NjcgNDEuNjY2Vjg4N2MwIDQ1Ljk1OS0zNy4zOTUgODMuMzMzLTgzLjMzMyA4My4zMzN6IG0tNTQxLjY2NyAwSDEzNC4zOTFjLTQ1Ljk0OSAwLTgzLjMzMy0zNy4zNzQtODMuMzMzLTgzLjMzM1Y2NzguNjY3YzAtMjMuMDExIDE4LjY1Ni00MS42NjcgNDEuNjY3LTQxLjY2N3M0MS42NjcgMTguNjU2IDQxLjY2NyA0MS42NjdWODg3aDIwOC4zMzNjMjMuMDEgMCA0MS42NjYgMTguNjU2IDQxLjY2NiA0MS42NjcgMCAyMy4wMS0xOC42NTcgNDEuNjY2LTQxLjY2NiA0MS42NjZ6IG0tMjUwLTU4Ny41MDRjLTIzLjAxIDAtNDEuNjY3LTE4LjY1Ni00MS42NjctNDEuNjY3VjEzN2MwLTQ1Ljk1OSAzNy4zODQtODMuMzMzIDgzLjMzMy04My4zMzNoMjA0LjE2M2MyMy4wMSAwIDQxLjY2NyAxOC42NTcgNDEuNjY3IDQxLjY2N1MzNjEuNTY0IDEzNyAzMzguNTU0IDEzN0gxMzQuMzkxdjIwNC4xNjJjMCAyMy4wMTEtMTguNjU2IDQxLjY2Ny00MS42NjYgNDEuNjY3eiBtODMzLjMzMy04LjMyMWMtMjMuMDEgMC00MS42NjYtMTguNjU2LTQxLjY2Ni00MS42NjZWMTM3SDY3MS44ODdjLTIzLjAxIDAtNDEuNjY2LTE4LjY1Ni00MS42NjYtNDEuNjY3czE4LjY1Ni00MS42NjcgNDEuNjY2LTQxLjY2N2gyMTIuNTA1YzQ1LjkzOCAwIDgzLjMzMyAzNy4zNzQgODMuMzMzIDgzLjMzM3YxOTUuODQyYzAgMjMuMDExLTE4LjY1NyA0MS42NjctNDEuNjY3IDQxLjY2N3oiIHAtaWQ9IjYwOTciIGZpbGw9IiNmZmZmZmYiPjwvcGF0aD48L3N2Zz4=");
+
+/***/ }),
+
+/***/ 731:
+/***/ (function(__unused_webpack_module, __webpack_exports__) {
+
+"use strict";
+/* harmony default export */ __webpack_exports__["Z"] = ("data:image/svg+xml;base64,PHN2ZyB0PSIxNTgyMjczNDA4NzQ0IiBjbGFzcz0iaWNvbiIgdmlld0JveD0iMCAwIDEwMjQgMTAyNCIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHAtaWQ9Ijg4NiIgd2lkdGg9IjIwMCIgaGVpZ2h0PSIyMDAiPjxwYXRoIGQ9Ik03ODAuNDA4MTI0NzMgNjY1LjM2aDExNS4wMzY4NzVjMTAuNTk3NSAwIDE5LjYzMTI1MDI3IDMuNzUxODc1MjcgMjcuMTEyNTAwNTQgMTEuMjQ5OTk5NzMgNy41MjA2MjQ3NCA3LjUwMzc0OTczIDExLjI2MTI1MDI3IDE2LjUyNjI1MDI3IDExLjI2MTI0OTQ2IDI3LjA3ODc1MDU0IDAgMTAuNjY1LTMuNzQwNjI0NzMgMTkuNjg3NDk5NzMtMTEuMjY2ODc0NzMgMjcuMTkxMjQ5NDYtNy40NzU2MjUgNy40OTgxMjUyNy0xNi41MDkzNzUyNyAxMS4yNDk5OTk3My0yNy4xMDY4NzUyNyAxMS4yNTAwMDA1NGgtMTE1LjAzMTI0OTc0Yy0xMC41ODYyNTAyNyAwLTE5LjYzMTI1MDI3IDMuNzUxODc1MjctMjcuMTEyNDk5NzIgMTEuMjQ5OTk5NzQtNy41MjA2MjQ3NCA3LjUwMzc0OTczLTExLjI0OTk5OTczIDE2LjUyNjI1MDI3LTExLjI1MDAwMDU0IDI3LjA3MzEyNTI2djExNS4wOTg3NDk3M2MwIDEwLjU0Njg3NS0zLjc1MTg3NTI3IDE5LjU3NS0xMS4yNjEyNDk0NiAyNy4wNzMxMjUyNy03LjQ4Njg3NDczIDcuNDk4MTI1MjctMTYuNTI2MjUwMjcgMTEuMjQ5OTk5NzMtMjcuMTEyNTAwNTQgMTEuMjQ5OTk5NzMtMTAuNTc0OTk5NzMgMC0xOS42MzY4NzQ3My0zLjc1MTg3NTI3LTI3LjA4OTk5OTQ2LTExLjI0OTk5OTczLTcuNTM3NDk5NzItNy41MDM3NDk3My0xMS4yNjEyNTAyNy0xNi41MjYyNTAyNy0xMS4yNjEyNTAyOC0yNy4wNzMxMjUyN3YtMTE1LjA5ODc0OTczYzAtMzEuNzU4NzQ5OTkgMTEuMjE2MjQ5NzMtNTguODM3NDk5NzMgMzMuNjkzNzQ5NzQtODEuMzM3NSAyMi40NjYyNTAyNy0yMi41MDAwMDAyNyA0OS41NTYyNDk3My0zMy42Mzc1MDAyNyA4MS4zMzE4NzU1NC0zMy42Mzc1MDAyN2wwLjA1NjI0OTQ2LTAuMTEyNDk5NzN6TTMyMC4yNDkzNzUgOTAuMTI1YzEwLjU5MTg3NDczIDAgMTkuNjM2ODc0NzMgMy43NTE4NzUyNyAyNy4xMDY4NzUyNyAxMS4yNDk5OTk3MyA3LjUyMDYyNDc0IDcuNTAzNzQ5NzMgMTEuMjYxMjUwMjcgMTYuNTI2MjUwMjcgMTEuMjYxMjQ5NDUgMjcuMDczMTI1Mjd2MTE1LjA5ODc0OTczYzAgMzEuNzU4NzQ5OTktMTEuMjM4NzQ5OTkgNTguODM3NDk5NzMtMzMuNzA0OTk5NDUgODEuMzM3NS0yMi40NjYyNTAyNyAyMi41MDAwMDAyNy00OS41ODQzNzUyNyAzMy43NS04MS4zNDMxMjUyNyAzMy43NUgxMjguNTI2ODc0NzNjLTEwLjU3NDk5OTczIDAtMTkuNjMxMjUwMjctMy43NDYyNDk5OS0yNy4xMDY4NzQ0Ni0xMS4zNjI0OTk0Ni03LjUyMDYyNDc0LTcuMzg1NjI0NzMtMTEuMjQ5OTk5NzMtMTYuNDA4MTI1MjctMTEuMjUwMDAwNTQtMjcuMDczMTI1MjggMC0xMC41NTI1MDAyNyAzLjcyOTM3NS0xOS41NzUgMTEuMjUwMDAwNTQtMjcuMDc4NzQ5NzIgNy40ODEyNTAyNy03LjQ5ODEyNTI3IDE2LjUyNjI1MDI3LTExLjI0OTk5OTczIDI3LjExMjQ5OTczLTExLjI1MDAwMDU0aDExNS4wMzEyNDk3M2MxMC41OTc1IDAgMTkuNjMxMjUwMjctMy43NTE4NzUyNyAyNy4xMTI1MDA1NC0xMS4yNDk5OTk3NCA3LjUyMDYyNDc0LTcuNTAzNzQ5NzMgMTEuMjYxMjUwMjctMTYuNTI2MjUwMjcgMTEuMjYxMjQ5NDctMjcuMDczMTI1MjZWMTI4LjQ0ODEyNWMwLTEwLjU0Njg3NSAzLjcyMzc0OTczLTE5LjY4NzQ5OTczIDExLjI2MTI1MDI3LTI3LjA3MzEyNTI3IDcuNDgxMjUwMjctNy42MTYyNTAyNyAxNi41MTQ5OTk3My0xMS4yNDk5OTk3MyAyNy4wOTU2MjQ3Mi0xMS4yNDk5OTk3M2gtMC4wNDQ5OTk3M3pNMTI4LjUyNjg3NDczIDY2NS4zNkgyNDMuNTc1MDAwMjdjMzEuNzU4NzQ5OTkgMCA1OC44NzY4NzUgMTEuMjQ5OTk5NzMgODEuMzM3NSAzMy43NTU2MjUyNyAyMi40NzE4NzQ3MyAyMi4zODc0OTk3MyAzMy43MTA2MjQ3MyA0OS41Nzg3NDk5OSAzMy43MTA2MjQ3MyA4MS4zMzc1djExNC45NzQ5OTk0NmMwIDEwLjY3MDYyNTI3LTMuNzQwNjI0NzMgMTkuNjkzMTI1LTExLjI2MTI1MDI3IDI3LjE5Njg3NTU0LTcuNDY5OTk5NzMgNy40OTgxMjUyNy0xNi41MTQ5OTk3MyAxMS4yNDk5OTk3My0yNy4xMTI0OTk3MyAxMS4yNDk5OTk3My0xMC41NzQ5OTk3MyAwLTE5LjYzMTI1MDI3LTMuNzUxODc1MjctMjcuMDkwMDAwMjctMTEuMjQ5OTk5NzMtNy41Mzc0OTk3Mi03LjUwMzc0OTczLTExLjI2Njg3NDczLTE2LjUyNjI1MDI3LTExLjI2Njg3NDczLTI3LjE5MTI1MDI2di0xMTQuOTc1MDAwMjhjMC0xMC42NzA2MjUyNy0zLjczNTAwMDI3LTE5LjY5MzEyNS0xMS4yNzI1MDAwMS0yNy4wNzg3NDk3Mi03LjQ2NDM3NTI3LTcuNjE2MjUwMjctMTYuNDk4MTI0NzMtMTEuMzYyNTAwMjctMjcuMTA2ODc1MjYtMTEuMzYyNTAwMjdIMTI4LjQ3NjI0OTczYy0xMC41ODYyNTAyNyAwLTE5LjYzMTI1MDI3LTMuNjM5Mzc0NzMtMjcuMTAxMjUtMTEuMjU1NjI1MDEtNy41MjA2MjQ3NC03LjM4NTYyNDczLTExLjI0OTk5OTczLTE2LjUyNjI1MDI3LTExLjI0OTk5OTczLTI3LjA3MzEyNDQ2IDAtMTAuNTUyNTAwMjcgMy43MjkzNzUtMTkuNjg3NDk5NzMgMTEuMjQ5OTk5NzMtMjcuMDc4NzUwNTQgNy40NjQzNzUyNy03LjYxNjI1MDI3IDE2LjUxNDk5OTczLTExLjI0OTk5OTczIDI3LjA5NTYyNTU0LTExLjI0OTk5OTczaDAuMDU2MjQ5NDZ6TTcwMy43MjgxMjQ3MyA5MC4xMjVjMTAuNTk3NSAwIDE5LjY0MjUgMy43NTE4NzUyNyAyNy4xMTI1MDA1NCAxMS4yNDk5OTk3MyA3LjUyMDYyNDc0IDcuNTAzNzQ5NzMgMTEuMjU1NjI1IDE2LjUyNjI1MDI3IDExLjI1NTYyNSAyNy4wNzMxMjUyN3YxMTUuMDk4NzQ5NzNjMCAxMC41NDY4NzUgMy43NDA2MjQ3MyAxOS42ODc0OTk3MyAxMS4yNjY4NzQ3MyAyNy4wNzMxMjUyNiA3LjQ2NDM3NTI3IDcuNjE2MjUwMjcgMTYuNTIwNjI1IDExLjI0OTk5OTczIDI3LjEwNjg3NTI3IDExLjI0OTk5OTc0aDExNS4wMjU2MjQ0NmMxMC41OTE4NzQ3MyAwIDE5LjY0MjUgMy43NTE4NzUyNyAyNy4xMTI1MDA1NCAxMS4yNTAwMDA1NCA3LjUxNTAwMDI3IDcuNTAzNzQ5NzMgMTEuMjY2ODc0NzMgMTYuNTI2MjUwMjcgMTEuMjY2ODc0NzMgMjcuMTkxMjQ5NDYgMCAxMC41NTI1MDAyNy0zLjc1MTg3NTI3IDE5LjU3NS0xMS4yNjEyNTAyNyAyNy4wNzg3NTA1NC03LjQ4MTI1MDI3IDcuNDk4MTI1MjctMTYuNTI2MjUwMjcgMTEuMjQ5OTk5NzMtMjcuMTE4MTI1IDExLjI0OTk5OTczaC0xMTUuMDMxMjQ5NzNjLTMxLjc2OTk5OTczIDAtNTguODQ4NzUwMjctMTEuMjQ5OTk5NzMtODEuMzM3NS0zMy42Mzc1MDAyNy0yMi40ODMxMjUyNy0yMi41MDAwMDAyNy0zMy42OTM3NDk3My00OS41Nzg3NDk5OS0zMy42OTM3NDk3My04MS4zMzc1VjEyOC41NjA2MjQ3MWMwLTEwLjY2NSAzLjczNTAwMDI3LTE5LjY4NzQ5OTczIDExLjI0OTk5OTczLTI3LjA3MzEyNDQ0IDcuNDc1NjI1LTcuNjE2MjUwMjcgMTYuNTM3NS0xMS4yNDk5OTk3MyAyNy4xMTI0OTk3My0xMS4yNTAwMDA1NEw3MDMuNzMzNzQ5OTkgOTAuMTI1eiIgZmlsbD0iI2ZmZmZmZiIgcC1pZD0iODg3Ij48L3BhdGg+PC9zdmc+");
+
+/***/ }),
+
+/***/ 8732:
+/***/ (function(__unused_webpack_module, __webpack_exports__) {
+
+"use strict";
+/* harmony default export */ __webpack_exports__["Z"] = ("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/PjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+PHN2ZyBjbGFzcz0iaWNvbiIgd2lkdGg9IjIwMHB4IiBoZWlnaHQ9IjIwMC4wMHB4IiB2aWV3Qm94PSIwIDAgMTAyNCAxMDI0IiB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZmlsbD0iI2ZmZmZmZiIgZD0iTTI1Mi43NzAxNDk5NSA4Ny44MDU2OTkxN2M3OC4wOTI5OTI5MiAwIDE0MS4zOTgxMDAyOSA2My4zMDUxMDczNSAxNDEuMzk4MTAwMjggMTQxLjM5ODEwMDI2djU2NS41OTI0MDExNGMwIDc4LjA5Mjk5MjkyLTYzLjMwNTEwNzM1IDE0MS4zOTgxMDAyOS0xNDEuMzk4MTAwMjggMTQxLjM5ODEwMDI2cy0xNDEuMzk4MTAwMjktNjMuMzA1MTA3MzUtMTQxLjM5ODEwMDI4LTE0MS4zOTgxMDAyNlYyMjkuMjAzNzk5NDNjMC03OC4wOTI5OTI5MiA2My4zMDUxMDczNS0xNDEuMzk4MTAwMjkgMTQxLjM5ODEwMDI4LTE0MS4zOTgxMDAyNnogbTUxOC40NTk3MDAxIDBjNzguMDkyOTkyOTIgMCAxNDEuMzk4MTAwMjkgNjMuMzA1MTA3MzUgMTQxLjM5ODEwMDI4IDE0MS4zOTgxMDAyNnY1NjUuNTkyNDAxMTRjMCA3OC4wOTI5OTI5Mi02My4zMDUxMDczNSAxNDEuMzk4MTAwMjktMTQxLjM5ODEwMDI4IDE0MS4zOTgxMDAyNnMtMTQxLjM5ODEwMDI5LTYzLjMwNTEwNzM1LTE0MS4zOTgxMDAyOC0xNDEuMzk4MTAwMjZWMjI5LjIwMzc5OTQzYzAtNzguMDkyOTkyOTIgNjMuMzA1MTA3MzUtMTQxLjM5ODEwMDI5IDE0MS4zOTgxMDAyOC0xNDEuMzk4MTAwMjZ6IiAgLz48L3N2Zz4=");
+
+/***/ })
+
+/******/ 	});
+/************************************************************************/
+/******/ 	// The module cache
+/******/ 	var __webpack_module_cache__ = {};
+/******/ 	
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/ 		// Check if module is in cache
+/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
+/******/ 		if (cachedModule !== undefined) {
+/******/ 			return cachedModule.exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = __webpack_module_cache__[moduleId] = {
+/******/ 			id: moduleId,
+/******/ 			// no module.loaded needed
+/******/ 			exports: {}
+/******/ 		};
+/******/ 	
+/******/ 		// Execute the module function
+/******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
+/******/ 	
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/ 	
+/************************************************************************/
+/******/ 	/* webpack/runtime/compat get default export */
+/******/ 	!function() {
+/******/ 		// getDefaultExport function for compatibility with non-harmony modules
+/******/ 		__webpack_require__.n = function(module) {
+/******/ 			var getter = module && module.__esModule ?
+/******/ 				function() { return module['default']; } :
+/******/ 				function() { return module; };
+/******/ 			__webpack_require__.d(getter, { a: getter });
+/******/ 			return getter;
+/******/ 		};
+/******/ 	}();
+/******/ 	
+/******/ 	/* webpack/runtime/define property getters */
+/******/ 	!function() {
+/******/ 		// define getter functions for harmony exports
+/******/ 		__webpack_require__.d = function(exports, definition) {
+/******/ 			for(var key in definition) {
+/******/ 				if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
+/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
+/******/ 				}
+/******/ 			}
+/******/ 		};
+/******/ 	}();
+/******/ 	
+/******/ 	/* webpack/runtime/global */
+/******/ 	!function() {
+/******/ 		__webpack_require__.g = (function() {
+/******/ 			if (typeof globalThis === 'object') return globalThis;
+/******/ 			try {
+/******/ 				return this || new Function('return this')();
+/******/ 			} catch (e) {
+/******/ 				if (typeof window === 'object') return window;
+/******/ 			}
+/******/ 		})();
+/******/ 	}();
+/******/ 	
+/******/ 	/* webpack/runtime/hasOwnProperty shorthand */
+/******/ 	!function() {
+/******/ 		__webpack_require__.o = function(obj, prop) { return Object.prototype.hasOwnProperty.call(obj, prop); }
+/******/ 	}();
+/******/ 	
+/************************************************************************/
+var __webpack_exports__ = {};
+// This entry need to be wrapped in an IIFE because it need to be in strict mode.
+!function() {
+"use strict";
+
+// EXPORTS
+__webpack_require__.d(__webpack_exports__, {
+  "default": function() { return /* binding */ src_0; }
+});
+
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.object.define-property.js
+var es_object_define_property = __webpack_require__(9070);
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.object.keys.js
+var es_object_keys = __webpack_require__(7941);
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.symbol.js
+var es_symbol = __webpack_require__(2526);
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.array.filter.js
+var es_array_filter = __webpack_require__(7327);
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.object.get-own-property-descriptor.js
+var es_object_get_own_property_descriptor = __webpack_require__(5003);
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.array.for-each.js
+var es_array_for_each = __webpack_require__(9554);
+// EXTERNAL MODULE: ./node_modules/core-js/modules/web.dom-collections.for-each.js
+var web_dom_collections_for_each = __webpack_require__(4747);
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.object.get-own-property-descriptors.js
+var es_object_get_own_property_descriptors = __webpack_require__(9337);
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.object.define-properties.js
+var es_object_define_properties = __webpack_require__(3321);
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.regexp.exec.js
+var es_regexp_exec = __webpack_require__(4916);
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.string.match.js
+var es_string_match = __webpack_require__(4723);
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.date.to-string.js
+var es_date_to_string = __webpack_require__(3710);
+;// CONCATENATED MODULE: ./src/components/video.ts
+
+
+
+
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var Video = /*#__PURE__*/function () {
+  // 监听事件列表
+  function Video() {
+    _classCallCheck(this, Video);
+
+    _defineProperty(this, "onEvent", void 0);
+
+    _defineProperty(this, "el", void 0);
+
+    _defineProperty(this, "posterEl", void 0);
+
+    this.createVideoEl();
+    this.createPosterEl();
+  }
+
+  _createClass(Video, [{
+    key: "setCurrentTime",
+    value: function setCurrentTime(time) {
+      this.el.currentTime = time;
+    }
+    /** 播放地址 */
+
+  }, {
+    key: "setUrl",
+    value: function setUrl(object) {
+      if (!(this !== null && this !== void 0 && this.el)) throw new Error('请先初始化播放器!');
+      this.el.setAttribute('src', object.src || '');
+      this.posterEl.src = object.poster;
+    }
+  }, {
+    key: "setState",
+    value: function setState(event, e) {
+      if (typeof this.onEvent === 'function') {
+        this.onEvent(event, e);
+      }
+    }
+  }, {
+    key: "showPoster",
+    value: function showPoster() {
+      this.posterEl.style.display = 'block';
+    }
+  }, {
+    key: "hidePoster",
+    value: function hidePoster() {
+      this.posterEl.style.display = 'none';
+    }
+  }, {
+    key: "duration",
+    get: function get() {
+      return isNaN(this.el.duration) ? 0 : this.el.duration;
+    }
+  }, {
+    key: "currentTime",
+    get: function get() {
+      return isNaN(this.el.currentTime) ? 0 : this.el.currentTime;
+    }
+  }, {
+    key: "createPosterEl",
+    value: function createPosterEl() {
+      var _this = this;
+
+      this.posterEl = document.createElement('img');
+      this.posterEl.className = 'poster_img';
+      this.posterEl.style.position = 'absolute';
+      this.posterEl.style.top = '0';
+      this.posterEl.style.left = '0';
+      this.posterEl.style.right = '0';
+      this.posterEl.style.bottom = '0';
+      this.posterEl.style.margin = 'auto';
+      this.posterEl.style.objectFit = 'cover';
+      this.posterEl.style.width = '100%';
+      this.posterEl.style.display = 'none';
+      this.posterEl.style.zIndex = '10';
+
+      this.posterEl.onerror = function () {
+        _this.hidePoster();
+      };
+    } // 创建video
+
+  }, {
+    key: "createVideoEl",
+    value: function createVideoEl() {
+      var _this2 = this;
+
+      var videoEl = document.createElement('video');
+      videoEl.className = 'p_video';
+      var text = document.createTextNode('您的浏览器不支持Video播放器');
+      videoEl.appendChild(text);
+      var ua = navigator.userAgent.toLocaleLowerCase(); // x5内核
+
+      if (ua.match(/tencenttraveler/) != null || ua.match(/qqbrowse/) != null) {
+        videoEl.setAttribute('x5-video-player-fullscreen', 'true'); // 进入全屏通知
+
+        videoEl.setAttribute('x-webkit-airplay', 'true'); // 设置允许设备播放
+        // this.el.setAttribute('x5-playsinline', 'true'); // 设置android在微信中内联播放视频 这是坑微信无法正常横屏
+
+        videoEl.setAttribute('x5-video-player-type', 'h5'); // 关闭同层X5内核播放器    x5-video-player-type='h5' 启用Ｈ5同层播放器
+
+        videoEl.setAttribute('x5-video-orientation', 'landscape|portrait'); // 控制横竖屏 可选值： landscape 横屏, portraint竖屏  默认值：portraint
+        // 进入全屏
+
+        videoEl.addEventListener('x5videoenterfullscreen', function (e) {
+          return _this2.setState('x5videoenterfullscreen', e);
+        }, false); // 退出全屏时
+
+        videoEl.addEventListener('x5videoexitfullscreen', function (e) {
+          return _this2.setState('x5videoenterfullscreen', e);
+        }, false);
+      } else {
+        // ios端
+        videoEl.setAttribute('webkit-playsinline', 'true'); // // 设置ios在微信中内联播放视频 ios9
+
+        videoEl.setAttribute('playsinline', 'true'); // 设置ios在微信中内联播放视频 ios10/ios11
+
+        videoEl.setAttribute('x5-video-player-type', 'h5');
+      } // 双击播放器暂停，移动端无双击事件，用两次点击时间模拟 300 毫秒2次点击为双击
+
+
+      var clickTime = 0;
+      videoEl.addEventListener('click', function () {
+        var nowTime = new Date().getTime();
+
+        if (nowTime - clickTime < 300) {
+          if (videoEl.paused) {
+            videoEl.play();
+          } else {
+            videoEl.pause();
+          }
+        }
+
+        clickTime = nowTime;
+      });
+      this.el = videoEl;
+      this.initEvent();
+    }
+  }, {
+    key: "initEvent",
+    value: function initEvent() {
+      var _this3 = this;
+
+      // loadstart：视频查找。当浏览器开始寻找指定的音频/视频时触发，也就是当加载过程开始时
+      this.el.addEventListener('loadstart', function (e) {
+        return _this3.setState('loadstart', e);
+      }); // durationchange：时长变化。当指定的音频/视频的时长数据发生变化时触发，加载后，时长由 NaN 变为音频/视频的实际时长
+
+      this.el.addEventListener('durationchange', function (e) {
+        return _this3.setState('durationchange', e);
+      }); // loadedmetadata ：元数据加载。当指定的音频/视频的元数据已加载时触发，元数据包括：时长、尺寸（仅视频）以及文本轨道
+
+      this.el.addEventListener('loadedmetadata', function (e) {
+        return _this3.setState('loadedmetadata', e);
+      }); // loadeddata：视频下载监听。当当前帧的数据已加载，但没有足够的数据来播放指定音频/视频的下一帧时触发
+      // this.el.addEventListener('loadeddata', (e) => {
+      //   console.log('提示当前帧的数据是可用的');
+      //   this.setState('loadeddata');
+      // });
+      // progress：浏览器缓存监听。当浏览器正在缓存指定的音频/视频时触发
+
+      this.el.addEventListener('progress', function (e) {
+        return _this3.setState('progress', e);
+      }); // canplay：可播放监听。当浏览器能够开始播放指定的音频/视频时触发
+
+      this.el.addEventListener('canplay', function (e) {
+        return _this3.setState('canplay', e);
+      }); // canplaythrough：可流畅播放。当浏览器预计能够在不停下来进行缓冲的情况下持续播放指定的音频/视频时触发
+
+      this.el.addEventListener('canplaythrough', function (e) {
+        return _this3.setState('loadedmetadata', e);
+      }); // play：播放监听
+
+      this.el.addEventListener('play', function (e) {
+        return _this3.setState('play', e);
+      }); // pause：暂停监听
+
+      this.el.addEventListener('pause', function (e) {
+        return _this3.setState('pause', e);
+      }); // seeking：查找开始。当用户开始移动/跳跃到音频/视频中新的位置时触发
+      // this.el.addEventListener('seeking', (e) => {
+      //   console.log('开始移动进度条');
+      // });
+      // // seeked：查找结束。当用户已经移动/跳跃到视频中新的位置时触发
+
+      this.el.addEventListener('seeked', function (e) {
+        return _this3.setState('seeked', e);
+      }); // waiting：视频加载等待。当视频由于需要缓冲下一帧而停止，等待时触发
+
+      this.el.addEventListener('waiting', function (e) {
+        return _this3.setState('waiting', e);
+      }); // playing：当视频在已因缓冲而暂停或停止后已就绪时触发
+
+      this.el.addEventListener('playing', function (e) {
+        return _this3.setState('playing', e);
+      }); // timeupdate：目前的播放位置已更改时，播放时间更新
+
+      this.el.addEventListener('timeupdate', function (e) {
+        return _this3.setState('timeupdate', e);
+      }); // ended：播放结束
+
+      this.el.addEventListener('ended', function (e) {
+        return _this3.setState('ended', e);
+      }); // error：播放错误
+
+      this.el.addEventListener('error', function (e) {
+        return _this3.setState('error', e);
+      }); // volumechange：当音量更改时
+      // this.el.addEventListener('volumechange', (e) => {
+      //   console.log('音量更改');
+      // });
+      // stalled：当浏览器尝试获取媒体数据，但数据不可用时
+      //   this.el.addEventListener('stalled', (e) => {
+      //     console.log('媒体数据不可用');
+      //   });
+      // ratechange：当视频的播放速度已更改时
+      // this.el.addEventListener('ratechange', (e) => {
+      //   console.log('ratechange');
+      // });
+    }
+  }]);
+
+  return Video;
+}();
+// EXTERNAL MODULE: ./node_modules/core-js/modules/web.timers.js
+var web_timers = __webpack_require__(2564);
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.array.concat.js
+var es_array_concat = __webpack_require__(2222);
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.regexp.constructor.js
+var es_regexp_constructor = __webpack_require__(4603);
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.regexp.to-string.js
+var es_regexp_to_string = __webpack_require__(9714);
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.array.index-of.js
+var es_array_index_of = __webpack_require__(2772);
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.parse-int.js
+var es_parse_int = __webpack_require__(1058);
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.array.slice.js
+var es_array_slice = __webpack_require__(7042);
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.array.join.js
+var es_array_join = __webpack_require__(9600);
+;// CONCATENATED MODULE: ./src/utils/util.ts
+
+
+
+
+
+
+
+
+
+
+
+function util_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function util_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function util_createClass(Constructor, protoProps, staticProps) { if (protoProps) util_defineProperties(Constructor.prototype, protoProps); if (staticProps) util_defineProperties(Constructor, staticProps); return Constructor; }
+
+var Utils = /*#__PURE__*/function () {
+  function Utils() {
+    util_classCallCheck(this, Utils);
+  }
+
+  util_createClass(Utils, null, [{
+    key: "hasClass",
+    value:
+    /**
+     * 判断class是否存在
+     * @param el dom对象
+     * @param cls class名称
+     */
+    function hasClass(el, cls) {
+      return el.className.match(new RegExp('(\\s|^)' + cls + '(\\s|$)'));
+    }
+    /**
+     * 添加class
+     * @param el dom对象
+     * @param cls class
+     */
+
+  }, {
+    key: "addClass",
+    value: function addClass(el, cls) {
+      // if (!this.hasClass(el,cls)) el.className += ' ' + cls;
+      if (!this.hasClass(el, cls)) el.classList.add(cls);
+    }
+    /**
+     * 删除class
+     * @param el dom对象
+     * @param cls class
+     */
+
+  }, {
+    key: "removeClass",
+    value: function removeClass(el, cls) {
+      if (this.hasClass(el, cls)) {
+        // var reg = new RegExp('(\\s|^)' + cls + '(\\s|$)');
+        // el.className = el.className.replace(reg, ' ');
+        el.classList.remove(cls);
+      }
+    }
+    /**
+     * 切换class 有则删除，无则添加
+     * @param el dom对象
+     * @param cls class
+     */
+
+  }, {
+    key: "toggleClass",
+    value: function toggleClass(el, cls) {
+      if (this.hasClass(el, cls)) {
+        if (this.hasClass(el, cls)) {
+          this.removeClass(el, cls);
+        } else {
+          this.addClass(el, cls);
+        }
+      }
+    }
+    /** 是否是PC端 */
+
+  }, {
+    key: "isPC",
+    value: function isPC() {
+      var userAgentInfo = navigator.userAgent;
+      var Agents = ['Android', 'iPhone', 'SymbianOS', 'Windows Phone', 'iPad', 'iPod']; // 判断用户代理头信息
+
+      var flag = true;
+
+      for (var i in Agents) {
+        if (userAgentInfo.indexOf(Agents[i]) !== -1) {
+          flag = false;
+          break;
+        }
+      }
+
+      return flag; // true为pc端，false为非pc端
+    }
+    /** 时间秒转换为时分秒
+     * @param value 秒
+     */
+
+  }, {
+    key: "formatSeconds",
+    value: function formatSeconds(value) {
+      var secondTime = parseInt(value); // 秒
+
+      var minuteTime = 0; // 分
+
+      var hourTime = 0; // 小时
+
+      if (secondTime >= 60) {
+        minuteTime = Math.floor(secondTime / 60);
+        secondTime = Math.floor(secondTime % 60);
+
+        if (minuteTime >= 60) {
+          hourTime = Math.floor(minuteTime / 60);
+          minuteTime = Math.floor(minuteTime % 60);
+        }
+      }
+
+      var joinDate = "".concat(this.PrefixInteger(minuteTime), ":").concat(this.PrefixInteger(secondTime));
+      if (hourTime > 0 || value >= 3600) joinDate = "".concat(this.PrefixInteger(hourTime), ":").concat(joinDate);
+      return joinDate;
+    }
+    /**
+     * utils 数字向下取整
+     * @param num 数字
+     * @param len 长度
+     */
+
+  }, {
+    key: "PrefixInteger",
+    value: function PrefixInteger(num) {
+      var len = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 2;
+      num = isNaN(num) ? 0 : Math.floor(num); // 向下取整
+
+      return (Array(len).join('0') + num).slice(-len);
+    }
+  }]);
+
+  return Utils;
+}();
+;// CONCATENATED MODULE: ./src/utils/index.ts
+
+;// CONCATENATED MODULE: ./src/components/controls.ts
+
+
+
+
+function controls_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function controls_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function controls_createClass(Constructor, protoProps, staticProps) { if (protoProps) controls_defineProperties(Constructor.prototype, protoProps); if (staticProps) controls_defineProperties(Constructor, staticProps); return Constructor; }
+
+function controls_defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+var Controls = /*#__PURE__*/function () {
+  // 控制条容器
+  // 提示label
+  // 进度条容器
+  // 当前进度
+  // 缓冲进度
+  // 进度条拖动按钮
+  // 播放按钮
+  // 播放时间/视频总长
+  // 进度条左边按钮容器
+  // 控制条右边按钮容器
+  function Controls(video, containerElemelt, config) {
+    var _this = this;
+
+    controls_classCallCheck(this, Controls);
+
+    this.video = video;
+    this.containerElemelt = containerElemelt;
+    this.config = config;
+
+    controls_defineProperty(this, "controlsEl", void 0);
+
+    controls_defineProperty(this, "labelEl", void 0);
+
+    controls_defineProperty(this, "progress", void 0);
+
+    controls_defineProperty(this, "current_progress", void 0);
+
+    controls_defineProperty(this, "current_buffer", void 0);
+
+    controls_defineProperty(this, "current_dot", void 0);
+
+    controls_defineProperty(this, "play_btn", void 0);
+
+    controls_defineProperty(this, "timeEl", void 0);
+
+    controls_defineProperty(this, "controls_left", void 0);
+
+    controls_defineProperty(this, "controls_right", void 0);
+
+    controls_defineProperty(this, "isMove", false);
+
+    controls_defineProperty(this, "timeout", null);
+
+    controls_defineProperty(this, "showControls", function () {
+      clearTimeout(_this.timeout);
+      Utils.addClass(_this.controlsEl, 'showControls');
+    });
+
+    controls_defineProperty(this, "hideControls", function () {
+      _this.timeout = setTimeout(function () {
+        Utils.removeClass(_this.controlsEl, 'showControls');
+      }, 5000);
+    });
+
+    controls_defineProperty(this, "showmoveLabel", function (offsetX) {
+      if (offsetX < 0) offsetX = 0;
+      _this.labelEl.innerText = _this.getOffsetXTimeText(offsetX);
+      var minLeft = _this.labelEl.clientWidth / 2;
+      var maxRight = _this.progress.clientWidth - minLeft;
+      if (offsetX < minLeft) offsetX = minLeft; // 防止被遮掩
+
+      if (offsetX > maxRight) offsetX = maxRight;
+      _this.labelEl.style.left = offsetX + 'px';
+      _this.labelEl.style.visibility = 'visible';
+    });
+
+    controls_defineProperty(this, "hidemoveLabel", function () {
+      _this.labelEl.style.visibility = 'hidden';
+    });
+
+    controls_defineProperty(this, "progressHover", function (isHover) {
+      if (isHover) {
+        Utils.addClass(_this.progress, 'hover_cls');
+      } else {
+        Utils.removeClass(_this.progress, 'hover_cls');
+      }
+    });
+
+    this.createControlsEl(); // 创建容器
+
+    this.createControlsBtn(); // 控制条左边元素
+
+    if (config.controls) {
+      this.showControls();
+    }
+  }
+  /** 获取进度条宽度，实时获取 */
+
+
+  controls_createClass(Controls, [{
+    key: "progressWidth",
+    get: function get() {
+      return this.progress.clientWidth;
+    } // 控制条dom创建
+
+  }, {
+    key: "createControlsEl",
+    value: function createControlsEl() {
+      this.controlsEl = document.createElement('div');
+      this.controlsEl.className = 'p_controls'; // 进度条容器
+
+      this.progress = document.createElement('div');
+      this.progress.className = 'progress_bar'; // 当前播放进度
+
+      this.current_progress = document.createElement('div');
+      this.current_progress.className = 'current_progress'; // 当前缓冲进度
+
+      this.current_buffer = document.createElement('div');
+      this.current_buffer.className = 'current_buffer'; // 进度条按钮
+
+      this.current_dot = document.createElement('i');
+      this.current_dot.className = 'current_dot';
+      this.progress.appendChild(this.current_progress);
+      this.progress.appendChild(this.current_buffer);
+      this.progress.appendChild(this.current_dot);
+      this.controlsEl.appendChild(this.progress);
+      if (this.config.isFastForward && this.config.controls) this.initControlsEvent();
+      if (this.config.autoHideControls && this.config.controls) this.initAutoControls();
+    }
+    /** 控制条拖拽事件 */
+
+  }, {
+    key: "initControlsEvent",
+    value: function initControlsEvent() {
+      var _this2 = this;
+
+      var isPc = Utils.isPC(); // pc端 和移动端事件区分
+
+      var touchstart = isPc ? 'mousedown' : 'touchstart'; // 鼠标按下/触摸
+
+      var touchmove = isPc ? 'mousemove' : 'touchmove'; // 开始移动/拖动
+
+      var touchend = isPc ? 'mouseup' : 'touchend'; // 松开/手指移开
+      // 鼠标按下时候，跳转进度
+
+      this.progress.onmousedown = function (event) {
+        if (!_this2.config.isFastForward) return;
+
+        _this2.setPlayTime(event.offsetX);
+
+        var per = 100 * event.offsetX / _this2.progressWidth;
+
+        _this2.setCurrentPlayPer(per);
+      }; // 阻止事件冒泡到点击进度条
+
+
+      this.current_dot.onmousedown = function (event) {
+        return event.stopPropagation();
+      }; // 进度条按钮拖动
+
+
+      this.current_dot.addEventListener(touchstart, function (event) {
+        event.preventDefault(); // event.stopPropagation();
+
+        if (!_this2.config.isFastForward) return; // 移动端触摸到进度条变化
+
+        if (!isPc && _this2.config.isFastForward) _this2.progressHover(true); // 如果这个元素的位置内只有一个手指
+
+        if (isPc || event.targetTouches.length === 1) {
+          var touch = isPc ? event : event.targetTouches[0];
+          if (!isPc) _this2.showmoveLabel(touch.clientX); // 开始拖动
+
+          var move = function move(e) {
+            _this2.isMove = true;
+            var touch2 = isPc ? e : e.targetTouches[0];
+
+            var touchX = _this2.offsetXPer(touch2.clientX);
+
+            _this2.setCurrentPlayPer(touchX);
+
+            _this2.showmoveLabel(touch2.clientX);
+          }; // 如果浏览器下，需要全局监听拖动
+
+
+          var dotElmt = isPc ? window : _this2.current_dot; // 拖动完成 删除事件
+
+          var chend = function chend(e) {
+            // 拖动完成更新播放器时间
+            var touch2 = isPc ? e : e.changedTouches[0]; // 更新视频实际播放时间
+
+            _this2.setPlayTime(touch2.clientX);
+
+            _this2.isMove = false;
+            if (!isPc) _this2.progressHover(false);
+
+            _this2.hidemoveLabel();
+
+            dotElmt.removeEventListener(touchmove, move);
+            dotElmt.removeEventListener(touchend, chend);
+          };
+
+          dotElmt.addEventListener(touchmove, move);
+          dotElmt.addEventListener(touchend, chend);
+        }
+      }, false);
+
+      if (isPc) {
+        // /进度条控制样式 mouseover mouseout：鼠标移入子元素时会重复触发所以使用mouseenter mouseleave
+        // PC端鼠标移入控制条变粗变大
+        this.progress.addEventListener('mouseenter', function (e) {
+          return _this2.progressHover(true);
+        }); // 鼠标移开
+
+        this.progress.addEventListener('mouseleave', function (e) {
+          _this2.progressHover(false);
+
+          _this2.hidemoveLabel();
+        }); // 鼠标移动
+
+        this.progress.addEventListener('mousemove', function (e) {
+          return _this2.showmoveLabel(e.clientX);
+        });
+      }
+    }
+    /** 自动显示隐藏控制条 */
+
+  }, {
+    key: "initAutoControls",
+    value: function initAutoControls() {
+      var _this3 = this;
+
+      var onmouseover = function onmouseover(e) {
+        _this3.showControls();
+
+        _this3.hideControls();
+      };
+
+      var isPc = Utils.isPC();
+
+      if (isPc) {
+        // 鼠标在容器移动时候触发显示
+        this.containerElemelt.addEventListener('mousemove', onmouseover); // 当鼠标移动到控制条上，取消隐藏，一直显示
+
+        this.controlsEl.addEventListener('mouseenter', function (e) {
+          _this3.containerElemelt.removeEventListener('mousemove', onmouseover);
+
+          _this3.showControls();
+        }); // 鼠标移开
+
+        this.controlsEl.addEventListener('mouseleave', function (e) {
+          _this3.containerElemelt.addEventListener('mousemove', onmouseover);
+
+          _this3.hideControls();
+        });
+      } else {
+        this.containerElemelt.ontouchstart = this.showControls;
+        this.containerElemelt.ontouchend = this.hideControls;
+      }
+    } // 控制条按钮
+
+  }, {
+    key: "createControlsBtn",
+    value: function createControlsBtn() {
+      var _this4 = this;
+
+      this.labelEl = document.createElement('span');
+      this.labelEl.className = 'date_label';
+      this.labelEl.innerText = '00:00';
+      this.controlsEl.appendChild(this.labelEl); // 左边容器
+
+      this.controls_left = document.createElement('div');
+      this.controls_left.className = 'controls_left'; // 播放按钮
+
+      this.play_btn = document.createElement('i');
+      this.play_btn.className = 'button_img play play_btn';
+      this.play_btn.addEventListener('click', function () {
+        var _this4$video;
+
+        if ((_this4$video = _this4.video) !== null && _this4$video !== void 0 && _this4$video.el.paused) {
+          _this4.video.el.play();
+        } else {
+          _this4.video.el.pause();
+        }
+      }); // 显示时间
+
+      this.timeEl = document.createElement('div');
+      this.timeEl.className = 'time';
+      this.timeEl.innerText = '00:00 / 00:00';
+      this.controls_left.appendChild(this.play_btn);
+      this.controls_left.appendChild(this.timeEl);
+      this.controlsEl.appendChild(this.controls_left); // 右边容器
+
+      this.controls_right = document.createElement('div');
+      this.controls_right.className = 'controls_right';
+      this.controlsEl.appendChild(this.controls_right);
+    }
+    /** 设置播放按钮状态 */
+
+  }, {
+    key: "changePlay",
+    value: function changePlay(isPause) {
+      if (isPause) {
+        Utils.removeClass(this.play_btn, 'suspend');
+      } else {
+        Utils.addClass(this.play_btn, 'suspend');
+      }
+    }
+    /**
+     * 根据当前x位置计算在进度条占比
+     * @param offsetX 距离进度条的偏移
+     */
+
+  }, {
+    key: "offsetXPer",
+    value: function offsetXPer(offsetX) {
+      if (offsetX < 0) {
+        offsetX = 0;
+      }
+
+      if (offsetX > this.progressWidth) {
+        offsetX = this.progressWidth;
+      }
+
+      var per = 100 * offsetX / this.progressWidth;
+      return per;
+    }
+    /**
+     * 根据当前x位置计算当前时间进度
+     * @param per
+     */
+
+  }, {
+    key: "getOffsetXTimeText",
+    value: function getOffsetXTimeText(offsetX) {
+      var maxWidth = this.progressWidth; // 进度总长度，进度条-按钮
+
+      if (offsetX > maxWidth) offsetX = maxWidth;
+      var slitherCurrentTime = offsetX / maxWidth * this.video.duration; // 当前拖动进度位置时间
+
+      var currentTime = "".concat(Utils.formatSeconds(slitherCurrentTime)); // 当前播放进度- 分:秒
+
+      return currentTime;
+    }
+    /** 设置缓存进度条百分比样式 */
+
+  }, {
+    key: "setBufferPer",
+    value: function setBufferPer(per) {
+      this.current_buffer.style.width = per + '%';
+    }
+    /** 设置进度条百分比样式 */
+
+  }, {
+    key: "setCurrentPlayPer",
+    value: function setCurrentPlayPer(per) {
+      this.current_progress.style.width = per + '%';
+      this.current_dot.style.left = per + '%';
+    }
+    /** 更新展示当前播放时间进度 */
+
+  }, {
+    key: "changePlayTimeText",
+    value: function changePlayTimeText() {
+      if (!this.isMove) {
+        // 防止拖动进度条时候更新
+        var per = 100 * this.video.currentTime / this.video.duration;
+        this.setCurrentPlayPer(per);
+      }
+
+      var currentTime = Utils.formatSeconds(this.video.currentTime); // 当前播放时长
+
+      var duration = Utils.formatSeconds(this.video.duration); // 视频总长度- 分:秒
+
+      this.timeEl.innerHTML = "".concat(currentTime, " / ").concat(duration);
+    }
+    /**
+     * 根据当前位置更新播放器进度
+     * @param offsetX 当前进度条偏移位置
+     */
+
+  }, {
+    key: "setPlayTime",
+    value: function setPlayTime(offsetX) {
+      if (offsetX > this.progressWidth) {
+        offsetX = this.progressWidth;
+      }
+
+      var time = offsetX / this.progressWidth * this.video.duration;
+      this.video.setCurrentTime(time);
+    }
+  }]);
+
+  return Controls;
+}();
+;// CONCATENATED MODULE: ./src/components/cover.ts
+
+
+function cover_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function cover_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function cover_createClass(Constructor, protoProps, staticProps) { if (protoProps) cover_defineProperties(Constructor.prototype, protoProps); if (staticProps) cover_defineProperties(Constructor, staticProps); return Constructor; }
+
+function cover_defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var VideoCover = /*#__PURE__*/function () {
+  // 音量按钮容器
+  function VideoCover(containerElemelt) {
+    var _this = this;
+
+    cover_classCallCheck(this, VideoCover);
+
+    this.containerElemelt = containerElemelt;
+
+    cover_defineProperty(this, "el", void 0);
+
+    cover_defineProperty(this, "err_cover", void 0);
+
+    cover_defineProperty(this, "loading_cover", void 0);
+
+    cover_defineProperty(this, "play_btn_cover", void 0);
+
+    cover_defineProperty(this, "play", void 0);
+
+    this.el = document.createElement('div');
+    this.el.className = 'video_cover'; // 播放按钮
+
+    var play_btn = document.createElement('div');
+    play_btn.className = 'cover_content';
+    play_btn.innerHTML = '<div class="cover_img play play_btn"></div>';
+    play_btn.addEventListener('click', function () {
+      return _this.play && _this.play();
+    });
+    this.play_btn_cover = play_btn; // 错误
+
+    var err = document.createElement('div');
+    err.className = 'cover_content';
+    err.innerHTML = "\n            <div class=\"cover_img error\"></div>\n            <div class=\"tips_text tips_error\">\u8D44\u6E90\u52A0\u8F7D\u5931\u8D25~</div>\n        ";
+    this.err_cover = err; // 加载中
+
+    var loading = document.createElement('div');
+    loading.className = 'cover_content';
+    loading.innerHTML = "\n            <div class=\"video_loading\">\n                <div>\n                    <div class=\"spot\"></div>\n                    <div class=\"spot\"></div>\n                    <div class=\"spot\"></div>\n                    <div class=\"spot\"></div>\n                    <div class=\"spot\"></div>\n                </div>\n                <div class=\"tips_text\">\u6B63\u5728\u52A0\u8F7D...</div>\n            </div>\n        ";
+    this.loading_cover = loading;
+  }
+
+  cover_createClass(VideoCover, [{
+    key: "setState",
+    value: function setState(state) {
+      if (this.containerElemelt.contains(this.el)) {
+        this.containerElemelt.removeChild(this.el);
+      }
+
+      this.el.innerHTML = '';
+
+      switch (state) {
+        case 'play':
+          this.el.appendChild(this.play_btn_cover);
+          break;
+
+        case 'loading':
+          this.el.appendChild(this.loading_cover);
+          break;
+
+        case 'error':
+          this.el.appendChild(this.err_cover);
+          break;
+
+        default:
+          break;
+      }
+
+      if (this.el.hasChildNodes()) {
+        this.containerElemelt.appendChild(this.el);
+      }
+    }
+  }]);
+
+  return VideoCover;
+}();
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.parse-float.js
+var es_parse_float = __webpack_require__(4678);
+;// CONCATENATED MODULE: ./src/components/btns/volume_btn.ts
+
+
+
+function volume_btn_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function volume_btn_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function volume_btn_createClass(Constructor, protoProps, staticProps) { if (protoProps) volume_btn_defineProperties(Constructor.prototype, protoProps); if (staticProps) volume_btn_defineProperties(Constructor, staticProps); return Constructor; }
+
+function volume_btn_defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+var VolumeBtn = /*#__PURE__*/function () {
+  // 事件
+  // 音量按钮容器
+
+  /** 音量slider */
+
+  /** 当前视频播放音量 0 - 1 */
+
+  /** 是否静音 */
+  function VolumeBtn() {
+    var _this = this;
+
+    volume_btn_classCallCheck(this, VolumeBtn);
+
+    volume_btn_defineProperty(this, "valueChange", void 0);
+
+    volume_btn_defineProperty(this, "el", void 0);
+
+    volume_btn_defineProperty(this, "volumeSlider", void 0);
+
+    volume_btn_defineProperty(this, "currentvolum", 0.8);
+
+    volume_btn_defineProperty(this, "isMute", false);
+
+    this.el = document.createElement('div');
+    this.el.className = 'volume_bth';
+    this.el.innerHTML = "\n            <div class=\"volume_con\">\n                <div class=\"volume_slider\">\n                    <input id=\"volumeslider\" type='range' min=\"0\" max=\"1\" step=\"0.01\" value=\"0.8\"/>\n                </div>\n            </div>\n            <i id=\"volume_img\" class=\"button_img sound\"></i>\n        ";
+    this.volumeSlider = this.el.querySelector('#volumeslider'); // 音量拖动事件
+
+    this.volumeSlider.oninput = function (e) {
+      e.preventDefault();
+      _this.currentvolum = e.target.value;
+
+      _this.setValue(_this.currentvolum);
+
+      _this.valueChange && _this.valueChange(_this.currentvolum);
+    }; // 点击事件
+
+
+    if (Utils.isPC()) {
+      this.el.querySelector('#volume_img').addEventListener('click', function (e) {
+        // e.preventDefault();
+        _this.isMute = !_this.isMute;
+        var val = _this.isMute ? 0 : _this.currentvolum;
+
+        _this.setValue(val);
+
+        _this.valueChange && _this.valueChange(val);
+      });
+    }
+  }
+  /** 设置音量 */
+
+
+  volume_btn_createClass(VolumeBtn, [{
+    key: "setValue",
+    value: function setValue(val) {
+      var value = typeof val === 'string' ? parseFloat(val) : val;
+      this.volumeSlider.style.backgroundSize = "".concat(value * 100, "% 100%");
+      /* 设置左右宽度比例*/
+
+      this.volumeSlider.value = "".concat(val);
+      var volume_bth = this.el.querySelector('#volume_img');
+
+      if (value && volume_bth) {
+        volume_bth.classList.remove('mute');
+      } else {
+        volume_bth.classList.add('mute');
+      }
+    }
+  }]);
+
+  return VolumeBtn;
+}();
+;// CONCATENATED MODULE: ./src/components/btns/fullscreen_btn.ts
+
+
+function fullscreen_btn_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function fullscreen_btn_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function fullscreen_btn_createClass(Constructor, protoProps, staticProps) { if (protoProps) fullscreen_btn_defineProperties(Constructor.prototype, protoProps); if (staticProps) fullscreen_btn_defineProperties(Constructor, staticProps); return Constructor; }
+
+function fullscreen_btn_defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+var FullscreenBtn = /*#__PURE__*/function () {
+  function FullscreenBtn(videoEl) {
+    var _this = this;
+
+    fullscreen_btn_classCallCheck(this, FullscreenBtn);
+
+    fullscreen_btn_defineProperty(this, "el", void 0);
+
+    fullscreen_btn_defineProperty(this, "isFullscreen", false);
+
+    this.el = document.createElement('i');
+    this.el.className = 'button_img full';
+    this.el.addEventListener('click', function () {
+      _this.fullscreen(_this.isFullscreen, videoEl);
+    });
+  }
+
+  fullscreen_btn_createClass(FullscreenBtn, [{
+    key: "changeIcon",
+    value: function changeIcon(isFull) {
+      if (isFull) {
+        Utils.addClass(this.el, 'scale');
+      } else {
+        Utils.removeClass(this.el, 'scale');
+      }
+    }
+    /** 全屏 */
+
+  }, {
+    key: "fullscreen",
+    value: function fullscreen(isFull, el) {
+      if (isFull) {
+        if (document['exitFullscreen']) {
+          document['exitFullscreen']();
+        } else if (document['webkitCancelFullScreen']) {
+          document['webkitCancelFullScreen']();
+        } else if (document['mozCancelFullScreen']) {
+          document['mozCancelFullScreen']();
+        } else if (document['msExitFullscreen']) {
+          document['msExitFullscreen']();
+        } else if (document['webkitEnterFullscreen']) {
+          return;
+        }
+
+        this.isFullscreen = false;
+        this.changeIcon(false);
+      } else {
+        var requestMethod = el.requestFullScreen || el.webkitRequestFullScreen || el.mozRequestFullScreen || el.msRequestFullscreen || el.webkitEnterFullscreen || el.enterFullScreen;
+
+        if (requestMethod) {
+          requestMethod.call(el);
+          if (el.webkitEnterFullscreen || el.enterFullScreen) return;
+          this.isFullscreen = true;
+          this.changeIcon(true);
+        } else {
+          alert('该浏览器不支持全屏');
+        }
+      }
+    }
+  }]);
+
+  return FullscreenBtn;
+}();
+;// CONCATENATED MODULE: ./src/components/btns/speed_btn.ts
+
+
+
+
+
+function speed_btn_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function speed_btn_defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var SpeedBtn = // 事件
+// 音量按钮容器
+// 当前视频播放音量 0 - 1
+function SpeedBtn() {
+  var _this = this;
+
+  speed_btn_classCallCheck(this, SpeedBtn);
+
+  speed_btn_defineProperty(this, "valueChange", void 0);
+
+  speed_btn_defineProperty(this, "el", void 0);
+
+  speed_btn_defineProperty(this, "value", 0.8);
+
+  this.el = document.createElement('div');
+  this.el.className = 'speed_bth';
+  this.el.innerHTML = "\n            <div id=\"speed_con\" class=\"speed_li\">\n                <div>2.0x</div>\n                <div>1.5x</div>\n                <div>1.2x</div>\n                <div class=\"on\">1.0x</div>\n                <div>0.5x</div>\n            </div>\n            <span id=\"speed_btn\">1.0x</span>\n        ";
+  var speed_con = this.el.querySelectorAll('#speed_con > div') || [];
+  var speed_btn = this.el.querySelector('#speed_btn');
+  /** 倍速列表点击事件 */
+
+  speed_con.forEach(function (f) {
+    f.addEventListener('click', function (e) {
+      speed_con.forEach(function (el) {
+        el.classList.remove('on');
+      });
+      e.target.classList.add('on');
+      speed_btn.innerText = e.target.innerText;
+      _this.value = parseFloat(e.target.innerText);
+      _this.valueChange && _this.valueChange(_this.value);
+    });
+  });
+};
+;// CONCATENATED MODULE: ./src/components/index.ts
+
+
+
+
+
+
+;// CONCATENATED MODULE: ./src/config.ts
+
+
+function config_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function config_defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var Config = function Config() {
+  config_classCallCheck(this, Config);
+
+  config_defineProperty(this, "autoplay", false);
+
+  config_defineProperty(this, "src", void 0);
+
+  config_defineProperty(this, "poster", void 0);
+
+  config_defineProperty(this, "autoHideControls", false);
+
+  config_defineProperty(this, "isFastForward", true);
+
+  config_defineProperty(this, "hideFullScreen", false);
+
+  config_defineProperty(this, "controls", true);
+
+  config_defineProperty(this, "loop", false);
+
+  config_defineProperty(this, "preload", 'auto');
+
+  config_defineProperty(this, "debug", false);
+};
+
+
+// EXTERNAL MODULE: ./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js
+var injectStylesIntoStyleTag = __webpack_require__(3379);
+var injectStylesIntoStyleTag_default = /*#__PURE__*/__webpack_require__.n(injectStylesIntoStyleTag);
+// EXTERNAL MODULE: ./node_modules/css-loader/dist/cjs.js!./node_modules/less-loader/dist/cjs.js!./src/index.less
+var cjs_js_src = __webpack_require__(8074);
+;// CONCATENATED MODULE: ./src/index.less
+
+            
+
+var options = {};
+
+options.insert = "head";
+options.singleton = false;
+
+var update = injectStylesIntoStyleTag_default()(cjs_js_src/* default */.Z, options);
+
+
+
+/* harmony default export */ var src = (cjs_js_src/* default.locals */.Z.locals || {});
+;// CONCATENATED MODULE: ./src/index.ts
+
+
+
+
+
+
+
+
+
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { src_defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function src_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function src_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function src_createClass(Constructor, protoProps, staticProps) { if (protoProps) src_defineProperties(Constructor.prototype, protoProps); if (staticProps) src_defineProperties(Constructor, staticProps); return Constructor; }
+
+function src_defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+
+
+
+
+var PrettyVideo = /*#__PURE__*/function () {
+  /** 容器 */
+
+  /** video播放器对象 */
+
+  /** 控制条 */
+
+  /** 音量 */
+
+  /** 全屏 */
+
+  /** cover */
+  // 监听事件列表
+  function PrettyVideo() {
+    var _this = this;
+
+    src_classCallCheck(this, PrettyVideo);
+
+    src_defineProperty(this, "containerElemelt", void 0);
+
+    src_defineProperty(this, "video", void 0);
+
+    src_defineProperty(this, "controls", void 0);
+
+    src_defineProperty(this, "volume", void 0);
+
+    src_defineProperty(this, "fullscreenBtn", void 0);
+
+    src_defineProperty(this, "videoCover", void 0);
+
+    src_defineProperty(this, "config", new Config());
+
+    src_defineProperty(this, "envents", {});
+
+    src_defineProperty(this, "setUrl", function (object) {
+      return _this.video.setUrl(object);
+    });
+
+    src_defineProperty(this, "reload", function () {
+      var _this$video;
+
+      return (_this$video = _this.video) === null || _this$video === void 0 ? void 0 : _this$video.el.load();
+    });
+
+    src_defineProperty(this, "play", function () {
+      var _this$video2;
+
+      return (_this$video2 = _this.video) === null || _this$video2 === void 0 ? void 0 : _this$video2.el.play();
+    });
+
+    src_defineProperty(this, "pause", function () {
+      var _this$video3;
+
+      return (_this$video3 = _this.video) === null || _this$video3 === void 0 ? void 0 : _this$video3.el.pause();
+    });
+
+    src_defineProperty(this, "setVolum", function (value) {
+      return _this.video.el.volume = value;
+    });
+
+    src_defineProperty(this, "dispose", function () {
+      _this.containerElemelt.innerHTML = '';
+    });
+
+    src_defineProperty(this, "getDuration", function () {
+      var _this$video4, _this$video5, _this$video6, _this$video7;
+
+      var currentSecond = ((_this$video4 = _this.video) === null || _this$video4 === void 0 ? void 0 : _this$video4.currentTime) || 0; // 当前播放时长 单位：秒
+
+      var durationSecond = ((_this$video5 = _this.video) === null || _this$video5 === void 0 ? void 0 : _this$video5.duration) || 0; // 总时长 单位：秒
+      // 转换格式HH:mm:ss  HH如果有的话才展示 否则展示mm:ss
+
+      var currentText = Utils.formatSeconds(((_this$video6 = _this.video) === null || _this$video6 === void 0 ? void 0 : _this$video6.currentTime) || 0);
+      var durationText = Utils.formatSeconds(((_this$video7 = _this.video) === null || _this$video7 === void 0 ? void 0 : _this$video7.duration) || 0);
+      return {
+        currentSecond: currentSecond,
+        durationSecond: durationSecond,
+        currentText: currentText,
+        durationText: durationText
+      };
+    });
+  }
+
+  src_createClass(PrettyVideo, [{
+    key: "init",
+    value: function init(el) {
+      var _this2 = this;
+
+      var config = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+      try {
+        var videoContainer = typeof el === 'string' ? document.getElementById(el) : el;
+        if (!videoContainer) throw new Error('无效的dom元素，请在页面加载完成后初始化播放器。');
+        this.containerElemelt = document.createElement('div');
+        this.containerElemelt.className = 'video_player'; // 右键
+
+        this.containerElemelt.oncontextmenu = function (e) {
+          return false; // 阻止右键默认事件。
+        };
+
+        this.video = new Video();
+        this.videoCover = new VideoCover(this.containerElemelt);
+
+        this.videoCover.play = function () {
+          var _this2$video$el;
+
+          return (_this2$video$el = _this2.video.el) === null || _this2$video$el === void 0 ? void 0 : _this2$video$el.play();
+        };
+
+        this.handleStateChange();
+        this.containerElemelt.appendChild(this.video.el);
+        this.containerElemelt.appendChild(this.video.posterEl);
+        this.initConfig(config);
+
+        if (config.src) {
+          this.setUrl({
+            src: config.src,
+            poster: config.poster
+          });
+        } else {
+          this.videoCover.setState('loading');
+        }
+
+        videoContainer.appendChild(this.containerElemelt);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    /** 播放地址 */
+
+  }, {
+    key: "isPause",
+    value:
+    /** 是否暂停状态 */
+    function isPause() {
+      var _this$video8;
+
+      return (_this$video8 = this.video) === null || _this$video8 === void 0 ? void 0 : _this$video8.el.paused;
+    }
+    /** 暂停播放 */
+
+  }, {
+    key: "on",
+    value:
+    /**
+     * 监听事件
+     * @param eventName 事件名称
+     * @param callback 回调
+     */
+    function on(eventName, callback) {
+      this.envents[eventName] = callback;
+    }
+    /**
+     * 取消事件监听
+     */
+
+  }, {
+    key: "unOn",
+    value: function unOn(eventName) {
+      delete this.envents[eventName];
+    }
+    /** 播放器配置 */
+
+  }, {
+    key: "initConfig",
+    value: function initConfig(cfg) {
+      this.config = _objectSpread(_objectSpread({}, this.config), cfg);
+      this.video.el.autoplay = this.config.autoplay ? true : false;
+      this.video.el.loop = this.config.loop ? true : false;
+      this.video.el.preload = this.config.preload;
+      this.initControls();
+    } // video事件
+
+  }, {
+    key: "handleStateChange",
+    value: function handleStateChange() {
+      var _this3 = this;
+
+      this.video.onEvent = function (state, e) {
+        if (typeof _this3.envents[state] === 'function') {
+          _this3.envents[state]({
+            type: 'state'
+          });
+        }
+
+        _this3.videoCover.setState(_this3.isPause() ? 'play' : '');
+
+        if (_this3.config.debug) console.log(state);
+
+        switch (state) {
+          case 'waiting':
+            _this3.videoCover.setState('loading');
+
+            break;
+
+          case 'error':
+            _this3.videoCover.setState('error');
+
+            if (_this3.containerElemelt.contains(_this3.controls.controlsEl)) {
+              _this3.containerElemelt.removeChild(_this3.controls.controlsEl);
+            }
+
+            break;
+
+          case 'durationchange':
+            // 视频时长变化
+            if (!_this3.containerElemelt.contains(_this3.controls.controlsEl)) {
+              _this3.containerElemelt.appendChild(_this3.controls.controlsEl);
+            }
+
+            if (!isNaN(_this3.video.duration)) {
+              // 防止拖动进度条时候更新
+              var per = 100 * _this3.video.currentTime / _this3.video.duration;
+
+              _this3.controls.setCurrentPlayPer(per);
+            }
+
+          case 'loadstart':
+            _this3.videoCover.setState('loading');
+
+            break;
+
+          case 'play':
+          case 'ended':
+          case 'pause':
+          case 'seeked':
+            _this3.controls.changePlay(_this3.isPause());
+
+            break;
+
+          case 'canplay':
+          case 'loadedmetadata':
+            // 元数据加载完成
+            _this3.controls.changePlayTimeText();
+
+            if (_this3.video.currentTime <= 0) {
+              _this3.video.showPoster();
+            }
+
+            break;
+
+          case 'timeupdate':
+            // 播放中
+            _this3.controls.changePlayTimeText();
+
+            _this3.video.hidePoster();
+
+            break;
+
+          case 'progress':
+            // 缓冲中
+            if (e.target.buffered.length) {
+              var loaded = 100 * e.target.buffered.end(0) / e.target.duration;
+
+              _this3.controls.setBufferPer(loaded);
+            }
+
+            break;
+
+          case 'x5videoenterfullscreen':
+            _this3.fullscreenBtn && _this3.fullscreenBtn.changeIcon(true);
+
+          case 'x5videoexitfullscreen':
+            _this3.fullscreenBtn && _this3.fullscreenBtn.changeIcon(false);
+            break;
+
+          default:
+            break;
+        }
+      };
+    }
+    /** 初始化控制条 */
+
+  }, {
+    key: "initControls",
+    value: function initControls() {
+      var _this4 = this;
+
+      this.controls = new Controls(this.video, this.containerElemelt, this.config); // 音量按钮
+
+      this.volume = new VolumeBtn();
+      this.controls.controls_right.appendChild(this.volume.el);
+
+      this.volume.valueChange = function (value) {
+        return _this4.setVolum(value);
+      }; // 倍速
+
+
+      var speedBtn = new SpeedBtn();
+      this.controls.controls_right.appendChild(speedBtn.el);
+
+      speedBtn.valueChange = function (value) {
+        _this4.video.el.playbackRate = value;
+      };
+
+      if (!this.config.hideFullScreen) {
+        // 全屏按钮
+        this.fullscreenBtn = new FullscreenBtn(this.video.el);
+        this.controls.controls_right.appendChild(this.fullscreenBtn.el);
+      }
+    }
+  }]);
+
+  return PrettyVideo;
+}();
+
+/* harmony default export */ var src_0 = (PrettyVideo);
+}();
+__webpack_exports__ = __webpack_exports__.default;
+/******/ 	return __webpack_exports__;
+/******/ })()
+;
+});

@@ -46,7 +46,7 @@ declare class PrettyVideo {
      * @param eventName 事件名称
      * @param callback 回调
      */
-    on(eventName: string, callback: Function): void;
+    on(eventName: string, callback: () => void): void;
     /**
      * 取消事件监听
      */

@@ -27,7 +27,7 @@ export declare class Utils {
     static isPC(): boolean;
     /** 时间秒转换为时分秒
      * @param value 秒
-    */
+     */
     static formatSeconds(value: any): string;
     /**
      * utils 数字向下取整
