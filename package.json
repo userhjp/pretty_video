@@ -31,8 +31,7 @@
   ],
   "bundledDependencies": false,
   "dependencies": {
-    "core-js": "^3.12.1",
-    "date-fns": "^2.21.3"
+    "core-js": "^3.12.1"
   },
   "devDependencies": {
     "@babel/core": "^7.12.10",
