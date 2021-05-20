@@ -1,11 +1,12 @@
-import path from 'path';
+import { resolve, join } from 'path';
 import os from 'os';
 import webpack from 'webpack';
 import UglifyJsPlugin from 'compression-webpack-plugin';
+import { CleanWebpackPlugin } from 'clean-webpack-plugin';
 // 各种插件：https://www.webpackjs.com/plugins/
 // import CopyWebpackPlugin from 'copy-webpack-plugin';  // 复制目录
-// import htmlWebpackPlugin from 'html-webpack-plugin';
-// import MiniCssExtractPlugin from 'mini-css-extract-plugin';  // 单独抽离样式
+import HtmlWebpackPlugin from 'html-webpack-plugin';
+import MiniCssExtractPlugin from 'mini-css-extract-plugin'; // 单独抽离样式
 // import OptimizeCssAssetsPlugin from 'optimize-css-assets-webpack-plugin';  // 压缩样式
 interface Config extends webpack.Configuration {
   devServer: { [key: string]: any };
@@ -31,8 +32,8 @@ const config: Config = {
     'video.min': ['./src/index.ts'],
   }, // 入口，如果传入一个字符串或字符串数组，chunk 会被命名为 main。如果传入一个对象，则每个键(key)会是 chunk 的名称，该值描述了 chunk 的入口起点。
   output: {
-    filename: '[name].js', // 输出名称, 您可以忽略它，这是默认设置
-    path: path.resolve(__dirname, 'dist'), // 输出路径，您可以忽略它，这是默认设置
+    filename: '[name].js',
+    path: resolve(__dirname, 'dist'),
     // publicPath: '/assets/', // 输出解析文件的目录，url 相对于 HTML 页面
     library: 'PrettyVideo', // 导出库(exported library)的名称
     libraryTarget: 'umd', // 通用模块定义
@@ -42,8 +43,6 @@ const config: Config = {
   // devtool: 'source-map',
   mode: 'development', // 默认是production 进行压缩
   module: {
-    // loader 用于对模块的源代码进行转换
-    // 作用，webpack 编译器，碰到「在 require()/import 语句中被解析为 '.tsx' 的路径」时，在你对它打包之前，先使用 babel-loader 转换一下
     rules: [
       {
         test: /\.tsx?$/,
@@ -55,8 +54,8 @@ const config: Config = {
         test: /\.less?$/,
         exclude: /(node_modules|bower_components)/,
         use: [
-          // loader: MiniCssExtractPlugin.loader
-          { loader: 'style-loader' },
+          // { loader: 'style-loader' },
+          { loader: MiniCssExtractPlugin.loader },
           { loader: 'css-loader' },
           { loader: 'less-loader' },
         ],
@@ -67,9 +66,17 @@ const config: Config = {
         use: {
           loader: 'url-loader',
           options: {
-            name: 'assets/[name].[ext]', // 图片复制到指定位置
-            limit: 8192, // 单位byte，小于8KB的图片都会被编码(base64)放打包在js中
+            name: 'assets/[name].[ext]', // [hash:10].[ext]
+            limit: 8 * 1024,
           },
+        },
+      },
+      {
+        // 处理其他资源
+        exclude: /\.(html|js|ts|css|less|jpg|png|gif)/,
+        loader: 'file-loader',
+        options: {
+          name: 'assets/[name].[ext]',
         },
       },
     ],
@@ -102,17 +109,18 @@ const config: Config = {
     ],
   },
   plugins: [
+    new CleanWebpackPlugin(),
     // 插件数组
-    // new htmlWebpackPlugin({ //创建一个在内存中生成html页面插件的配置对象
-    //   template:path.join(__dirname,'./src/index.html'),    //指定模版页面生成内存中的hmtl
-    //   filename:'index.html'   //指定生成的页面名称
-    // }),
-    // // 提取css文件
-    // new MiniCssExtractPlugin({
-    //   // 类似 webpackOptions.output里面的配置 可以忽略
-    //   filename: '[name].css',
-    //   chunkFilename: '[id].css',
-    // }),
+    new HtmlWebpackPlugin({
+      // 创建一个在内存中生成html页面插件的配置对象
+      template: join(__dirname, './src/index.html'), // 指定模版页面生成内存中的hmtl
+      filename: 'index.html', // 指定生成的页面名称
+    }),
+    // 提取css文件
+    new MiniCssExtractPlugin({
+      // 类似 webpackOptions.output里面的配置 可以忽略
+      filename: '[name].css',
+    }),
     // new CopyWebpackPlugin([ // 打包复制目录
     //   {
     //     from:__dirname+'/src/index.d.ts',
@@ -121,11 +129,12 @@ const config: Config = {
     // ])
   ],
   devServer: {
+    compress: true, // gizp
     host: getHost(),
     port: '8080',
     open: false,
     // proxy: { '/api': 'http://localhost:3000' },
-    static: path.resolve(__dirname, 'src'), // 设置静态目录 服务器启动根目录
+    static: resolve(__dirname, 'dist'), // 设置静态目录 服务器启动根目录
   },
 };
 
@@ -133,7 +142,7 @@ const config: Config = {
 //   ...config,
 //   output: {
 //     filename: '[name].js', // 输出名称, 您可以忽略它，这是默认设置
-//     path: path.resolve(__dirname, 'dist2'), // 输出路径，您可以忽略它，这是默认设置
+//     path: resolve(__dirname, 'dist2'), // 输出路径，您可以忽略它，这是默认设置
 //     publicPath: '/dist2', // 输出解析文件的目录路径，url 相对于 HTML 页面
 //     library: 'PrettyVideo2', // 导出库(exported library)的名称
 //     libraryTarget: 'commonjs', // 通用模块定义
