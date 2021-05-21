@@ -1,4 +1,4 @@
-import { resolve, join } from 'path';
+import path, { resolve, join } from 'path';
 import os from 'os';
 import webpack from 'webpack';
 import UglifyJsPlugin from 'compression-webpack-plugin';
@@ -73,7 +73,7 @@ const config: Config = {
       },
       {
         // 处理其他资源
-        exclude: /\.(html|js|ts|css|less|jpg|png|gif)/,
+        exclude: /\.(html|js|ts|css|less|jpg|png|gif|svg)/,
         loader: 'file-loader',
         options: {
           name: 'assets/[name].[ext]',
@@ -109,11 +109,10 @@ const config: Config = {
     ],
   },
   plugins: [
-    new CleanWebpackPlugin(),
     // 插件数组
     new HtmlWebpackPlugin({
       // 创建一个在内存中生成html页面插件的配置对象
-      template: join(__dirname, './src/index.html'), // 指定模版页面生成内存中的hmtl
+      template: path.join(__dirname, './src/index.html'), // 指定模版页面生成内存中的hmtl
       filename: 'index.html', // 指定生成的页面名称
     }),
     // 提取css文件
@@ -121,6 +120,7 @@ const config: Config = {
       // 类似 webpackOptions.output里面的配置 可以忽略
       filename: '[name].css',
     }),
+    // new CleanWebpackPlugin(),
     // new CopyWebpackPlugin([ // 打包复制目录
     //   {
     //     from:__dirname+'/src/index.d.ts',

@@ -198,4 +198,4 @@ class PrettyVideo {
   }
 }
 
-export default PrettyVideo;
+export default new PrettyVideo();
