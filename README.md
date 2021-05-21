@@ -82,7 +82,7 @@ export default class PrettyVideo {
      /** 设置音量 0-1 */
     setVolum(num: number): void;
     /** 监听事件 'loadstart' | 'canplay' | 'play' | 'pause' | 'waiting' | 'playing' | 'ended' | 'error' | 'seeked' | 'loadedmetadata' */
-    on(eventName: string, callback: () => {}): void;
+    on(eventName: string, callback: (obj: { type }) => void): void;
     /** 取消事件监听 */
     unOn(eventName: string): void
     /** 销毁video包括dom元素 */
