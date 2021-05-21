@@ -29,7 +29,6 @@ function getHost() {
 const config: Config = {
   entry: {
     video: ['./src/index.ts'],
-    'video.min': ['./src/index.ts'],
   }, // 入口，如果传入一个字符串或字符串数组，chunk 会被命名为 main。如果传入一个对象，则每个键(key)会是 chunk 的名称，该值描述了 chunk 的入口起点。
   output: {
     filename: '[name].js',
@@ -39,9 +38,8 @@ const config: Config = {
     libraryTarget: 'umd', // 通用模块定义
     libraryExport: 'default',
   },
-  target: 'es5',
-  // devtool: 'source-map',
   mode: 'development', // 默认是production 进行压缩
+  devtool: 'eval-source-map',
   module: {
     rules: [
       {
@@ -61,22 +59,23 @@ const config: Config = {
         ],
       },
       {
-        // 处理图片
-        test: /\.(png|svg|jpg|gif)$/,
-        use: {
-          loader: 'url-loader',
-          options: {
-            name: 'assets/[name].[ext]', // [hash:10].[ext]
-            limit: 8 * 1024,
+        test: /\.(jpg|png|gif|svg)$/,
+        type: 'asset',
+        parser: {
+          dataUrlCondition: {
+            maxSize: 8 * 1024,
           },
         },
+        generator: {
+          filename: 'images/[name][ext][query]',
+        },
       },
+      // 处理其他资源
       {
-        // 处理其他资源
-        exclude: /\.(html|js|ts|css|less|jpg|png|gif|svg)/,
-        loader: 'file-loader',
-        options: {
-          name: 'assets/[name].[ext]',
+        exclude: /\.(js|ts|css|less|html|jpg|png|gif|svg)/,
+        type: 'asset/resource',
+        generator: {
+          filename: 'assets/[name][ext][query]',
         },
       },
     ],
@@ -94,12 +93,12 @@ const config: Config = {
     // 优化项
     minimize: true,
     minimizer: [
-      // new UglifyJsPlugin({
-      //   include: /\.min\.js$/, // 通过 include 设置只压缩 min.js 结尾的文件
-      //   filename: '[name][base].js',
-      //   // cache: true,  //是否启用文件缓存
-      //   // parallel: true, //使用多进程并行运行来提高构建速度
-      // }),
+      new UglifyJsPlugin({
+        include: /.js$/, // 通过 include 设置只压缩 min.js 结尾的文件
+        filename: '[name].min.js',
+        // cache: true,  //是否启用文件缓存
+        // parallel: true, //使用多进程并行运行来提高构建速度
+      }),
       //   // new OptimizeCssAssetsPlugin({
       //   //   assetNameRegExp: /\.css$/g, // 匹配需要优化或者压缩的资源名
       //   //   cssProcessor: require('cssnano'), // 用于压缩和优化CSS 的处理器
@@ -120,7 +119,7 @@ const config: Config = {
       // 类似 webpackOptions.output里面的配置 可以忽略
       filename: '[name].css',
     }),
-    // new CleanWebpackPlugin(),
+    new CleanWebpackPlugin(),
     // new CopyWebpackPlugin([ // 打包复制目录
     //   {
     //     from:__dirname+'/src/index.d.ts',
@@ -131,23 +130,11 @@ const config: Config = {
   devServer: {
     compress: true, // gizp
     host: getHost(),
-    port: '8080',
+    port: '8081',
     open: false,
     // proxy: { '/api': 'http://localhost:3000' },
     static: resolve(__dirname, 'dist'), // 设置静态目录 服务器启动根目录
   },
 };
 
-// const config2 = {
-//   ...config,
-//   output: {
-//     filename: '[name].js', // 输出名称, 您可以忽略它，这是默认设置
-//     path: resolve(__dirname, 'dist2'), // 输出路径，您可以忽略它，这是默认设置
-//     publicPath: '/dist2', // 输出解析文件的目录路径，url 相对于 HTML 页面
-//     library: 'PrettyVideo2', // 导出库(exported library)的名称
-//     libraryTarget: 'commonjs', // 通用模块定义
-//   },
-// }
-
-// 可以导出多分配置
-export default [config];
+export default config;

@@ -6,22 +6,16 @@
   <base href="./">
   <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
-  <!-- <style type="text/css">
-    #MyVideo {
-        height: 300px;
-    }
-  </style> -->
 </head>
 <body>
- <div id="MyVideo" style="height: 210px;"></div>
+ <div id="PrettyVideo" style="height: 210px;"></div>
  <div id="button">
      <a href="#" onclick="changeurl('one')">测试视频1.mp4</a><br>
      <a href="#" onclick="changeurl('two')">测试视频2.mp4</a>
  </div>
 </body>
 <script type="text/javascript">
-    var myVideo;
-    debugger
+    var PrettyVideo;
     var obj = {
         one: {
             url: 'https://1251605855.vod2.myqcloud.com/de5144f0vodtranscq1251605855/625d5e105285890805262076936/v.f30.mp4?t=5f867ee3&exper=180&us=4d90a17646f344d5aaf1c8ce56490c15&sign=167c9091c6c4ace78c255c0617961306',
@@ -33,14 +27,13 @@
         },
     }
     function changeurl(type) {
-        myVideo.setUrl({
+        PrettyVideo.setUrl({
             src: obj[type].url,
             poster: obj[type].poster,
         })
     }
     window.onload = function () {
-        myVideo = PrettyVideo;
-        myVideo.init('MyVideo', {
+        PrettyVideo.init('PrettyVideo', {
             // src: obj['one'].url,
             // poster: obj['one'].poster,
             autoplay: false,
@@ -49,12 +42,12 @@
             hideFullScreen: false
         });
         this.changeurl('one');
-        // myVideo.on('canplay', function(){
+        // PrettyVideo.on('canplay', function(){
         //     console.log('hahahahahah ')
         // })
         // setTimeout(() => {
-        //    console.log(myVideo.getDuration());
-        //    myVideo.dispose()
+        //    console.log(PrettyVideo.getDuration());
+        //    PrettyVideo.dispose()
         // }, 10000);
     }
 
