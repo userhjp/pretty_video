@@ -19,7 +19,7 @@
     "README.md"
   ],
   "scripts": {
-    "dev": "webpack serve",
+    "dev": "webpack serve --config ./webpack.config.dev",
     "wdith": "webpack --progress --watch",
     "build": "tsc -p tsconfig.json && webpack --mode=production",
     "eslint": "eslint --fix --ext .js,.tsx,.ts src/",
@@ -64,6 +64,7 @@
     "url-loader": "^4.1.1",
     "webpack": "^5.37.1",
     "webpack-cli": "^4.7.0",
-    "webpack-dev-server": "^4.0.0-beta.0"
+    "webpack-dev-server": "^4.0.0-beta.0",
+    "webpack-merge": "^5.7.3"
   }
 }

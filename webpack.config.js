@@ -1,32 +1,10 @@
-import path, { resolve, join } from 'path';
-import os from 'os';
-import webpack from 'webpack';
-import UglifyJsPlugin from 'compression-webpack-plugin';
-import { CleanWebpackPlugin } from 'clean-webpack-plugin';
-// 各种插件：https://www.webpackjs.com/plugins/
-// import CopyWebpackPlugin from 'copy-webpack-plugin';  // 复制目录
-import HtmlWebpackPlugin from 'html-webpack-plugin';
-import MiniCssExtractPlugin from 'mini-css-extract-plugin'; // 单独抽离样式
+const { resolve, join } = require('path');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 // import OptimizeCssAssetsPlugin from 'optimize-css-assets-webpack-plugin';  // 压缩样式
-interface Config extends webpack.Configuration {
-  devServer: { [key: string]: any };
-}
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
-function getHost() {
-  const ifaces = os.networkInterfaces();
-  let ip = '';
-  for (const dev in ifaces) {
-    ifaces[dev].forEach((details) => {
-      if (ip === '' && details.family === 'IPv4' && !details.internal) {
-        ip = details.address;
-        return;
-      }
-    });
-  }
-  return ip || '127.0.0.1';
-}
-
-const config: Config = {
+module.exports = {
   entry: {
     video: ['./src/index.ts'],
   }, // 入口，如果传入一个字符串或字符串数组，chunk 会被命名为 main。如果传入一个对象，则每个键(key)会是 chunk 的名称，该值描述了 chunk 的入口起点。
@@ -39,7 +17,7 @@ const config: Config = {
     libraryExport: 'default',
   },
   mode: 'development', // 默认是production 进行压缩
-  devtool: 'eval-source-map',
+  devtool: 'nosources-source-map',
   module: {
     rules: [
       {
@@ -89,29 +67,11 @@ const config: Config = {
     extensions: ['.tsx', '.ts', '.js', '.jsx'], // 使用的扩展名
   },
   externals: [], // 不打包的模块，例如：externals: ['date-fns']，打包时候将不会对date-fns模块进行打包到
-  optimization: {
-    // 优化项
-    minimize: true,
-    minimizer: [
-      new UglifyJsPlugin({
-        include: /.js$/, // 通过 include 设置只压缩 min.js 结尾的文件
-        filename: '[name].min.js',
-        // cache: true,  //是否启用文件缓存
-        // parallel: true, //使用多进程并行运行来提高构建速度
-      }),
-      //   // new OptimizeCssAssetsPlugin({
-      //   //   assetNameRegExp: /\.css$/g, // 匹配需要优化或者压缩的资源名
-      //   //   cssProcessor: require('cssnano'), // 用于压缩和优化CSS 的处理器
-      //   //   cssProcessorOptions: { safe: true, discardComments: { removeAll: true } },
-      //   //   canPrint: true // 表示插件能够在console中打印信息，默认值是true
-      //   // }),
-    ],
-  },
   plugins: [
     // 插件数组
     new HtmlWebpackPlugin({
       // 创建一个在内存中生成html页面插件的配置对象
-      template: path.join(__dirname, './src/index.html'), // 指定模版页面生成内存中的hmtl
+      template: join(__dirname, './src/index.html'), // 指定模版页面生成内存中的hmtl
       filename: 'index.html', // 指定生成的页面名称
     }),
     // 提取css文件
@@ -127,14 +87,4 @@ const config: Config = {
     //   }
     // ])
   ],
-  devServer: {
-    compress: true, // gizp
-    host: getHost(),
-    port: '8081',
-    open: false,
-    // proxy: { '/api': 'http://localhost:3000' },
-    static: resolve(__dirname, 'dist'), // 设置静态目录 服务器启动根目录
-  },
 };
-
-export default config;
