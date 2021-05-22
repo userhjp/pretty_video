@@ -3,6 +3,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 // import OptimizeCssAssetsPlugin from 'optimize-css-assets-webpack-plugin';  // 压缩样式
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const Autoprefixer = require('autoprefixer');
 
 module.exports = {
   entry: {
@@ -11,7 +12,7 @@ module.exports = {
   output: {
     filename: '[name].js',
     path: resolve(__dirname, 'dist'),
-    // publicPath: '/assets/', // 输出解析文件的目录，url 相对于 HTML 页面
+    publicPath: '/', // 所有资源引入公共路径前缀 --> 'imgs/a.jpg' --> '/imgs/a.jpg'
     library: 'PrettyVideo', // 导出库(exported library)的名称
     libraryTarget: 'umd', // 通用模块定义
     libraryExport: 'default',
@@ -33,6 +34,18 @@ module.exports = {
           // { loader: 'style-loader' },
           { loader: MiniCssExtractPlugin.loader },
           { loader: 'css-loader' },
+          {
+            loader: 'postcss-loader',
+            options: {
+              postcssOptions: {
+                ident: 'postcss',
+                plugins: [
+                  // 自动添加样式前缀
+                  Autoprefixer(),
+                ],
+              },
+            },
+          },
           { loader: 'less-loader' },
         ],
       },

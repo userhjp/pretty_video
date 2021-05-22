@@ -1,0 +1,79 @@
+/* 音量 */
+.volume_bth {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+
+    .volume_con {
+        position: absolute;
+        display: none;
+        bottom: 34px;
+        width: 30px;
+        left: -8px;
+        height: 90px;
+        background-color: rgba(0, 16, 27, 0.7);
+        border-radius: 2px;
+        padding: 4px 0 12px 0;
+        text-align: center;
+        cursor: auto;
+        &.fill::after {
+            position: absolute;
+            bottom: -20px;
+            left: 0px;
+            content: '';
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+        }
+        #volume_text {
+            color: #fff;
+            font-size: 12px;
+            margin-bottom: 4px;
+        }
+        #volume_range {
+            height: 70%;
+            width: 4px;
+            background-color: #dddddd;
+            display: inline-block;
+            border-radius: 4px;
+            position: relative;
+            cursor: pointer;
+            padding: 4px 0;
+            #volume_progress {
+                display: inline-block;
+                width: 100%;
+                height: 0%;
+                background-color: #49a9ee;
+                position: absolute;
+                left: 0;
+                bottom: 0;
+                border-radius: 4px;
+            }
+            .volume_dot_warp {
+                height: 100%;
+                width: 100%;
+                position: relative;
+                .dot {
+                    position: absolute;
+                    width: 12px;
+                    height: 12px;
+                    border-radius: 50%;
+                    background-color: #fff;
+                    left: -4px;
+                    transform: translateY(5px);
+                    bottom: 0;
+                    &:hover {
+                        background-color: #dddddd;
+                    }
+                }
+            }
+        }
+
+    }
+
+    &:hover {
+        .volume_con {
+            display: block;
+        }
+    }
+}

@@ -1,0 +1,59 @@
+@import '../../theme.less';
+
+/* 倍速 */
+.speed_bth {
+    position: relative;
+
+    &:active {
+        background-color: none;
+    }
+
+    .speed_li {
+        position: absolute;
+        display: none;
+        bottom: 38px;
+        padding: 6px 0;
+        text-align: center;
+        color: #fff;
+        font-size: 14px;
+        width: 100%;
+        -webkit-tap-highlight-color: transparent;
+        background-color: rgba(0, 16, 27, 0.7);
+        border-radius: 2px;
+        &.fill::after {
+            position: absolute;
+            bottom: -20px;
+            left: 0;
+            content: '';
+            display: inline-block;
+            width: 100%;
+            height: 30px;
+          }
+        div {
+            cursor: pointer;
+            line-height: 26px;
+        }
+
+        div.on {
+            color: @mainColor;
+        }
+
+        div:hover {
+            color: @mainColor;
+        }
+    }
+
+    span {
+        cursor: pointer;
+        -webkit-tap-highlight-color: transparent;
+        display: inline-block;
+        color: #fff;
+        text-align: center;
+        min-width: 40px;
+        padding: 0 10px;
+        line-height: 22px;
+        // background-color: rgba(0, 0, 0, .35);
+        border-radius: 12px;
+        font-size: 15px;
+    }
+}

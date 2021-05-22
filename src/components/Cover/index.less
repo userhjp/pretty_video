@@ -1,0 +1,85 @@
+.video_cover {
+    position: absolute;
+    // display: none;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .play_btn {
+      width: 40px;
+      height: 40px;
+      box-sizing: border-box;
+    }
+
+    .err-warp {
+      text-align: center;
+      .err_img {
+        display: inline-block;
+        width: 32px;
+        height: 32px;
+        background: url(../../assets/error.svg);
+        background-size: cover;
+      }
+    }
+
+    .tips {
+      margin-top: 4px;
+      color: #fff;
+      font-size: 12px;
+      text-align: center;
+    }
+
+    .video_loading {
+      .spot {
+        width: 4px;
+        height: 4px;
+        border-radius: 2px;
+        background: #ffffff;
+        float: left;
+        margin: 10px 4px;
+        animation: spot linear 1s infinite;
+        -webkit-animation: spot linear 1s infinite;
+      }
+      .spot:nth-child(1) {
+        animation-delay: 0s;
+      }
+      .spot:nth-child(2) {
+        animation-delay: 0.12s;
+      }
+      .spot:nth-child(3) {
+        animation-delay: 0.24s;
+      }
+      .spot:nth-child(4) {
+        animation-delay: 0.36s;
+      }
+      .spot:nth-child(5) {
+        animation-delay: 0.48s;
+      }
+      @keyframes spot {
+        0%,
+        60%,
+        100% {
+          transform: scale(1);
+        }
+        30% {
+          transform: scale(2);
+        }
+      }
+      @-webkit-keyframes spot {
+        0%,
+        60%,
+        100% {
+          transform: scale(1);
+        }
+        30% {
+          transform: scale(2);
+        }
+      }
+    }
+  }
