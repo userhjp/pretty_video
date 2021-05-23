@@ -9,9 +9,10 @@ const devConfig = {
     compress: true, // gizp
     host: getHost(),
     // port: '8080',
+    hot: true,
     open: false,
     // proxy: { '/api': 'http://localhost:3000' },
-    static: resolve(__dirname, 'build'), // 设置静态目录 服务器启动根目录
+    // static: resolve(__dirname, 'dist'), // 设置静态目录 服务器启动根目录
   },
 };
 

@@ -198,4 +198,6 @@ class PrettyVideo {
   }
 }
 
-export default new PrettyVideo();
+const prettyVideo = new PrettyVideo();
+
+export default prettyVideo;
