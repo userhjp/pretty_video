@@ -8,7 +8,7 @@
   <link rel="icon" type="image/x-icon" href="favicon.ico">
 </head>
 <body>
- <div id="PrettyVideo"></div>
+ <div id="PrettyVideo" style="max-width: 720px;"></div>
  <div id="button">
      <a onclick="changeurl('one')">测试视频1.mp4</a><br>
      <a onclick="changeurl('two')">测试视频2.mp4</a>
@@ -38,7 +38,7 @@
             // poster: obj['one'].poster,
             autoplay: false,
             controls: true,
-            autoHideControls: false,
+            autoHideControls: true,
             hideFullScreen: false
         });
         this.changeurl('one');

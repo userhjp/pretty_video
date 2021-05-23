@@ -32,7 +32,7 @@ function getHost() {
 module.exports = merge(config, devConfig);
 
 // asset-modules
-// webpack5 之前我们处理静态资源比如。图片字体之类的资源的时候等，需要用到url-loader，file-loader，raw-loader，webpack5则放弃了这三个loader，这三个loader在github上也停止了更新。
+// webpack5 之前处理静态资源比如。图片字体之类的资源的时候等，需要用到url-loader，file-loader，raw-loader，webpack5则放弃了这三个loader，这三个loader在github上也停止了更新。
 // webpack5使用四种新增的资源模块（Asset Modules）替代了这些loader的功能。
 // asset/resource 将资源分割为单独的文件，并导出url，就是之前的 file-loader的功能.
 // asset/inline 将资源导出为dataURL（url(data:)）的形式，之前的 url-loader的功能.

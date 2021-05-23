@@ -1,5 +1,5 @@
 import './index.less';
-
+/** 播放器全屏遮掩提示错误、加载中等 */
 export class VideoCover {
   el: HTMLElement;
   err_cover: HTMLElement;

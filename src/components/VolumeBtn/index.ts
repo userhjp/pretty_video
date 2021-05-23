@@ -1,6 +1,6 @@
 import { Utils } from '../../utils';
 import './index.less';
-
+/** 音量切换 */
 export class VolumeBtn {
   valueChange: (value: number) => void; // 事件
   el: HTMLElement; // 音量按钮容器

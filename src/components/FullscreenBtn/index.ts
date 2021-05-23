@@ -1,6 +1,6 @@
 import { Utils } from '../../utils';
 import './index.less';
-
+/** 全屏按钮 */
 export class FullscreenBtn {
   el: HTMLElement;
   isFullscreen = false;

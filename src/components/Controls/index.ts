@@ -2,7 +2,7 @@ import Config from '../../config';
 import { Utils } from '../../utils';
 import { Video } from '../Video';
 import './index.less';
-
+/** 播放器控制条 */
 export class Controls {
   controlsEl: HTMLElement; // 控制条容器
   labelEl: HTMLElement; // 提示label

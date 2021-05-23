@@ -1,5 +1,5 @@
 import './index.less';
-
+/** 倍速切换 */
 export class SpeedBtn {
   valueChange: (value: number) => void; // 事件
   el: HTMLElement; // 音量按钮容器

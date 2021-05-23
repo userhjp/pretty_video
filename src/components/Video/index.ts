@@ -1,5 +1,5 @@
 import './index.less';
-
+/** Video 播放器 */
 export type VideoState =
   | 'loadstart'
   | 'canplay'

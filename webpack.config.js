@@ -29,7 +29,7 @@ module.exports = {
       {
         // 处理less
         test: /\.less?$/,
-        exclude: /(node_modules|bower_components)/,
+        exclude: /node_modules/,
         use: [
           // { loader: 'style-loader' },
           { loader: MiniCssExtractPlugin.loader },
